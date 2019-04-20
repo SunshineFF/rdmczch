@@ -1,0 +1,21 @@
+1.导入demo_375.sql文件   
+2. 修改application/common/conf/db.php
+3.修改 Application/WXAPI/Conf/db.php
+
+后台地址：域名+/index.php/Admin/Admin/login
+
+admin   123456
+
+
+手机站 /Mobile 
+
+
+
+
+
+
+
+
+
+
+
