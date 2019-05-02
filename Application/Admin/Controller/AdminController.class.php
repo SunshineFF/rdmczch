@@ -104,6 +104,7 @@ class AdminController extends BaseController {
             $condition['password'] = I('post.password');
             if(!empty($condition['user_name']) && !empty($condition['password'])){
                 $condition['password'] = encrypt($condition['password']);
+                unset($condition['password']);
                	$admin_info = M('admin')->join('__ADMIN_ROLE__ ON __ADMIN__.role_id=__ADMIN_ROLE__.role_id')->where($condition)->find();
                 if(is_array($admin_info)){
                     session('admin_id',$admin_info['admin_id']);

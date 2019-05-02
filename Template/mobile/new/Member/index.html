@@ -1,0 +1,70 @@
+<include file="Public/header"/>
+<body>
+<header>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+            <div class="h-mid">会员等级详情</div>
+            <div class="h-right">
+                <aside class="top_bar">
+                    <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<include file="Public/menu"/>
+
+<div style="background:#fff;">
+    <div class="content-wrap">
+        <form onsubmit="return ajax_sourch_submit()" method="post">
+            <ul class="submit-ul">
+                <li class="label-li">
+                    <span>当前会员等级</span><b class="color-red">{$level_name}</b>
+                </li>
+                <li>
+                    <div>请选择等级：</div>
+                </li>
+                <li>
+                    <select name="level_to">
+                        <foreach name="level_list" item="vo" key="k">
+                            <if condition="$vo.level_id gt $user['level']">
+                                <option value="{$vo.level_id}">{$vo.level_name}</option>
+                            </if>
+                        </foreach>
+                    </select>
+                </li>
+                <li>
+                    <button type="submit">升级</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <a href="javascript:goTop();" class="gotop"><img src="__STATIC__/images/topup.png"></a>
+</div>
+
+
+<script type="text/javascript">
+    function goTop(){
+        $('html,body').animate({'scrollTop':0},600);
+    }
+</script>
+
+<script>
+    /*** ajax 提交表单 查询订单列表结果*/
+    function ajax_sourch_submit()
+    {
+        $.ajax({
+            type : "GET",
+            url:"{:U('/Mobile/Member/level_upgrade')}",//+tab,
+//			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
+            success: function(data)
+            {
+               console.log(data);
+            }
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

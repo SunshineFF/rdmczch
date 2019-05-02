@@ -16,7 +16,10 @@
 <include file="Public/menu"/>
 <div id="tbh5v0">			
 <div style="background:#fff;">
-<div class="user_login_title"><h2><em>账户余额</em><span>￥{$user['user_money']}元</span></h2></div>
+    <div class="money-wrap">
+        <div class="user_login_title"><h2><em>账户余额</em><span>￥{$user['user_money']}元</span></h2></div>
+        <div class="user_login_title"><h2><em>投资金额</em><span>￥{$user['user_money']}元</span></h2></div>
+    </div>
 <empty name="account_log">
 <p class="font12">您没有任何资金的变动哦！</p>
 <else/>

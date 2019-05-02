@@ -247,8 +247,7 @@ class CartController extends MobileBaseController {
             {
                 $bankCodeList[$val['code']] = unserialize($val['bank_code']);        
             }                
-        }                
-        
+        }
         $bank_img = include 'Application/Home/Conf/bank.php'; // 银行对应图片        
         $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();        
         $this->assign('paymentList',$paymentList);        

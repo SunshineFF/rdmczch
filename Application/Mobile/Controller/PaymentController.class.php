@@ -34,11 +34,15 @@ class PaymentController extends MobileBaseController {
             //file_put_contents('./a.html',$_GET,FILE_APPEND);    
             $this->pay_code = I('get.pay_code');
             unset($_GET['pay_code']); // 用完之后删除, 以免进入签名判断里面去 导致错误
-        }                        
+        }
+
+        if ($code = I('payment_code')){
+            $this->pay_code = $code;
+        }
         //获取通知的数据
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];               
         // 导入具体的支付类文件                
-        include_once  "plugins/payment/{$this->pay_code}/{$this->pay_code}.class.php"; // D:\wamp\www\svn_tpshop\www\plugins\payment\alipay\alipayPayment.class.php                       
+        include_once "plugins/payment/{$this->pay_code}/{$this->pay_code}.class.php"; // D:\wamp\www\svn_tpshop\www\plugins\payment\alipay\alipayPayment.class.php
         $code = '\\'.$this->pay_code; // \alipay
         $this->payment = new $code();
     }
@@ -78,7 +82,13 @@ class PaymentController extends MobileBaseController {
                $code_str = $this->payment->getJSAPI($order,$config_value);
                exit($code_str);
            }
-           $this->assign('code_str', $code_str); 
+           $order_id = $order['order_id'];
+
+
+           $this->assign('payment_name',$this->payment->getData('name'));
+           $this->assign('payment_code',$this->payment->getData('code'));
+           $this->assign('code_str', $code_str);
+           $this->assign('money', $order['order_amount']);
            $this->assign('order_id', $order_id);
            $this->assign('master_order_sn', $master_order_sn); // 主订单号
            $this->display('payment');  // 分跳转 和不 跳转 
@@ -162,6 +172,20 @@ class PaymentController extends MobileBaseController {
                 $this->display('success');   
             else
                 $this->display('error');   
-        }                
-              
+        }
+
+
+    public function pay(){
+        $return = $this->payment->respond2();
+        if (isset($return['order_sn'])){
+            $order = M('order')->where("order_sn = '{$return['order_sn']}'")->find();
+        }
+        $this->assign('order', $order);
+        if ($return['code'] == 200){
+            $this->display('success');
+        }else{
+            $this->assign('msg', $return['msg']);
+            $this->display('error');
+        }
+    }
 }

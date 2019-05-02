@@ -23,18 +23,6 @@
 </header>
 <div id="tbh5v0">
 	<div class="log_reg_box">
-		<ul class="tab" id="logRegTab">
-			<li id="mob_log" class="curr" onClick="changeForm(this)">
-				<span>
-					<font>手机注册</font>
-				</span>
-			</li>
-			<li id="email_log" class="curr currr" onClick="changeForm(this)">
-				<span>
-					<font>邮箱注册</font>
-				</span>
-			</li>
-		</ul>
 		<div id="logRegTabCon">
 			<div class="log_reg_item" id="phonearea">
 				<form action="" id="mobileForm" name="mobileForm" method="post"  onsubmit="return check_submit()">
@@ -55,6 +43,12 @@
 							<div class="tips">
 								<span id="confirm_password_notice"></span>
 							</div>
+						</div>
+						<div class="field pwd">
+							<input type="text" name="" placeholder="上级手机号" class="c-form-txt-normal" required />
+						</div>
+						<div class="field pwd">
+							<input type="text" name="" placeholder="邀请人手机号" class="c-form-txt-normal" required />
 						</div>
 						<div class="yanzheng"  style=" margin-top:0px;">
                               <div class="codeTxt">
@@ -99,7 +93,7 @@
                                    <div class="codePhoto">
 									<input id="zemail" type="button" rel="email" value="获取邮箱验证码 " class="zphone" onClick="sendcode(this)" style=" color:#FFF">
                                   </div>
-						</div>													
+						</div>
 						<input type="checkbox" style="display: none" name="agreement" value="1" checked="checked" required />
 						<input type="submit" id="btn_submit" name="Submit" class="btn_big1" value="注 册" />
 				</form>
