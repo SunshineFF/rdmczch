@@ -1270,3 +1270,18 @@ function get_goods_category_tree(){
 }
 
 
+function accountLogOnly($user_id,$money = 0,$desc = ''){
+    /* 插入帐户变动记录 */
+    $account_log = array(
+        'user_id'       => $user_id,
+        'user_money'    => $money,
+        'pay_points'    => 0,
+        'change_time'   => time(),
+        'desc'   => $desc,
+        'order_id'   => ''
+    );
+    /* 更新用户信息 */
+    M('account_log')->add($account_log);
+}
+
+

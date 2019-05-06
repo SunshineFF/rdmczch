@@ -1,0 +1,40 @@
+<include file="Public/header"/>
+<body>
+<header>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+            <div class="h-mid">资金管理</div>
+            <div class="h-right">
+                <aside class="top_bar">
+                    <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<include file="Public/menu"/>
+<div id="tbh5v0">
+    <div style="background:#fff;">
+        <div class="money-wrap">
+            <div class="user_login_title"><h2><em>账户余额</em><span>￥{$user['user_money']}元</span></h2></div>
+            <div class="user_login_title"><h2><em>已投资金额</em><span>￥{$user['tou_zi']}元</span></h2></div>
+            <form class="tou-zi-form" method="post" action="{:U('Mobile/User/tou_zi')}">
+                <div class="wrap">
+                    <span>投资金额：</span><input required name="money" type="number"/>
+                </div>
+                <button type="submit">提交投资</button>
+            </form>
+        </div>
+
+    </div>
+    <a href="javascript:goTop();" class="gotop"><img src="__STATIC__/images/topup.png"></a>
+</div>
+
+<script type="text/javascript">
+    function goTop(){
+        $('html,body').animate({'scrollTop':0},600);
+    }
+</script>
+</body>
+</html>

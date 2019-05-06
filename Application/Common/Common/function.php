@@ -659,4 +659,9 @@ function cachePage($p){
 function getPageFromCache(){
     return session("TPSHOP_PAGE");
 }
+
+function getUserIdByTelephone($telephone){
+    $id = M('users')->where(['username' => $telephone])->field('user_id')->find() ;
+    return $id ? $id : false;
+}
 // @}

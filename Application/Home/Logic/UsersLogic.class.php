@@ -14,6 +14,7 @@
 
 namespace Home\Logic;
 
+use Think\Exception;
 use Think\Model\RelationModel;
 use Think\Page;
 
@@ -201,15 +202,25 @@ class UsersLogic extends RelationModel
         //$distribut_condition = tpCache('distribut.condition'); 
         //if($distribut_condition == 0)  // 直接成为分销商, 每个人都可以做分销        
         $map['is_distribut']  = 1; // 默认每个人都可以成为分销商
-        
-        $user_id = M('users')->add($map);
-        if(!$user_id)        
-            return array('status'=>-1,'msg'=>'注册失败','result'=>'');        
-            
+
+        try{
+            $this->startTrans();
+            $map = $this->_initUserData($map);
+            $user_id = M('users')->add($map);
+            $this->commit();
+            if(!$user_id)
+                return array('status'=>-1,'msg'=>'注册失败','result'=>'');
+
+        }catch (\Exception $exception){
+            $this->rollback();
+            return $this->error($exception->getMessage());
+        }
+
         $pay_points = tpCache('basic.reg_integral'); // 会员注册赠送积分
         if($pay_points > 0)
             accountLog($user_id, 0,$pay_points, '会员注册赠送积分'); // 记录日志流水                  
         $user = M('users')->where("user_id = {$user_id}")->find();
+        $this->_initParentPath($user);
         // 会员注册送优惠券
         $coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
         if(!empty($coupon)){
@@ -222,7 +233,107 @@ class UsersLogic extends RelationModel
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 
-     /*
+    protected function _initParentPath(&$user){
+        if (!$user['parent_path']){
+            return;
+        }
+        $parentArray = explode(',',$user['parent_path']);
+        $firstParent = current($parentArray);
+        $firstParent = $this->where(['user_id' => $firstParent])->find();
+        $userAllArray = unserialize($firstParent['all_child']);
+        if (count($userAllArray) == 0){
+            $userAllArray = [];
+            $userAllArray[$user['parent_id']][$user['user_type']] = $user['user_id'];
+        }else{
+            $userAllArray[$user['parent_id']][$user['user_type']] = $user['user_id'];
+        }
+        $this->where(['user_id' => $firstParent['user_id']])->save(['all_child'=>serialize($userAllArray)]);
+    }
+
+    /**
+     * @param $user
+     * @throws \Exception
+     */
+    protected function _initUserData($user){
+        if ($_POST['parent_phone'] == '18613045257'){
+            return $user;
+        }
+        $this->_initUserParent($user);
+        $parent = isset($user['parent']) ? $user['parent'] : false;
+        if (!$parent){
+            throw new \Exception('参数不正确');
+        }
+        $this->_initUserParenPath($user);
+        $this->canUseParent($user);
+        unset($user['parent']);
+        return $user;
+    }
+
+    /** 更新直推的积分
+     * @param $zhituiId
+     */
+    protected function _updateZhiTuiJifen($zhituiId){
+        $this->where(['user_id' => $zhituiId])->setInc('pay_points',100);
+    }
+
+    /**初始化用户的父级和直推用户
+     * 直推默认为父级
+     * @param $user
+     * @throws \Exception
+     */
+    protected function _initUserParent(&$user){
+        $parent = $this->where(['mobile' => $_POST['parent_phone']])->find();
+        if (!$parent){
+            throw new \Exception('父级手机号填写不正确');
+        }
+        $user['parent'] = $parent;
+        $parentId = $parent['user_id'];
+        $user['parent_id'] = $parentId;
+        if (!$_POST['zhitui_phone'] || $_POST['zhitui_phone'] = $_POST['parent_phone']){
+            $user['zhitui_id'] = $parentId;
+        }else{
+            $zhituiId = getUserIdByTelephone($_POST['zhitui_phone']);
+            if (!$zhituiId){
+                throw new \Exception('推荐人手机号填写不正确');
+            }
+            $user['zhitui_id'] = $zhituiId;
+        }
+        $this->_updateZhiTuiJifen($user['zhitui_id']);
+    }
+
+    /** 初始化用户的 父级路径，方便以后寻址
+     * @param $user
+     */
+    protected function _initUserParenPath(&$user){
+        $parent = $user['parent'];
+        if ($parent['parent_path']){
+            $parentPath = '';
+            $parentPath .= $parent['parent_path'];
+            $parentPath .= ',';
+            $parentPath .= $parent['user_id'];
+        }else{
+            $parentPath = $parent['user_id'];
+        }
+        $user['parent_path'] = $parentPath;
+    }
+
+    /**
+     * @param $user
+     * @throws \Exception
+     */
+    protected function canUseParent(&$user){
+        $count = M('users')->where(['parent_id' => $user['parent_id']])->count();
+        if ($count == 0){
+            $user['user_type'] = 1;
+            return true;
+        }elseif($count == 1){
+            $user['user_type'] = 2;
+            return true;
+        }
+        throw new \Exception('您填写的父级已经没有位置了');
+    }
+
+    /*
       * 获取当前登录用户信息
       */
      public function get_info($user_id){
@@ -720,5 +831,381 @@ class UsersLogic extends RelationModel
             $data['status'] = 1;
             M('user_message')->where(array('user_id' => $user_info['user_id'], 'category' => 0))->save($data);
         }
+    }
+
+    protected function error($msg = '出了一些无法预料问题。请联系相关人员')
+    {
+        return array('status'=>-1,'msg'=>$msg,'result'=>'');
+    }
+
+    protected function success($msg = '出了一些无法预料问题。请联系相关人员')
+    {
+        return array('status'=>-1,'msg'=>$msg,'result'=>'');
+    }
+
+
+    /** 用户投资逻辑
+     * @param $user
+     * @return array
+     */
+    public function touZi($user){
+        $money = $_POST['money'];
+        if ((int)$money < 500){
+            return array('status'=>-1,'msg'=>'投资金额必须大于500');
+        }
+        if ($money > $user['user_money']){
+            return array('status'=>-1,'msg'=>'请填写正确的额度');
+        }
+        $user['tou_zi'] = $user['tou_zi'] + $money;
+        $user['user_money'] = $user['user_money'] - $money;
+//        $this->where(['user_id'=>$user['user_id']])->setInc('tou_zi',$money);
+//        $this->where(['user_id'=>$user['user_id']])->setDec('user_money',$money);
+        $this->where(['user_id' => $user['user_id']])->save($user);
+        $this->updateZhiTui($user,$money);
+        accountLogOnly($user['user_id'],$money,'用户投资');
+        return array('status'=>1,'msg'=>'投资成功');
+    }
+
+    /** 更新直推用户奖励
+     * @param $user
+     * @param $money
+     * @return bool
+     */
+    protected function updateZhiTui($user,$money){
+        $type = $this->getTypeByUser($user);
+        if ($type === false){
+            return false;
+        }
+        $zhituiM = 0;
+        switch ($user['user_type']){
+            case 1:
+                if ($type == 1){
+                    $zhituiM = $money*0.2;
+                }elseif($type == 2){
+                    $rule = $this->getRule($type,$user['zhitui_id']);
+                    if ($rule){
+                        $zhituiM = $money * $rule['zhitui'];
+                    }
+                }
+                break;
+            case 2:
+                if ($type == 1){
+                    $rule = $this->getRule($type,$user['zhitui_id']);
+                    if ($rule){
+                        $zhituiM = $money * $rule['zhitui'];
+                    }
+                }elseif($type == 2){
+                    $zhituiM = $money*0.2;
+                }
+                break;
+            default:
+                break;
+        }
+       $this->where(['user_id' => $user['zhitui_id']])->setInc('user_money',$zhituiM);
+        accountLogOnly($user['zhitui_id'],$zhituiM,'直推奖励');
+        $this->updateAllTouZi($user);
+    }
+
+    /** 更新这个分支的投资信息
+     * @param $user
+     * @param $money
+     */
+    protected function updateAllTouZi($user){
+        $firstParentId = current(explode(',',$user['parent_path']));
+        $firstParent = $this->where(['user_id' => $firstParentId])->find();
+        $touziString = $firstParent['all_touzi'];
+        if ($touziString){
+            $touziArray = unserialize($touziString);
+        }else{
+            $touziArray = [];
+        }
+        $one = [$user['user_id'] => $user['tou_zi']];
+        $touziArray[$user['parent_id']] = [
+            $user['user_type'] => $one
+        ];
+        $touziString = serialize($touziArray);
+        $this->where(['user_id' => $firstParentId])->save(['all_touzi'=> $touziString]);
+    }
+
+    /** 根据用户投资金额，获取奖励规则
+     * @param $type
+     * @param $userId
+     * @return array|bool
+     */
+    protected function getRule($type,$userId){
+        $touzi = $this->where(['user_id' => $userId])->field('tou_zi')->find();
+        $touzi = (int)$touzi['tou_zi'];
+        $rule = [
+            'zhitui' => 0.06,
+            'max_get' => 2,
+            'all_day' => 2000,
+            'max_day_get' => 50
+        ];
+        if ($type == 1){
+            $rule['zhitui'] = 0.2;
+            $rule['max_get'] = 0;
+            $rule['all_day'] = 0;
+            $rule['max_day_get'] = 0;
+        }else{
+          if($touzi >= 500 && $touzi < 5000){
+              return $rule;
+            }elseif($touzi >= 5000 && $touzi < 10000){
+              $rule['zhitui'] = 0.1;
+              $rule['max_get'] = 3;
+              $rule['all_day'] = 1800;
+              $rule['max_day_get'] = 500;
+            }elseif($touzi >= 10000 && $touzi < 50000){
+              $rule['zhitui'] = 0.15;
+              $rule['max_get'] = 5;
+              $rule['all_day'] = 1500;
+              $rule['max_day_get'] = 1000;
+            }elseif($touzi >= 50000 && $touzi < 100000){
+              $rule['zhitui'] = 0.2;
+              $rule['max_get'] = 8;
+              $rule['all_day'] = 1200;
+              $rule['max_day_get'] = 5000;
+            }elseif($touzi >= 100000 && $touzi < 500000){
+                $rule['zhitui'] = 0.2;
+                $rule['max_get'] = 10;
+                $rule['all_day'] = 1000;
+                $rule['max_day_get'] = 10000;
+            }elseif($touzi >= 100000 && $touzi < 500000){
+                $rule['zhitui'] = 0.3;
+                $rule['max_get'] = 15;
+                $rule['all_day'] = 800;
+                $rule['max_day_get'] = 50000;
+            }elseif($touzi >= 1000000){
+              $rule['zhitui'] = 0.3;
+              $rule['max_get'] = 20;
+              $rule['all_day'] = 500;
+              $rule['max_day_get'] = 100000;
+          }else{
+              return false;
+          }
+        }
+        return $rule;
+    }
+
+    /** 根据关系树，得到A分支或者B分支为大区或小区
+     * @param $user
+     * @return bool|int
+     */
+    protected function getTypeByUser($user){
+        if (!$user['parent_id']){
+            return false;
+        }
+        $parentId = $user['parent_id'];
+        $parentArray = explode(',',$user['parent_path']);
+        //拿到关系表
+        $parent = $this->where(['user_id' => current($parentArray)])->find();
+        $allChild = unserialize($parent['all_child']);
+        $A = $B = 0;
+        $current = '';
+        $AChild = $BChild = [];
+        for ($i = 0; $i < count($allChild);$i++){
+            if (isset($allChild[$parentId])){
+                $children = $allChild[$parentId];
+                if ($i > 0){
+                    if ($current == 1){
+                        if (isset($children[1])){
+                            $AChild[] = $children[1];
+                            $A++;
+                        }
+                        if (isset($children[2])){
+                            $AChild[] = $children[2];
+                            $A++;
+                        }
+                    }else{
+                        if (isset($children[1])){
+                            $BChild[] = $children[1];
+                            $B++;
+                        }
+                        if (isset($children[2])){
+                            $BChild[] = $children[2];
+                            $B++;
+                        }
+                    }
+                }else{
+                    if (isset($children[1])){
+                        $AChild[] = $children[1];
+                        $A++;
+                    }
+                    if (isset($children[2])){
+                        $BChild[] = $children[2];
+                        $B++;
+                    }
+                }
+            }
+            if (count($AChild) == 0 && count($BChild) == 0) break;
+            if (count($AChild) > 0){
+                $key = array_keys($AChild)[0];
+                $parentId = $AChild[$key];
+                $current = 1;
+                unset($AChild[$key]);
+            }else{
+                $key = array_keys($BChild)[0];
+                $parentId = $BChild[$key];
+                $current = 2;
+                unset($BChild[$key]);
+            }
+        }
+        if ($A > $B){
+            return 1;  //A大区
+        }elseif($A < $B){
+            return 2; //B小区
+        }
+
+        return 0;
+    }
+
+    protected function isXiaoQu($user){
+        $type = $this->getTypeByUser($user);
+        $xiao = false;
+        switch ($user['user_type']){
+            case 1:
+              if($type == 2){
+                  $xiao = true;
+                }
+                break;
+            case 2:
+                if ($type == 1){
+                    $xiao = true;
+                }
+                break;
+            default:
+                break;
+        }
+        return $xiao;
+    }
+
+    /** 分配一天的奖励
+     * @param $user
+     * @return array
+     */
+    public function getOneDayMoney($user){
+        $today = date('Y-m-d',time());
+        if ($user['one_day_time_dong']  && $user['one_day_time_jifen']
+            && $today == date('Y-m-d',$user['one_day_time_jifen'])
+            && $today == date('Y-m-d',$user['one_day_time_dong'])
+        ){
+            return ['status' => -1,'msg'=>'您已经领取过奖励了，请明天再领'];
+        }
+        $rule = $this->getRule(2,$user['user_id']);
+        if (!$rule){
+            return ['status' => -1,'msg'=>'您没有投资暂时不能领取奖励'];
+        }
+        try{
+            $this->updateJifenOneDay($user,$rule);
+            if (!$this->isXiaoQu($user)){
+                return ['status' => -1,'msg'=>'您当前属于大区，不能领取奖励'];
+            }
+            $total = $this->getAllMoneyFromUser($user);
+            $money = round($total*0.06/$rule['all_day'],2);
+            $data = [];
+            $user = $this->where(['user_id' => $user['user_id']])->find();
+            $data['user_money'] = $user['user_money'] + $money;
+            $data['one_day_time_dong'] = time();
+            $this->where(['user_id' => $user['user_id']])->save($data);
+        }catch (\Exception $e){
+            return ['status' => -1,'msg'=>$e->getMessage()];
+        }
+
+        accountLogOnly($user['user_id'],$money,'业绩的每天分红');
+        return ['status' => 1,'msg'=>'奖励发放完毕'];
+    }
+
+    /** 计算当前用户下的所有业绩
+     * @param $user
+     * @return float|int|mixed
+     */
+    protected function getAllMoneyFromUser($user){
+        if (!$this->isXiaoQu($user)){
+            throw new \Exception('您当前所处为大区，不能参与分配奖励');
+        }
+        $parentArray = explode(',',$user['parent_path']);
+        //拿到关系表
+        $parent = $this->where(['user_id' => current($parentArray)])->find();
+        $allChild = unserialize($parent['all_touzi']);
+        $totalA = $totalB = 0;
+        $current = '';
+        $AChild = $BChild = [];
+        $currentId = $user['user_id'];
+        for ($i = 0; $i < count($allChild);$i++){
+            if (isset($allChild[$currentId])){
+                $children = $allChild[$currentId];
+                if ($i > 0){
+                    if ($current == 1){
+                        if (isset($children[1])){
+                            $one = $children[1];
+                            $AChild[] = key($one);
+                            $totalA += current($one);
+                        }
+                        if (isset($children[2])){
+                            $one = $children[2];
+                            $AChild[] = key($one);
+                            $totalA += current($one);
+                        }
+                    }else{
+                        if (isset($children[1])){
+                            $one = $children[1];
+                            $BChild[] = key($one);
+                            $totalB += current($one);
+                        }
+                        if (isset($children[2])){
+                            $one = $children[2];
+                            $BChild[] = key($one);
+                            $totalB += current($one);
+                        }
+                    }
+                }else{
+                    if (isset($children[1])){
+                        $one = $children[1];
+                        $AChild[] = key($one);
+                        $totalA += current($one);
+                    }
+                    if (isset($children[2])){
+                        $one = $children[2];
+                        $BChild[] = key($one);
+                        $totalB += current($one);
+                    }
+                }
+            }
+            if (count($AChild) == 0 && count($BChild) == 0) break;
+            if (count($AChild) > 0){
+                $key = array_keys($AChild)[0];
+                $currentId = $AChild[$key];
+                $current = 1;
+                unset($AChild[$key]);
+            }else{
+                $key = array_keys($BChild)[0];
+                $currentId = $BChild[$key];
+                $current = 2;
+                unset($BChild[$key]);
+            }
+        }
+        if($user == 1){
+            $total = $totalA;
+        }else{
+            $total = $totalB;
+        }
+        $total = $total/100;
+        $total += $user['tou_zi'];
+        return $total;
+    }
+
+    /** 进行积分至余额的转化
+     * @param $user
+     * @param $rule
+     */
+    protected function updateJifenOneDay($user,$rule){
+        if (!$rule){
+            return;
+        }
+        $money = round($user['pay_points'] / $rule['all_day'],2);
+        $user['pay_points'] = $user['pay_points'] - $money;
+        $user['user_money'] = $user['user_money'] + $money;
+        $user['one_day_time_jifen'] = time();
+        $this->where(['user_id' => $user['user_id']])->save($user);
+        accountLogOnly($user['user_id'],$money,'积分转余额');
     }
 }

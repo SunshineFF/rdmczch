@@ -291,9 +291,11 @@ class UserController extends MobileBaseController
 
         $region_list = get_region_list();
         $invoice_no = M('DeliveryDoc')->where("order_id = $id")->getField('invoice_no', true);
-        $order_info[invoice_no] = implode(' , ', $invoice_no);
+        $order_info['invoice_no'] = implode(' , ', $invoice_no);
         //获取订单操作记录
         $order_action = M('order_action')->where(array('order_id' => $id))->select();
+
+        $this->getOrderStatus($order_info);
         $this->assign('store', $store);
         $this->assign('order_status', C('ORDER_STATUS'));
         $this->assign('shipping_status', C('SHIPPING_STATUS'));
@@ -303,6 +305,12 @@ class UserController extends MobileBaseController
         $this->assign('order_info', $order_info);
         $this->assign('order_action', $order_action);
         $this->display();
+    }
+
+    protected function getOrderStatus(&$order_info){
+        if ($order_info['pay_status'] == 1){
+            $order_info['order_status_desc'] = '报单成功';
+        }
     }
 
     public function express()
@@ -1174,5 +1182,38 @@ class UserController extends MobileBaseController
             exit;
         }
         $this->display();
+    }
+
+    /**
+     * 用户投资
+     */
+    public function tou_zi(){
+       if ($_POST){
+           $userModel = new UsersLogic();
+           $return = $userModel->touZi($this->user);
+           if($return['status'] == 1){
+               $this->success($return['msg']);
+           }else{
+               $this->error($return['msg']);
+           }
+           exit;
+       }else{
+           $this->assign('user',$this->user);
+           $this->display();
+       }
+    }
+
+    /**
+     * 用户一天的收益
+     */
+    public function get_one_day(){
+        $userModel = new UsersLogic();
+        $return = $userModel->getOneDayMoney($this->user);
+        if($return['status'] == 1){
+            $this->success($return['msg']);
+        }else{
+            $this->error($return['msg']);
+        }
+        exit;
     }
 }
