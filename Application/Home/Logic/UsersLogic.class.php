@@ -871,7 +871,7 @@ class UsersLogic extends RelationModel
      * @param $money
      * @return bool
      */
-    protected function updateZhiTui($user,$money){
+    public function updateZhiTui($user,$money){
         $type = $this->getTypeByUser($user);
         if ($type === false){
             return false;
@@ -919,7 +919,8 @@ class UsersLogic extends RelationModel
         }else{
             $touziArray = [];
         }
-        $one = [$user['user_id'] => $user['tou_zi']];
+        $user = $this->where(['user_id' => $user['user_id']])->find();
+        $one = [$user['user_id'] => $user['total_amount']];
         $touziArray[$user['parent_id']] = [
             $user['user_type'] => $one
         ];
@@ -933,8 +934,8 @@ class UsersLogic extends RelationModel
      * @return array|bool
      */
     protected function getRule($type,$userId){
-        $touzi = $this->where(['user_id' => $userId])->field('tou_zi')->find();
-        $touzi = (int)$touzi['tou_zi'];
+        $touzi = $this->where(['user_id' => $userId])->field('total_amount')->find();
+        $touzi = (int)$touzi['total_amount'];
         $rule = [
             'zhitui' => 0.06,
             'max_get' => 2,
@@ -980,7 +981,7 @@ class UsersLogic extends RelationModel
               $rule['all_day'] = 500;
               $rule['max_day_get'] = 100000;
           }else{
-              return false;
+              return   ;
           }
         }
         return $rule;
@@ -1189,7 +1190,7 @@ class UsersLogic extends RelationModel
             $total = $totalB;
         }
         $total = $total/100;
-        $total += $user['tou_zi'];
+        $total += $user['total_amount'];
         return $total;
     }
 

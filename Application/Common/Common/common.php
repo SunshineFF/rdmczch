@@ -794,6 +794,8 @@ function update_pay_status($order_sn,$pay_status = 1)
 		minus_stock($order['order_id']);
 		// 给他升级, 根据order表查看消费记录 给他会员等级升级 修改他的折扣 和 总金额
 		update_user_level($order['user_id']);
+		//更新订单直推奖励
+		update_zhitui($order);
 		// 记录订单操作日志
 		logOrder($order['order_id'],'订单付款成功','付款成功',$order['user_id'],2);
 		//分销设置
@@ -1282,6 +1284,13 @@ function accountLogOnly($user_id,$money = 0,$desc = ''){
     );
     /* 更新用户信息 */
     M('account_log')->add($account_log);
+}
+
+function update_zhitui($order){
+    $user = M('users')->where(['user_id' => $order['user_id']])->find();
+    $money = $order['total_amount'];
+    $userModel = new Home\Logic\UsersLogic();
+    $userModel->updateZhiTui($user,$money);
 }
 
 
