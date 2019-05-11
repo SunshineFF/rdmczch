@@ -233,7 +233,7 @@ class UsersLogic extends RelationModel
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 
-    protected function _initParentPath(&$user){
+    protected function   _initParentPath(&$user){
         if (!$user['parent_path']){
             return;
         }
@@ -282,22 +282,15 @@ class UsersLogic extends RelationModel
      * @throws \Exception
      */
     protected function _initUserParent(&$user){
-        $parent = $this->where(['mobile' => $_POST['parent_phone']])->find();
-        if (!$parent){
-            throw new \Exception('父级手机号填写不正确');
+        $zhitui = $this->where(['mobile' => $_POST['zhitui_phone']])->find();
+        if (!$zhitui){
+            throw new \Exception('推荐人手机号填写不正确');
         }
+        $user['zhitui_id'] = $zhitui['user_id'];
+        $parent = $this->getUserParent($zhitui);
         $user['parent'] = $parent;
         $parentId = $parent['user_id'];
         $user['parent_id'] = $parentId;
-        if (!$_POST['zhitui_phone'] || $_POST['zhitui_phone'] = $_POST['parent_phone']){
-            $user['zhitui_id'] = $parentId;
-        }else{
-            $zhituiId = getUserIdByTelephone($_POST['zhitui_phone']);
-            if (!$zhituiId){
-                throw new \Exception('推荐人手机号填写不正确');
-            }
-            $user['zhitui_id'] = $zhituiId;
-        }
         $this->_updateZhiTuiJifen($user['zhitui_id']);
     }
 
@@ -317,7 +310,7 @@ class UsersLogic extends RelationModel
         $user['parent_path'] = $parentPath;
     }
 
-    /**
+    /** 查看父级有没有位置
      * @param $user
      * @throws \Exception
      */
@@ -872,7 +865,7 @@ class UsersLogic extends RelationModel
      * @return bool
      */
     public function updateZhiTui($user,$money){
-        $type = $this->getTypeByUser($user);
+        $type = $this->getTypeByMoney($user);
         if ($type === false){
             return false;
         }
@@ -981,7 +974,7 @@ class UsersLogic extends RelationModel
               $rule['all_day'] = 500;
               $rule['max_day_get'] = 100000;
           }else{
-              return   ;
+              return false;
           }
         }
         return $rule;
@@ -1059,8 +1052,15 @@ class UsersLogic extends RelationModel
         return 0;
     }
 
+    /**
+     * @param $user
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     protected function isXiaoQu($user){
-        $type = $this->getTypeByUser($user);
+        $type = $this->getTypeByMoney($user);
         $xiao = false;
         switch ($user['user_type']){
             case 1:
@@ -1184,7 +1184,7 @@ class UsersLogic extends RelationModel
                 unset($BChild[$key]);
             }
         }
-        if($user == 1){
+        if($user['type'] == 1){
             $total = $totalA;
         }else{
             $total = $totalB;
@@ -1192,6 +1192,83 @@ class UsersLogic extends RelationModel
         $total = $total/100;
         $total += $user['total_amount'];
         return $total;
+    }
+
+    /**根据用户业绩区分大小区
+     * @param $user
+     * @return int | bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function getTypeByMoney($user){
+        $parentArray = explode(',',$user['parent_path']);
+        //拿到关系表
+        $parent = $this->where(['user_id' => current($parentArray)])->find();
+        $allChild = unserialize($parent['all_touzi']);
+        $totalA = $totalB = 0;
+        $current = '';
+        $AChild = $BChild = [];
+        $currentId = $user['user_id'];
+        for ($i = 0; $i < count($allChild);$i++){
+            if (isset($allChild[$currentId])){
+                $children = $allChild[$currentId];
+                if ($i > 0){
+                    if ($current == 1){
+                        if (isset($children[1])){
+                            $one = $children[1];
+                            $AChild[] = key($one);
+                            $totalA += current($one);
+                        }
+                        if (isset($children[2])){
+                            $one = $children[2];
+                            $AChild[] = key($one);
+                            $totalA += current($one);
+                        }
+                    }else{
+                        if (isset($children[1])){
+                            $one = $children[1];
+                            $BChild[] = key($one);
+                            $totalB += current($one);
+                        }
+                        if (isset($children[2])){
+                            $one = $children[2];
+                            $BChild[] = key($one);
+                            $totalB += current($one);
+                        }
+                    }
+                }else{
+                    if (isset($children[1])){
+                        $one = $children[1];
+                        $AChild[] = key($one);
+                        $totalA += current($one);
+                    }
+                    if (isset($children[2])){
+                        $one = $children[2];
+                        $BChild[] = key($one);
+                        $totalB += current($one);
+                    }
+                }
+            }
+            if (count($AChild) == 0 && count($BChild) == 0) break;
+            if (count($AChild) > 0){
+                $key = array_keys($AChild)[0];
+                $currentId = $AChild[$key];
+                $current = 1;
+                unset($AChild[$key]);
+            }else{
+                $key = array_keys($BChild)[0];
+                $currentId = $BChild[$key];
+                $current = 2;
+                unset($BChild[$key]);
+            }
+        }
+        if($totalA > $totalB){
+            return 1;
+        }elseif($totalB > $totalA){
+            return 2;
+        }
+        return 0;
     }
 
     /** 进行积分至余额的转化
@@ -1208,5 +1285,43 @@ class UsersLogic extends RelationModel
         $user['one_day_time_jifen'] = time();
         $this->where(['user_id' => $user['user_id']])->save($user);
         accountLogOnly($user['user_id'],$money,'积分转余额');
+    }
+    /** 根据用户的直推获取最少的上级
+     * @param $user
+     */
+    protected function getUserParent($user){
+        if ($user['parent_path']){
+            $parentArray = explode(',',$user['parent_path']);
+            //拿到关系表
+            $parent = $this->where(['user_id' => current($parentArray)])->find();
+        }else{
+            $parent = $user;
+        }
+        $allChild = unserialize($parent['all_child']);
+        $current = $user['user_id'];
+        $currentLevel = $nextLevel = [];
+        for ($i = 0;$i < count($allChild);$i++){
+            if (!isset($allChild[$current])){
+                break;
+            }
+            $one = $allChild[$current];
+            if (!isset($one[2])){
+                break;
+            }else{
+                $nextLevel[] = $one[1];
+                $nextLevel[] = $one[2];
+            }
+            if (count($nextLevel) > 0){
+                $currentLevel = $nextLevel;
+                $nextLevel = [];
+            }
+            if (count($currentLevel) > 0){
+                $key = array_keys($currentLevel)[0];
+                $current = $currentLevel[$key];
+                unset($currentLevel[$key]);
+            }
+        }
+        $parent = $this->where(['user_id' => $current])->find();
+        return $parent;
     }
 }
