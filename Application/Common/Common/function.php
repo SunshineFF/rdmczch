@@ -665,3 +665,11 @@ function getUserIdByTelephone($telephone){
     return $id ? $id : false;
 }
 // @}
+
+/** 获取产品页面的图片地址
+ * @param $imgString
+ * @return string
+ */
+function getProductImageUrl($imgString){
+    return "__STATIC__/img/product/".$imgString;
+}

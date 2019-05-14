@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/index.css">
+    <title></title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/common.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+</head>
+<!--banner图开始-->
+<body>
+
+<div class="product-method">
+    <form method="post" action="{:U('Product/select_payment_method')}">
+         <div class="method">
+             <p data-value="yu_e"><span>在线支付</span></p>
+             <p data-value="xian_xia"><span>线下报单</span></p>
+         </div>
+        <input type="hidden" name="product_id" value="{:product.id}">
+        <div class="pay-info">
+            <p><span>支付宝账号：</span>某某某 12345678901</p>
+            <p><span>银行打款：</span>某某某 12345678901</p>
+            <p><span></span>工商银行白云支行</p>
+        </div>
+        <button type="submit" class="xia-xia">提交订单</button>
+    </form>
+</div>
+
+<include file="Product/footer"/>
+
+<script type="text/javascript">
+    //	$(function(){
+    //		var layer = 1;
+    //		layui.use(['layer'],function () {
+    //		    layer = layui.layer;
+    //		    layer.msg('sasa');
+    //		})
+    //	})
+</script>
+</body>
+</html>
