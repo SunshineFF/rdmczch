@@ -12,4 +12,8 @@ class ProductController extends BaseController {
     public function index(){
         return $this->display();
     }
+
+    public function ajax_get_table(){
+
+    }
 }
