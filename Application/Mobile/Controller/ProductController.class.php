@@ -31,6 +31,7 @@ class ProductController extends MobileBaseController
     }
 
     public function index(){
+
         return $this->display();
     }
 
