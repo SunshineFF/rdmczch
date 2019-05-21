@@ -865,37 +865,39 @@ class UsersLogic extends RelationModel
      * @return bool
      */
     public function updateZhiTui($user,$money){
-        $type = $this->getTypeByMoney($user);
-        if ($type === false){
-            return false;
-        }
-        $zhituiM = 0;
-        switch ($user['user_type']){
-            case 1:
-                if ($type == 1){
-                    $zhituiM = $money*0.2;
-                }elseif($type == 2){
-                    $rule = $this->getRule($type,$user['zhitui_id']);
-                    if ($rule){
-                        $zhituiM = $money * $rule['zhitui'];
+        if ($user['zhitui_id']){
+            $type = $this->getTypeByMoney($user);
+            if ($type === false){
+                return false;
+            }
+            $zhituiM = 0;
+            switch ($user['user_type']){
+                case 1:
+                    if ($type == 1){
+                        $zhituiM = $money*0.2;
+                    }elseif($type == 2){
+                        $rule = $this->getRule($type,$user['zhitui_id']);
+                        if ($rule){
+                            $zhituiM = $money * $rule['zhitui'];
+                        }
                     }
-                }
-                break;
-            case 2:
-                if ($type == 1){
-                    $rule = $this->getRule($type,$user['zhitui_id']);
-                    if ($rule){
-                        $zhituiM = $money * $rule['zhitui'];
+                    break;
+                case 2:
+                    if ($type == 1){
+                        $rule = $this->getRule($type,$user['zhitui_id']);
+                        if ($rule){
+                            $zhituiM = $money * $rule['zhitui'];
+                        }
+                    }elseif($type == 2){
+                        $zhituiM = $money*0.2;
                     }
-                }elseif($type == 2){
-                    $zhituiM = $money*0.2;
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
+            $this->where(['user_id' => $user['zhitui_id']])->setInc('user_money',$zhituiM);
+            accountLogOnly($user['zhitui_id'],$zhituiM,'直推奖励');
         }
-       $this->where(['user_id' => $user['zhitui_id']])->setInc('user_money',$zhituiM);
-        accountLogOnly($user['zhitui_id'],$zhituiM,'直推奖励');
         $this->updateAllTouZi($user);
     }
 
@@ -905,20 +907,22 @@ class UsersLogic extends RelationModel
      */
     protected function updateAllTouZi($user){
         $firstParentId = current(explode(',',$user['parent_path']));
-        $firstParent = $this->where(['user_id' => $firstParentId])->find();
-        $touziString = $firstParent['all_touzi'];
-        if ($touziString){
-            $touziArray = unserialize($touziString);
-        }else{
-            $touziArray = [];
+        if ($firstParentId){
+            $firstParent = $this->where(['user_id' => $firstParentId])->find();
+            $touziString = $firstParent['all_touzi'];
+            if ($touziString){
+                $touziArray = unserialize($touziString);
+            }else{
+                $touziArray = [];
+            }
+            $user = $this->where(['user_id' => $user['user_id']])->find();
+            $one = [$user['user_id'] => $user['tou_zi']];
+            $touziArray[$user['parent_id']] = [
+                $user['user_type'] => $one
+            ];
+            $touziString = serialize($touziArray);
+            $this->where(['user_id' => $firstParentId])->save(['all_touzi'=> $touziString]);
         }
-        $user = $this->where(['user_id' => $user['user_id']])->find();
-        $one = [$user['user_id'] => $user['total_amount']];
-        $touziArray[$user['parent_id']] = [
-            $user['user_type'] => $one
-        ];
-        $touziString = serialize($touziArray);
-        $this->where(['user_id' => $firstParentId])->save(['all_touzi'=> $touziString]);
     }
 
     /** 根据用户投资金额，获取奖励规则
@@ -927,8 +931,8 @@ class UsersLogic extends RelationModel
      * @return array|bool
      */
     protected function getRule($type,$userId){
-        $touzi = $this->where(['user_id' => $userId])->field('total_amount')->find();
-        $touzi = (int)$touzi['total_amount'];
+        $touzi = $this->where(['user_id' => $userId])->field('tou_zi')->find();
+        $touzi = (int)$touzi['tou_zi'];
         $rule = [
             'zhitui' => 0.06,
             'max_get' => 2,
@@ -1190,7 +1194,7 @@ class UsersLogic extends RelationModel
             $total = $totalB;
         }
         $total = $total/100;
-        $total += $user['total_amount'];
+        $total += $user['tou_zi'];
         return $total;
     }
 

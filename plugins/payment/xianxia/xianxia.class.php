@@ -44,5 +44,15 @@ class xianxia extends RelationModel{
         return $this->return;
     }
 
+    /**
+     * @param $money
+     * @param $user
+     * @return array
+     * @throws Exception
+     */
+    public function payForProduct($money,$user){
+        return $this->return;
+    }
+
 
 }

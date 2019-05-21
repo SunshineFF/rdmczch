@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/index.css">
+    <title></title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/common.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+</head>
+<body>
+<!--收藏列表开始-->
+<div class="collection_list">
+    <ul>
+        <foreach name="order_list" item="item" key="k">
+            <li>
+                <div class="collection_list_img">
+                    <form name="form_{$val.id}" action="{:U('Product/pay_again')}" method="post" >
+                        <div class="box-top">
+                            <img src="__STATIC__/img/product/{$item.thumd_img}" alt="" />
+                            <div>
+                                <h5>{$val.name}</h5>
+                                <p><span>价值：{$item.face_value}</span></p>
+                            </div>
+                        </div>
+                        <div class="box-bottom">
+                            <p><span>预付定金：{$item.price}</span></p>
+                            <p><span>赠送积分：{$item.jifen}</span></p>
+                            <input name="order_id" type="hidden" value="{$item.id}">
+                            <if condition="$item.status eq 0">
+                                <p><button type="submit">我已支付</button></p>
+                            </if>
+                            <if condition="$item.status eq 5">
+                                <p><button type="submit">请等待审核</button></p>
+                            </if>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </foreach>
+    </ul>
+    <!--查看更多开始-->
+    <!--	<div class="more">-->
+    <!--		<p>查看更多</p>-->
+    <!--	</div>-->
+    <!--查看更多结束-->
+</div>
+<!--收藏列表结束-->
+<include file="Product/footer"/>
+
+<script type="text/javascript">
+    //	$(function(){
+    //		var layer = 1;
+    //		layui.use(['layer'],function () {
+    //		    layer = layui.layer;
+    //		    layer.msg('sasa');
+    //		})
+    //	})
+</script>
+</body>
+</html>

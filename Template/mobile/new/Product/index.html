@@ -21,7 +21,7 @@
 		<tpshop sql="select * from __PREFIX__product" key="key" item='val'>
 		<li>
 			<div class="collection_list_img">
-				<form name="form_{$val.id}" action="{:U('Product/post_product')}" method="post" >
+				<form name="form_{$val.id}" action="{:U('Product/select_payment_method')}" method="post" >
 					<div class="box-top">
 						<img src="__STATIC__/img/product/{$val.thumd_img}" alt="" />
 						<div>
