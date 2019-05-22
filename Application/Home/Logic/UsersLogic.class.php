@@ -49,7 +49,7 @@ class UsersLogic extends RelationModel
      * app端登陆
      */
     public function app_login($username,$password){
-       
+
     	$result = array();
         if(!$username || !$password)
            $result= array('status'=>0,'msg'=>'请填写账号或密码');
@@ -233,7 +233,13 @@ class UsersLogic extends RelationModel
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 
-    protected function   _initParentPath(&$user){
+    /** 初始化用户路径
+     * @param $user
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _initParentPath(&$user){
         if (!$user['parent_path']){
             return;
         }
@@ -255,7 +261,7 @@ class UsersLogic extends RelationModel
      * @throws \Exception
      */
     protected function _initUserData($user){
-        if ($_POST['parent_phone'] == '18613045257'){
+        if ($_POST['zhitui_phone'] == '18613045257'){
             return $user;
         }
         $this->_initUserParent($user);
@@ -287,11 +293,34 @@ class UsersLogic extends RelationModel
             throw new \Exception('推荐人手机号填写不正确');
         }
         $user['zhitui_id'] = $zhitui['user_id'];
-        $parent = $this->getUserParent($zhitui);
+      //  $parent = $this->getUserParent($zhitui);  //双线，默认分配小区
+        $parent = $this->getUserParentNew($zhitui);  //单线只开放大区
         $user['parent'] = $parent;
         $parentId = $parent['user_id'];
         $user['parent_id'] = $parentId;
         $this->_updateZhiTuiJifen($user['zhitui_id']);
+    }
+
+    /** 根据直推账号获取推荐人
+     * @param $user
+     * @return array|false|mixed|\PDOStatement|string|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function getUserParentNew($user){
+        if ($user['parent_path']){
+            $parentArray = explode(',',$user['parent_path']);
+            //拿到关系表
+            $parent = $this->where(['user_id' => current($parentArray)])->find();
+            $allChild = unserialize($parent['all_child']);
+            $lastParent = end($allChild);
+            $parentId = current($lastParent);
+            $parent = $this->where(['user_id' => $parentId])->find();
+        }else{
+            $parent = $user;
+        }
+        return $parent;
     }
 
     /** 初始化用户的 父级路径，方便以后寻址
@@ -316,11 +345,12 @@ class UsersLogic extends RelationModel
      */
     protected function canUseParent(&$user){
         $count = M('users')->where(['parent_id' => $user['parent_id']])->count();
-        if ($count == 0){
+//        if ($count == 0){
+//            $user['user_type'] = 1;
+//            return true;
+//        }elseif($count == 1){
+       if($count == 0){
             $user['user_type'] = 1;
-            return true;
-        }elseif($count == 1){
-            $user['user_type'] = 2;
             return true;
         }
         throw new \Exception('您填写的父级已经没有位置了');

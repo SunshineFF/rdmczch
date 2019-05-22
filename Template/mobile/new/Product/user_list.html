@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/index.css">
-    <title></title>
-    <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
-    <script type="text/javascript" src="__STATIC__/js/common.js"></script>
-    <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
-</head>
-<body>
 <!--收藏列表开始-->
+<include file="Public/header"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/index.css">
+<header>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+            <div class="h-mid">我的藏品</div>
+            <div class="h-right">
+                <aside class="top_bar">
+                    <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<include file="Public/menu"/>
+
 <div class="collection_list">
     <ul>
         <foreach name="order_list" item="item" key="k">
