@@ -2,6 +2,9 @@
 
 namespace Admin\Controller;
 
+use Think\AjaxPage;
+use Think\Page;
+
 class ProductController extends BaseController {
 
     public function _initialize()
@@ -12,8 +15,48 @@ class ProductController extends BaseController {
     public function index(){
         return $this->display();
     }
+    /**
+     *  ajax 获取订单列表
+     */
+    public function ajax_index(){
+        $condition = $this->initParams();
+        $model = M('product_order');
+        $count = $model->where($condition)->count();
+        $Page  = new AjaxPage($count,10);
+        //  搜索条件下 分页赋值
+        foreach($condition as $key=>$val) {
+            $Page->parameter[$key]   =   urlencode($val);
+        }
+        $orderList = $model->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $show = $Page->show();
+        $this->assign('orderList',$orderList);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
 
-    public function ajax_get_table(){
+    public function detail(){
+        $orderId = I('order_id');
+    }
 
+    /** 初始化参数
+     * @return array|void
+     */
+    protected function initParams(){
+        $condition = [];
+        I('product_name') ? $condition['product_name'] = array("like","%".I('product_name')."%") : false;
+        I('order_id') ? $condition['order_id'] = I('order_id') : false;
+        I('order_id') ? $condition['status'] = I('pay_status') : false;
+        I('order_id') ? $condition['pay_method'] = I('pay_method') : false;
+        $this->getConditionTime($condition);
+        return $condition;
+    }
+
+    protected function getConditionTime(&$condition){
+        $time = I('time');
+        if ($time){
+            $time = explode('-',$time);
+            $condition['created_at'] = array('gt' => strtotime(trim($time[0])));
+            $condition['updated_at'] = array('lt' => strtotime(trim($time[1])));
+        }
     }
 }

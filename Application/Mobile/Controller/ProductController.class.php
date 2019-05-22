@@ -75,11 +75,26 @@ class ProductController extends MobileBaseController
     public function select_payment_method(){
         try{
             $product = $this->getProductData(I('product_id'));
+            $this->checkUserHasProduct($product['id']);
             $this->assign('product',$product);
         }catch (\Exception $exception){
             $this->error($exception->getMessage());
         }
         $this->display();
+    }
+
+    /**
+     * @param $productId
+     * @throws \Exception
+     */
+    protected function checkUserHasProduct($productId){
+        $condition = [];
+        $condition['user_id'] = $this->user_id;
+        $condition['product_id'] = $productId;
+        $data = M('product_order')->where($condition)->find();
+        if ($data){
+            throw new \Exception('您已经收藏了这个藏品，不能重复收藏');
+        }
     }
 
     /** 初始化订单数据

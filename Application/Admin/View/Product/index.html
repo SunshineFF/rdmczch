@@ -14,7 +14,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="navbar navbar-default">
-                        <form action="{:U('Admin/order/export_order')}" id="search-form2" class="navbar-form form-inline" method="post">
+                        <form action="{:U('Admin/product/ajax_index')}" id="search-form2" class="navbar-form form-inline" method="post"  onsubmit="return false">
                             <div class="form-group">
                                 <label class="control-label" for="input-order-id">藏品</label>
                                 <div class="input-group">
@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label class="control-label" for="input-date-added">下单日期</label>
                                 <div class="input-group">
-                                    <input type="text" name="timegap" value="{$timegap}" placeholder="下单日期"  id="add_time" class="input-sm">
+                                    <input type="text" name="time" value="{$timegap}" placeholder="下单日期"  id="add_time" class="input-sm">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -41,7 +41,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select name="pay_code" class="input-sm" style="width:100px;">
+                                <select name="pay_method" class="input-sm" style="width:100px;">
                                     <option value="">支付方式</option>
                                     <option value="yue">余额支付</option>
                                     <option value="xianxia">线下支付</option>
@@ -98,7 +98,7 @@
         cur_page = page; //当前页面 保存为全局变量
         $.ajax({
             type : "POST",
-            url:"/index.php/Admin/product/ajaxindex/p/"+page,//+tab,
+            url:"/index.php/Admin/product/ajax_index/p/"+page,//+tab,
             data : $('#'+tab).serialize(),// 你的formid
             success: function(data){
                 $("#ajax_return").html('');
