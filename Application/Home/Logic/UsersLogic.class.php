@@ -261,7 +261,7 @@ class UsersLogic extends RelationModel
      * @throws \Exception
      */
     protected function _initUserData($user){
-        if ($_POST['zhitui_phone'] == '18613045257'){
+        if ($_POST['invite_code'] == '18613045257'){
             return $user;
         }
         $this->_initUserParent($user);
@@ -288,7 +288,7 @@ class UsersLogic extends RelationModel
      * @throws \Exception
      */
     protected function _initUserParent(&$user){
-        $zhitui = $this->where(['mobile' => $_POST['zhitui_phone']])->find();
+        $zhitui = $this->where(['invite_code' => $_POST['invite_code']])->find();
         if (!$zhitui){
             throw new \Exception('推荐人手机号填写不正确');
         }
@@ -1357,5 +1357,43 @@ class UsersLogic extends RelationModel
         }
         $parent = $this->where(['user_id' => $current])->find();
         return $parent;
+    }
+
+
+    /** 用户转账
+     * @param $user
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function zhuanZhang($user){
+        $toMoney = I('money');
+        $toUserName = I('username');
+        if ($toMoney > $user['user_money']){
+            return ['status' => -1,'msg'=>'您的余额只有'.$user['user_money'].'请充值或者减少转账额度'];
+        }
+        $toUser = $this->where(['mobile' => $toUserName])->find();
+        if ($toUserName == $user['mobile']){
+            return ['status' => -1,'msg'=>'您不能转账给自己'];
+        }
+        if ($toUser){
+            return ['status' => -1,'msg'=>'目标账户不存在'];
+        }
+        try{
+            $this->startTrans();
+            $user['user_money'] = $user['user_money'] - $toMoney;
+            $toUser['user_money'] = $toUser['user_money'] + $toMoney;
+            $this->where(['user_id' => $user['user_id']])->save($user);
+            $this->where(['user_id' => $toUser['user_id']])->save($toUser);
+            accountLogOnly($user['user_id'],$toMoney,'转账给'.$toUserName.':'.$toMoney);
+            accountLogOnly($toUser['user_id'],$toMoney,'收到'.$user['mobile'].'的转账：'.$toMoney);
+            $this->commit();
+            return ['status' => 1,'msg'=>'转账成功'];
+        }catch (\Exception $exception){
+            $this->rollback();
+            \Think\Log::write($exception->getMessage().$exception->getTraceAsString(),'WARN');
+            return ['status' => -1,'msg'=>'转账失败，请联系技术人员'];
+        }
     }
 }

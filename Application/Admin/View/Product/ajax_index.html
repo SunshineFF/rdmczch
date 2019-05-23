@@ -40,6 +40,9 @@
                         <if condition="$list['status'] eq 0">
                             未付款
                         </if>
+                        <if condition="$list['status'] eq 5">
+                            待审核
+                        </if>
                         <if condition="$list['status'] eq 1">
                             已付款
                         </if>
@@ -55,7 +58,7 @@
                         </if></td>
                     <td class="text-left">{:date('Y-m-d H:i',$list['created_at'])}</td>
                     <td class="text-right">
-                        <a href="{:U('Admin/product/detail',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                        <a href="{:U('Admin/product/detail',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
                     </td>
                 </tr>
             </volist>

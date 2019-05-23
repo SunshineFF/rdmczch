@@ -147,12 +147,17 @@ class ProductController extends MobileBaseController
     }
 
     public function user_list(){
-        $sql = "select * from __PREFIX__product_order o left join __PREFIX__product p on p.id = o.product_id
+        $sql = "select o.*,p.name,p.thumd_img,p.face_value,p.price,p.jifen from __PREFIX__product_order o left join __PREFIX__product p on p.id = o.product_id
  where o.user_id=".$this->user_id;
         $orderList = M('product_order')->query($sql);
         $this->assign('order_list',$orderList);
         return $this->display();
     }
 
+    public function pay_again(){
+        $orderId = I('order_id');
+        M('product_order')->where(['id' =>$orderId])->save(['status' => 5]);
+        $this->success('已提交支付审核，我们会尽快核实！',U('user_list'));
+    }
 
 }

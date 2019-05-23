@@ -1,0 +1,41 @@
+<include file="Public/header"/>
+<body>
+<header>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+            <div class="h-mid">转账</div>
+            <div class="h-right">
+                <aside class="top_bar">
+                    <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<include file="Public/menu"/>
+<div id="tbh5v0">
+    <div style="background:#fff;">
+        <div class="money-wrap">
+            <div class="user_login_title"><h2><em>账户余额</em><span>￥{$user['user_money']}元</span></h2></div>
+            <form class="tou-zi-form" method="post" action="">
+                <div class="wrap">
+                    <span>转账金额：</span><input required name="money" type="number"/>
+                    <span>目标账户：</span><input required name="username" type="text"/>
+                </div>
+                <button type="submit">确认转账</button>
+            </form>
+        </div>
+
+    </div>
+    <a href="javascript:goTop();" class="gotop"><img src="__STATIC__/images/topup.png"></a>
+</div>
+<include file="Public/footer"/>
+<include file="Public/footer_nav"/>
+<script type="text/javascript">
+    function goTop(){
+        $('html,body').animate({'scrollTop':0},600);
+    }
+</script>
+</body>
+</html>

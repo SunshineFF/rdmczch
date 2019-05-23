@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use Think\AjaxPage;
 use Think\Page;
+use Home\Logic\UsersLogic;
 
 class ProductController extends BaseController {
 
@@ -34,8 +35,51 @@ class ProductController extends BaseController {
         $this->display();
     }
 
+    /** 审核订单
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function detail(){
-        $orderId = I('order_id');
+        $orderId = I('id');
+        if(!$orderId){
+            $this->error('错误的参数',U('Admin/Product/index'));
+        }
+        if ($_POST){
+            $status = I('status');
+            $statusArray = [
+                0 => "未支付",
+                1 => "已支付",
+                5 => "待审核",
+            ];
+            if ($status != 1){
+                $this->success('订单状态未改变',U('Admin/Product/index'));
+                exit;
+            }
+
+            $userLogic = new UsersLogic();
+            try{
+                $order = M('order')->where(['id' => $orderId])->find();  //支付逻辑
+                $money = $order['total'];
+                $user = $userLogic->where(['user_id' => $order['user_id']])->find();
+                $userLogic->startTrans();
+                $user['tou_zi'] = $user['tou_zi'] + $money;
+                $userLogic->save($user);
+                $userLogic->updateZhiTui($user,$money);
+                accountLogOnly($user['user_id'],$money,'用户购买藏品，线下支付');
+                $userLogic->commit();
+            }catch (\Exception $exception){
+                $userLogic->rollback();
+                $this->success($exception->getMessage(),U('Admin/Product/index'));
+                exit;
+            }
+            M('product_order')->where(['id' => $orderId])->save(['status' => $status]);
+            $this->success('审核订单成功，修改订单状态为'.$statusArray[$status],U('Admin/Product/index'));
+            exit;
+        }
+        $order = M('product_order')->where(['id'=>$orderId])->find();
+        $this->assign('order',$order);
+        $this->display();
     }
 
     /** 初始化参数
@@ -45,8 +89,8 @@ class ProductController extends BaseController {
         $condition = [];
         I('product_name') ? $condition['product_name'] = array("like","%".I('product_name')."%") : false;
         I('order_id') ? $condition['order_id'] = I('order_id') : false;
-        I('order_id') ? $condition['status'] = I('pay_status') : false;
-        I('order_id') ? $condition['pay_method'] = I('pay_method') : false;
+        I('pay_status') ? $condition['status'] = I('pay_status') : false;
+        I('pay_method') ? $condition['pay_method'] = I('pay_method') : false;
         $this->getConditionTime($condition);
         return $condition;
     }
