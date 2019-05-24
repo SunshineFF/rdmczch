@@ -960,7 +960,7 @@ class UsersLogic extends RelationModel
      * @param $userId
      * @return array|bool
      */
-    protected function getRule($type,$userId){
+    public function getRule($type,$userId){
         $touzi = $this->where(['user_id' => $userId])->field('tou_zi')->find();
         $touzi = (int)$touzi['tou_zi'];
         $rule = [
