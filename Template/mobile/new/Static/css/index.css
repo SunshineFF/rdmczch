@@ -1,62 +1,70 @@
 body{
     background-color: #efefef;
 }
+a{
+    overflow: hidden;
+}
 /*头部开始*/
 .head{
- width: 100%;
- height: 2rem;
- line-height: 2rem;
- background: #32d2b0;
- padding: 0 0.5rem;
- box-sizing: border-box;
- text-align: center;
+    width: 100%;
+    height: 2.5rem;
+    line-height: 2rem;
+    background: #32d2b0;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+    text-align: center;
 }
 .head i{
- font-size: 1.3rem;
+    font-size: 1.4rem;
+    margin-top: 0.3rem;
 }
 .txt{
- width: 83%;
- height: 60%;
- border-radius: 1rem;
- background: #FFFFFF;
- margin-left: 0.5rem;
- margin-top: 2%;
+    width: 85%;
+    height: 70%;
+    border-radius: 0.3rem;
+    background: #FFFFFF;
+    margin-left: 0.5rem;
+    margin-top: 0.4rem;
 }
 .txt input[type='text']{
- width: 85%;
- height: 80%;
- float: left;
- margin-left: 1rem;
- margin-top: 1%;
- font-size: 1rem;
- outline: none;
- text-align: center;
- border: none;
+    width: 95%;
+    height: 80%;
+    float: left;
+    margin-left: 0.5rem;
+    margin-top: 0.5%;
+    font-size: 0.8rem;
+    outline: none;
+    text-align: center;
+    border: none;
 }
 .txt i{
- height: 100%;
- line-height: 100%;
- margin-right: 1rem;
- font-size: 3rem;
- padding-top: 1.5%;
- box-sizing: border-box;
+    height: 100%;
+    line-height: 100%;
+    margin-right: 1rem;
+    font-size: 1rem;
+    padding-top: 0.5%;
+    box-sizing: border-box;
+}
+.txt i:before{
+    color: #000000;
 }
 /*头部结束*/
 .fl{
- float: left;
+    float: left;
 }
 .fr{
- float: right;
+    float: right;
 }
 .content{
     width: 100%;
     padding: 0 0.2rem;
     box-sizing: border-box;
+    margin-bottom: 4rem;
 }
 /*轮播图开始*/
 .banner{
     width: 100%;
-    height: 13rem;
+    height: 15rem;
     border-radius: 0.8rem;
 }
 .banner img{
@@ -69,7 +77,7 @@ body{
 .factory{
     width: 100%;
     overflow: hidden;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     border-radius: 0.8rem;
     background: #ffffff;
 }
@@ -82,20 +90,17 @@ body{
 .factory li{
     float: left;
     width: 45%;
-    float: left;
-    margin-right: 2rem;
+    margin-left: 5%;
     margin-bottom: 1rem;
-}
-.factory li:nth-child(even){
-    margin: 0;
 }
 .factory li img{
     width: 80%;
 }
 .factory .price{
-    width: 55%;
+    width: 100%;
     overflow: hidden;
 }
+.factory .price .price_left{width: 55%;overflow: hidden;float: left}
 .factory .price .price_left span{
     width: 100%;
     background: #ff2e00;
@@ -108,12 +113,214 @@ body{
 }
 .factory .price .price_left b{
     float: left;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     line-height: 1.3rem;
+    color: #000;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 .factory .price .price_left i{
     float: left;
     font-size: 0.8rem;
     line-height: 1.3rem;
 }
+.factory .price .price_right{
+    width: 3.5rem;
+    padding: 1.2rem 0;
+    font-size: 0.5rem;
+    background: #ff2e00;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 5rem;
+    float: left;
+    margin-left: 5%;
+}
 /*工厂直销结束*/
+
+/*群主店铺开始*/
+.shop{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 0.8rem;
+    border-radius: 0.8rem;
+    background: #ffffff;
+}
+.shop .shop_title{
+    width: 100%;
+    overflow: hidden;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+.shop .shop_img{
+    width: 100%;
+    padding-left: 0.3rem;
+    overflow: hidden;
+}
+.shop .shop_img li{
+    width: 23%;
+    margin-right: 0.4rem;
+    float: left;
+    margin-bottom: 0.5rem;
+}
+.shop .shop_title li img{
+    width: 100%;
+}
+/*群主店铺结束*/
+
+/*积分商城图片开始*/
+.integral_img{
+    width: 100%;
+    height: 11rem;
+    margin-top: 1rem;
+}
+.integral_img img{
+    width: 100%;
+    height: 100%;
+}
+/*积分商城图片结束*/
+
+/*积分兑换开始*/
+.exchange{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 0.8rem;
+    border-radius: 0.8rem;
+    background: #ffffff;
+    padding-bottom: 1rem;
+}
+.exchange_title{
+    width: 100%;
+    overflow: hidden;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+.exchange li{
+    width: 45%;
+    overflow: hidden;
+    float: left;
+    margin-left: 2rem;
+}
+.exchange li:nth-of-type(odd){
+    margin: 0;
+}
+.exchange li img{
+    width: 80%;
+    margin-left: 1rem;
+}
+.exchange .exchange_left{
+    width: 45%;
+    overflow: hidden;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+.exchange .exchange_left span{
+    width: 100%;
+    height: 1.5rem;
+    text-align: center;
+    line-height: 1.5rem;
+    background: #ff2e00;
+    color: #ffffff;
+    border-radius: 0 0.5rem 0 0;
+    font-size: 0.5rem;
+    display: block;
+}
+.exchange .exchange_left b{
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #000000;
+    font-size: 0.5rem;
+    margin-top: 0.2rem;
+}
+.exchange .exchange_right{
+    width: 25.5%;
+    padding: 1rem 0;
+    font-size: 0.5rem;
+    border-radius: 2rem;
+    background: #ff2e00;
+    color: #ffffff;
+    text-align: center;
+    margin-left: 0.8rem;
+}
+/*积分兑换结束*/
+
+/*新品预售开始*/
+.news{
+    width: 100%;
+    height: 11rem;
+    margin-top: 1rem;
+}
+.news img{
+    width: 100%;
+    height: 100%;
+}
+/*新品预售结束*/
+
+/*新品预售开始*/
+.pre_sale{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 0.8rem;
+    border-radius: 0.8rem;
+    background: #ffffff;
+    padding-bottom: 1rem;
+}
+.pre_sale_title{
+    width: 100%;
+    overflow: hidden;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+.pre_sale li{
+    width: 25%;
+    overflow: hidden;
+    float: left;
+    text-align: center;
+    color: #000000;
+}
+.pre_sale li img{
+    width: 80%;
+    margin: 0 auto;
+}
+.pre_sale li span{
+    display: block;
+    width: 80%;
+    font-size: 0.5rem;
+    line-height: 1.3rem;
+    background: #ff2e00;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 0.3rem;
+}
+/*新品预售结束*/
+
+/*搜索子页面*/
+.search_hide { display: none;max-width: 640px;min-width: 320px; }
+.search_hide .search_body { width:100%; overflow:hidden; border-bottom:1px solid #e5e5e5; border-top:1px solid #e5e5e5;background:#F8F8F8; padding-top:5px; padding-bottom:5px;}
+.search_hide h2{ width:100%; height:40px; text-align:center; font-size:18px; color:#ffffff; font-weight:normal; line-height:40px; border-bottom:1px solid #eeeeee; position:relative;background: #32d2b0}
+.close{ position:absolute; display:block; width:20px; height:40px; right:10px; bottom:0px;font-size:14px; line-height:40px; color:#999; text-align:center}
+.close img{ display:inline-block; width:18px; height:18px; margin-right:5px; margin-top:-3px;}
+/*搜索子页面*/
+
+/*搜索 start*/
+.search_mid{ width:95%; margin:auto; overflow:hidden;margin-top:20px; margin-bottom:10px;}
+.search_mid ul{ width:100%; overflow:hidden;background-color: #fff;}
+.search_mid ul li {cursor: pointer;float: left;height:30px;line-height: 25px;text-align: center;width:70px; font-size:14px; line-height:30px; text-align:center; color:#333;}
+
+.search-type .cur,.search_mid ul li.cur{background:#32d2b0;color:#fff;}
+.searchdotm{ width:100%; overflow:hidden;}
+
+.mallSearch-input {width:99%; border:2px solid #909090; height:35px;float:left; overflow:hidden; margin:auto; position:relative  }
+.mallSearch-input .s-combobox-input{ display:block; width:100%; height:15px; font-size:14px; line-height:25px;color:#999;  -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; border:0; padding-top:10px; padding-bottom:10px; padding-left:10px}
+.mallSearch-input .button{ position:absolute; display:block; width:30px; height:30px; right:2px; bottom:3px; background:url(../images/search.png) no-repeat center center; border:0px;}
+
+.mix_recently_search { width:100%; overflow:hidden; padding-bottom:10px;padding-bottom:20px;}
+.mix_recently_search h3 { font-size: 14px; font-weight: normal; padding-left: 30px; height:40px; line-height:40px; background-size: 18px 18px; color:#333;}
+.mix_recently_search ul {width:90%; overflow:hidden; margin:auto }
+.mix_recently_search ul li { border: 1px solid #ccc; height:30px; position: relative; float:left; border-radius:4px; margin-right:10px; margin-bottom:10px;  }
+.mix_recently_search ul li a { display: block;font-size:14px; line-height:30px; color:#666; text-align:center; padding-left:10px; padding-right:10px; }
+.mix_recently_search .recently_search_null { text-align: center; line-height: 120px;font-size:14px;color:#666;}

@@ -8,28 +8,30 @@
 <meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
 <meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/index.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/icon/iconfont.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css"/>
 <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
 <script type="text/javascript" src="__STATIC__/js/TouchSlide.1.1.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
 <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+<script type="text/javascript" src="__STATIC__/js/size.js" ></script>
 <script src="__PUBLIC__/js/global.js"></script>
 <script src="__PUBLIC__/js/mobile_common.js"></script>
 
 </head>
 <body>
+<div class="con">
 <!--头部开始-->
 
 <div class="head">
-    <i class="iconshouye  fl"></i>
-    <div id="fake-search" class="txt fl">
-        <input type="text" id="search_text placeholder="请输入关键字进行搜索"/>
-        <i class="iconsousuo fr"></i>
+    <a href="{:U('Index/index')}"><i class="iconshouye  fl"></i></a>
+    <div class="txt fl">
+        <input type="text" id="search_text" class="search_text" placeholder="请输入关键字进行搜索"/>
+<!--        <i class="iconsousuo fr"></i>-->
     </div>
-    <i class="iconai-cart  fr"></i>
+    <a href="{:U('Cart/cart')}"><i class="iconai-cart  fr"></i></a>
 </div>
 <!--头部结束-->
 <div class="content">
@@ -43,33 +45,225 @@
     <!--工厂直销开始-->
     <div class="factory">
         <div class="factory_title">
-            <b class="fl" style="font-size: 1rem">工厂直销</b>
-            <span class="fr" style="font-size: 1rem;color: #6d6d6d;">更多 <i class="icongengduo"></i></span>
+            <b class="fl" style="font-size: 1rem;color: #000000">工厂直销</b>
+<!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
         </div>
         <ul>
             <li>
-                <img src="__STATIC__/img/index/TB216vSckfb_uJkHFCcXXXagFXa_!!2378385867@2x.png" alt="">
+                <a href="{:U('Goods/goodsInfo?id=201')}">
+                    <img src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" alt="">
+                    <div class="price">
+                        <div class="price_left">
+                            <span>￥14+12积分</span>
+                            <b>安之清纯沐浴露1008ml</b>
+                            <i style="color: #ff2e00;padding: 0 0.5rem">￥14</i><i style="color: #a7a7a7; text-decoration:line-through;">￥26</i>
+                        </div>
+                        <div class="price_right">
+                            <p>立即购买</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{:U('Goods/goodsInfo?id=195')}">
+                    <img src="__STATIC__/img/index/9b787593b9e5af35b8eeb89d3b0adf5.jpg" alt="">
+                    <div class="price">
+                        <div class="price_left">
+                            <span>￥60+30积分</span>
+                            <b>晓膳铁棍山药粉（30条罐装）</b>
+                            <i style="color: #ff2e00;padding: 0 0.5rem">￥60</i><i style="color: #a7a7a7; text-decoration:line-through;">￥98</i>
+                        </div>
+                        <div class="price_right">
+                            <p>立即购买</p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{:U('Goods/goodsInfo?id=168')}">
+                <img src="__STATIC__/img/index/20190524182222.jpg" alt="">
                 <div class="price">
                     <div class="price_left">
-                        <span>￥68+400积分</span>
-                        <b>阿斯顿破壁机</b>
-                        <i style="color: #ff2e00;padding: 0 0.5rem">￥68</i><i style="color: #a7a7a7; text-decoration:line-through;">￥468</i>
+                        <span>￥18+50积分</span>
+                        <b>威帮洗衣液1L</b>
+                        <i style="color: #ff2e00;padding: 0 0.5rem">￥18</i><i style="color: #a7a7a7; text-decoration:line-through;">￥75</i>
+                    </div>
+                    <div class="price_right">
+                        <p>立即购买</p>
                     </div>
                 </div>
+                </a>
             </li>
             <li>
-                <img src="__STATIC__/img/index/TB216vSckfb_uJkHFCcXXXagFXa_!!2378385867@2x.png" alt="">
-            </li>
-            <li>
-                <img src="__STATIC__/img/index/TB216vSckfb_uJkHFCcXXXagFXa_!!2378385867@2x.png" alt="">
-            </li>
-            <li>
-                <img src="__STATIC__/img/index/TB216vSckfb_uJkHFCcXXXagFXa_!!2378385867@2x.png" alt="">
+                <a href="{:U('Goods/goodsInfo?id=189')}">
+                    <img src="__STATIC__/img/index/20190524182003.jpg" alt="">
+                    <div class="price">
+                        <div class="price_left">
+                            <span>￥59+30积分</span>
+                            <b>好夫人多功能电煮锅1.6L</b>
+                            <i style="color: #ff2e00;padding: 0 0.5rem">￥59</i><i style="color: #a7a7a7; text-decoration:line-through;">￥90</i>
+                        </div>
+                        <div class="price_right">
+                            <p>立即购买</p>
+                        </div>
+                    </div>
+                </a>
             </li>
         </ul>
     </div>
     <!--工厂直销结束-->
+
+<!--    群主店铺开始-->
+<!--    <div class="shop">-->
+<!--        <div class="shop_title">-->
+<!--            <b class="fl" style="font-size: 1rem;color: #000000">群主店铺</b>-->
+<!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>-->
+<!--        </div>-->
+<!--        <div class="shop_img">-->
+<!--            <div class="main fl" style="width: 48%;margin-right: 0.3rem"><img src="__STATIC__/img/index/timg13@2x.png"></div>-->
+<!--            <ul>-->
+<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/timg5@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/12@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/timg2@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    群主店铺结束-->
+
+<!--&lt;!&ndash;积分商城图片开始&ndash;&gt;-->
+<!--<div class="integral_img"><img src="__STATIC__/img/index/20190524114929.png" alt=""></div>-->
+<!--&lt;!&ndash;积分商城图片结束&ndash;&gt;-->
+
+<!--&lt;!&ndash;    积分兑换开始&ndash;&gt;-->
+<!--<div class="exchange">-->
+<!--    <div class="exchange_title">-->
+<!--        <b class="fl" style="font-size: 1rem;color: #000000">积分兑换</b>-->
+<!--        <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
+<!--    </div>-->
+<!--    <ul>-->
+<!--        <li>-->
+<!--            <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
+<!--            <div class="exchange_left fl">-->
+<!--                <span>3000积分</span>-->
+<!--                <b>麦特来XO</b>-->
+<!--            </div>-->
+<!--            <div class="exchange_right fl">立即兑换</div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <img src="__STATIC__/img/index/20190524105323.png" alt="">-->
+<!--            <div class="exchange_left fl">-->
+<!--                <span>3000积分</span>-->
+<!--                <b>麦特来XO</b>-->
+<!--            </div>-->
+<!--            <div class="exchange_right fl">立即兑换</div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <img src="__STATIC__/img/index/20190524105328.png" alt="">-->
+<!--            <div class="exchange_left fl">-->
+<!--                <span>3000积分</span>-->
+<!--                <b>麦特来XO</b>-->
+<!--            </div>-->
+<!--            <div class="exchange_right fl">立即兑换</div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <img src="__STATIC__/img/index/20190524105330.png" alt="">-->
+<!--            <div class="exchange_left fl">-->
+<!--                <span>3000积分</span>-->
+<!--                <b>麦特来XO</b>-->
+<!--            </div>-->
+<!--            <div class="exchange_right fl">立即兑换</div>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--&lt;!&ndash;    积分兑换结束&ndash;&gt;-->
+<!--&lt;!&ndash;新品预售开始&ndash;&gt;-->
+<!--    <div class="integral_img"><img src="__STATIC__/img/index/20190524114933.png" alt=""></div>-->
+<!--&lt;!&ndash;新品预售结束&ndash;&gt;-->
+
+<!--&lt;!&ndash;新品预售开始&ndash;&gt;-->
+<!--    <div class="pre_sale">-->
+<!--        <div class="pre_sale_title">-->
+<!--            <b class="fl" style="font-size: 1rem;color: #000000">新品预售</b>-->
+<!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
+<!--        </div>-->
+<!--        <ul>-->
+<!--            <li>-->
+<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
+<!--                <p>尼奥智能机器人</p>-->
+<!--                <p style="color: #ff2e00">￥128</p>-->
+<!--                <span>点击预售</span>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
+<!--                <p>尼奥智能机器人</p>-->
+<!--                <p style="color: #ff2e00">￥128</p>-->
+<!--                <span>点击预售</span>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
+<!--                <p>尼奥智能机器人</p>-->
+<!--                <p style="color: #ff2e00">￥128</p>-->
+<!--                <span>点击预售</span>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
+<!--                <p>尼奥智能机器人</p>-->
+<!--                <p style="color: #ff2e00">￥128</p>-->
+<!--                <span>点击预售</span>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--新品预售结束-->
 </div>
+</div>
+<!--搜索子页面-->
+<div id="search_hide" class="search_hide">
+    <h2> <span class="close"><img src="__STATIC__/images/close.png"></span>关键搜索</h2>
+    <div id="mallSearch" class="search_mid">
+        <div id="search_tips" style="display:none;"></div>
+        <ul class="search-type">
+            <li  class="cur"  num="0">宝贝</li>
+            <li  num="1">店铺</li>
+        </ul>
+        <div class="searchdotm">
+            <form class="set_ip"name="sourch_form" id="sourch_form" method="post" action="{:U('Goods/search')}">
+                <div class="mallSearch-input">
+                    <div id="s-combobox-135">
+                        <input class="s-combobox-input" name="q" id="q"  placeholder="请输入关键词"  type="text" value="<?php echo I('q'); ?>" />
+                    </div>
+                    <input type="button" value="" class="button"  onclick="if($.trim($('#q').val()) != '') $('#sourch_form').submit();" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--
+   <div class="search_body">
+   <div class="search_box">
+   <form action="search.php" method="post" id="searchForm" name="searchForm">
+   <div>
+   <select id='search_type' name="search_type" style="width:15%;">
+       <option value='search'>宝贝</option>
+       <option value='stores'>店铺</option>
+   </select>
+        <input class="text" type="search" name="keywords" id="keywordBox" autofocus>
+        <button type="submit" value="搜 索" ></button>
+   </div>
+   </form>
+   </div>
+   </div>
+  -->
+    <section class="mix_recently_search"><h3>热门搜索</h3>
+        <ul>
+            <foreach name="tpshop_config.hot_keywords" item="wd" key="k">
+                <li><a href="{:U('Goods/search',array('q'=>$wd))}" <if condition="$k eq 0">class="ht"</if>>{$wd}</a></li>
+            </foreach>
+        </ul>
+    </section>
+</div>
+<!--搜索子页面-->
 <script>
 /*
 var Tday = new Array();
@@ -174,7 +368,7 @@ function goTop(){
 <script type="text/javascript">
 $(function() {
     $('#search_text').click(function(){
-        $(".showpage").children('div').hide();
+        $(".con").hide();
         $("#search_hide").css('position','fixed').css('top','0px').css('width','100%').css('z-index','999').show();
     })
     $('#get_search_box').click(function(){
@@ -182,8 +376,9 @@ $(function() {
         $("#search_hide").css('position','fixed').css('top','0px').css('width','100%').css('z-index','999').show();
     })
     $("#search_hide .close").click(function(){
-        $(".showpage").children('div').show();
+        $(".con").show();
         $("#search_hide").hide();
+        $("body").css("background-color","#e8e6e6");
     })
 });
 </script>

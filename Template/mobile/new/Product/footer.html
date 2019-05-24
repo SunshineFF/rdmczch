@@ -18,9 +18,10 @@
 			<i class="iconshejiao"></i>
 			<p>社交</p>
 		</li>
-		<li>
+		<li style="position: relative;">
 			<a href="{:U('Cart/cart')}">
 				<i class="iconai-cart"></i>
+				<em class="global-nav__nav-shop-cart-num" id="cart_quantity" style="right:9px;"></em>
 				<p>购物车</p>
 			</a>
 		</li>
@@ -32,3 +33,21 @@
 		</li>
 	</ul>
 </div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var cart_cn = getCookie('cn');
+		if(cart_cn == ''){
+			$.ajax({
+				type : "GET",
+				url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+				success: function(data){
+					cart_cn = getCookie('cn');
+					$('#cart_quantity').html(cart_cn);
+				}
+			});
+		}
+		$('#cart_quantity').html(cart_cn);
+	});
+</script>
