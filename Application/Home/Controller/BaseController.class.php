@@ -50,7 +50,7 @@ class BaseController extends Controller {
        $this->assign('goods_category_tree', $goods_category_tree);                     
        $brand_list = M('brand')->cache(true,TPSHOP_CACHE_TIME)->field('id,cat_id1,logo,is_hot')->where("cat_id1>0")->select();              
        $this->assign('brand_list', $brand_list);
-       $this->assign('tpshop_config', $tpshop_config);          
+       $this->assign('tpshop_config', $tpshop_config);
     }  
 
 }

@@ -139,5 +139,6 @@ a:link,a:active,a:visited,a:hover {
     display: none;
 }
 
-
+.header a.sb-back{background: url(../../images/category/arrow_left.png) no-repeat 15px center;
+    background-size: auto 16px;}
 /* 附加 */

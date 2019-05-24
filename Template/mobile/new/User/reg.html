@@ -18,7 +18,7 @@
 </head>
 <body>
 <header id="header" class='header'>
-	<div class="h-left"><a href="javascript:history.back(-1)" class="back"></a></div>
+	<div class="h-left"><a href="{:U('Mobile/index/index')}" class="back"></a></div>
     <div class="h-mid">用户注册</div>
 </header>
 <div id="tbh5v0">
@@ -27,19 +27,19 @@
 			<div class="log_reg_item" id="phonearea">
 				<form action="" id="mobileForm" name="mobileForm" method="post"  onsubmit="return check_submit()">
 						<div class="field phone">
-							<input type="text" id="username" name="username" placeholder="手机号" class="c-form-txt-normal" onBlur="checkMobilePhone(this.value);" />
+							<input type="text" required id="username" name="username" placeholder="手机号" class="c-form-txt-normal" onBlur="checkMobilePhone(this.value);" />
 							<div class="tips">
 								<span id="mobile_phone_notice"></span>
 							</div>
 						</div>
 						<div class="field pwd">
-							<input type="password" id="password" name="password" placeholder="密码" class="c-form-txt-normal" onBlur="check_password(this.value);" />
+							<input type="password" required name="password" placeholder="密码" class="c-form-txt-normal" onBlur="check_password(this.value);" />
 							<div class="tips">
 								<span id="password_notice"></span>
 							</div>
 						</div>
 						<div class="field pwd">
-							<input type="password" id="password2" name="password2" placeholder="确认密码" class="c-form-txt-normal" onBlur="check_confirm_password(this.value);" />
+							<input type="password" required name="password2" placeholder="确认密码" class="c-form-txt-normal" onBlur="check_confirm_password(this.value);" />
 							<div class="tips">
 								<span id="confirm_password_notice"></span>
 							</div>
@@ -48,11 +48,11 @@
 <!--							<input type="text" name="parent_phone" placeholder="上级手机号" class="c-form-txt-normal" required />-->
 <!--						</div>-->
 						<div class="field pwd">
-							<input type="text" name="zhitui_phone" placeholder="邀请人手机号" class="c-form-txt-normal" />
+							<input type="text" name="invite_code" value="{$invite_code}" placeholder="邀请码" class="c-form-txt-normal" />
 						</div>
 						<div class="yanzheng"  style=" margin-top:0px;">
                               <div class="codeTxt">
-								<input type="text" id="mobile_code"  name="mobile_code" placeholder="手机验证码" />
+								<input type="text" id="mobile_code" required  name="mobile_code" placeholder="手机验证码" />
                               </div>
                                <div class="codePhoto">
 								<input id="zphone" type="button" rel="mobile" value="获取手机验证码 " onClick="sendcode(this)" class="zphone" style=" color:#FFF">

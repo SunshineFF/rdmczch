@@ -49,7 +49,7 @@ class UsersLogic extends RelationModel
      * app端登陆
      */
     public function app_login($username,$password){
-       
+
     	$result = array();
         if(!$username || !$password)
            $result= array('status'=>0,'msg'=>'请填写账号或密码');
@@ -233,7 +233,13 @@ class UsersLogic extends RelationModel
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 
-    protected function   _initParentPath(&$user){
+    /** 初始化用户路径
+     * @param $user
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _initParentPath(&$user){
         if (!$user['parent_path']){
             return;
         }
@@ -255,7 +261,7 @@ class UsersLogic extends RelationModel
      * @throws \Exception
      */
     protected function _initUserData($user){
-        if ($_POST['parent_phone'] == '18613045257'){
+        if ($_POST['invite_code'] == '18613045257'){
             return $user;
         }
         $this->_initUserParent($user);
@@ -282,16 +288,39 @@ class UsersLogic extends RelationModel
      * @throws \Exception
      */
     protected function _initUserParent(&$user){
-        $zhitui = $this->where(['mobile' => $_POST['zhitui_phone']])->find();
+        $zhitui = $this->where(['invite_code' => $_POST['invite_code']])->find();
         if (!$zhitui){
             throw new \Exception('推荐人手机号填写不正确');
         }
         $user['zhitui_id'] = $zhitui['user_id'];
-        $parent = $this->getUserParent($zhitui);
+      //  $parent = $this->getUserParent($zhitui);  //双线，默认分配小区
+        $parent = $this->getUserParentNew($zhitui);  //单线只开放大区
         $user['parent'] = $parent;
         $parentId = $parent['user_id'];
         $user['parent_id'] = $parentId;
         $this->_updateZhiTuiJifen($user['zhitui_id']);
+    }
+
+    /** 根据直推账号获取推荐人
+     * @param $user
+     * @return array|false|mixed|\PDOStatement|string|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function getUserParentNew($user){
+        if ($user['parent_path']){
+            $parentArray = explode(',',$user['parent_path']);
+            //拿到关系表
+            $parent = $this->where(['user_id' => current($parentArray)])->find();
+            $allChild = unserialize($parent['all_child']);
+            $lastParent = end($allChild);
+            $parentId = current($lastParent);
+            $parent = $this->where(['user_id' => $parentId])->find();
+        }else{
+            $parent = $user;
+        }
+        return $parent;
     }
 
     /** 初始化用户的 父级路径，方便以后寻址
@@ -316,11 +345,12 @@ class UsersLogic extends RelationModel
      */
     protected function canUseParent(&$user){
         $count = M('users')->where(['parent_id' => $user['parent_id']])->count();
-        if ($count == 0){
+//        if ($count == 0){
+//            $user['user_type'] = 1;
+//            return true;
+//        }elseif($count == 1){
+       if($count == 0){
             $user['user_type'] = 1;
-            return true;
-        }elseif($count == 1){
-            $user['user_type'] = 2;
             return true;
         }
         throw new \Exception('您填写的父级已经没有位置了');
@@ -865,37 +895,39 @@ class UsersLogic extends RelationModel
      * @return bool
      */
     public function updateZhiTui($user,$money){
-        $type = $this->getTypeByMoney($user);
-        if ($type === false){
-            return false;
-        }
-        $zhituiM = 0;
-        switch ($user['user_type']){
-            case 1:
-                if ($type == 1){
-                    $zhituiM = $money*0.2;
-                }elseif($type == 2){
-                    $rule = $this->getRule($type,$user['zhitui_id']);
-                    if ($rule){
-                        $zhituiM = $money * $rule['zhitui'];
+        if ($user['zhitui_id']){
+            $type = $this->getTypeByMoney($user);
+            if ($type === false){
+                return false;
+            }
+            $zhituiM = 0;
+            switch ($user['user_type']){
+                case 1:
+                    if ($type == 1){
+                        $zhituiM = $money*0.2;
+                    }elseif($type == 2){
+                        $rule = $this->getRule($type,$user['zhitui_id']);
+                        if ($rule){
+                            $zhituiM = $money * $rule['zhitui'];
+                        }
                     }
-                }
-                break;
-            case 2:
-                if ($type == 1){
-                    $rule = $this->getRule($type,$user['zhitui_id']);
-                    if ($rule){
-                        $zhituiM = $money * $rule['zhitui'];
+                    break;
+                case 2:
+                    if ($type == 1){
+                        $rule = $this->getRule($type,$user['zhitui_id']);
+                        if ($rule){
+                            $zhituiM = $money * $rule['zhitui'];
+                        }
+                    }elseif($type == 2){
+                        $zhituiM = $money*0.2;
                     }
-                }elseif($type == 2){
-                    $zhituiM = $money*0.2;
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
+            $this->where(['user_id' => $user['zhitui_id']])->setInc('user_money',$zhituiM);
+            accountLogOnly($user['zhitui_id'],$zhituiM,'直推奖励');
         }
-       $this->where(['user_id' => $user['zhitui_id']])->setInc('user_money',$zhituiM);
-        accountLogOnly($user['zhitui_id'],$zhituiM,'直推奖励');
         $this->updateAllTouZi($user);
     }
 
@@ -905,20 +937,22 @@ class UsersLogic extends RelationModel
      */
     protected function updateAllTouZi($user){
         $firstParentId = current(explode(',',$user['parent_path']));
-        $firstParent = $this->where(['user_id' => $firstParentId])->find();
-        $touziString = $firstParent['all_touzi'];
-        if ($touziString){
-            $touziArray = unserialize($touziString);
-        }else{
-            $touziArray = [];
+        if ($firstParentId){
+            $firstParent = $this->where(['user_id' => $firstParentId])->find();
+            $touziString = $firstParent['all_touzi'];
+            if ($touziString){
+                $touziArray = unserialize($touziString);
+            }else{
+                $touziArray = [];
+            }
+            $user = $this->where(['user_id' => $user['user_id']])->find();
+            $one = [$user['user_id'] => $user['tou_zi']];
+            $touziArray[$user['parent_id']] = [
+                $user['user_type'] => $one
+            ];
+            $touziString = serialize($touziArray);
+            $this->where(['user_id' => $firstParentId])->save(['all_touzi'=> $touziString]);
         }
-        $user = $this->where(['user_id' => $user['user_id']])->find();
-        $one = [$user['user_id'] => $user['total_amount']];
-        $touziArray[$user['parent_id']] = [
-            $user['user_type'] => $one
-        ];
-        $touziString = serialize($touziArray);
-        $this->where(['user_id' => $firstParentId])->save(['all_touzi'=> $touziString]);
     }
 
     /** 根据用户投资金额，获取奖励规则
@@ -927,8 +961,8 @@ class UsersLogic extends RelationModel
      * @return array|bool
      */
     protected function getRule($type,$userId){
-        $touzi = $this->where(['user_id' => $userId])->field('total_amount')->find();
-        $touzi = (int)$touzi['total_amount'];
+        $touzi = $this->where(['user_id' => $userId])->field('tou_zi')->find();
+        $touzi = (int)$touzi['tou_zi'];
         $rule = [
             'zhitui' => 0.06,
             'max_get' => 2,
@@ -1190,7 +1224,7 @@ class UsersLogic extends RelationModel
             $total = $totalB;
         }
         $total = $total/100;
-        $total += $user['total_amount'];
+        $total += $user['tou_zi'];
         return $total;
     }
 
@@ -1323,5 +1357,43 @@ class UsersLogic extends RelationModel
         }
         $parent = $this->where(['user_id' => $current])->find();
         return $parent;
+    }
+
+
+    /** 用户转账
+     * @param $user
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function zhuanZhang($user){
+        $toMoney = I('money');
+        $toUserName = I('username');
+        if ($toMoney > $user['user_money']){
+            return ['status' => -1,'msg'=>'您的余额只有'.$user['user_money'].'请充值或者减少转账额度'];
+        }
+        $toUser = $this->where(['mobile' => $toUserName])->find();
+        if ($toUserName == $user['mobile']){
+            return ['status' => -1,'msg'=>'您不能转账给自己'];
+        }
+        if ($toUser){
+            return ['status' => -1,'msg'=>'目标账户不存在'];
+        }
+        try{
+            $this->startTrans();
+            $user['user_money'] = $user['user_money'] - $toMoney;
+            $toUser['user_money'] = $toUser['user_money'] + $toMoney;
+            $this->where(['user_id' => $user['user_id']])->save($user);
+            $this->where(['user_id' => $toUser['user_id']])->save($toUser);
+            accountLogOnly($user['user_id'],$toMoney,'转账给'.$toUserName.':'.$toMoney);
+            accountLogOnly($toUser['user_id'],$toMoney,'收到'.$user['mobile'].'的转账：'.$toMoney);
+            $this->commit();
+            return ['status' => 1,'msg'=>'转账成功'];
+        }catch (\Exception $exception){
+            $this->rollback();
+            \Think\Log::write($exception->getMessage().$exception->getTraceAsString(),'WARN');
+            return ['status' => -1,'msg'=>'转账失败，请联系技术人员'];
+        }
     }
 }

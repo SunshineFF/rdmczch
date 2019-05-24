@@ -17,6 +17,7 @@ use Home\Logic\UsersLogic;
 use Mobile\Logic\OrderGoodsLogic;
 use Think\Page;
 use Think\Verify;
+use Mobile\Logic\QRcodeHelp;
 
 class UserController extends MobileBaseController
 {
@@ -197,6 +198,13 @@ class UserController extends MobileBaseController
             $this->success($data['msg'], U('Mobile/User/index'));
             exit;
         }
+        $inviteCode = I('invite_code');
+        if ($inviteCode){
+            setcookie('invite_code',$inviteCode,null,'/');
+        }else{
+            $inviteCode = isset($_COOKIE['invite_code']) ? $_COOKIE['invite_code'] : '';
+        }
+        $this->assign('invite_code',$inviteCode);
         $this->assign('regis_sms_enable', tpCache('sms.regis_sms_enable')); // 注册启用短信：
         $this->assign('sms_time_out', tpCache('sms.sms_time_out')); // 手机短信超时时间
         $this->display();
@@ -1215,5 +1223,50 @@ class UserController extends MobileBaseController
             $this->error($return['msg']);
         }
         exit;
+    }
+
+    /** 用户转账
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function zhuan_zhang(){
+        if ($_POST){
+            $userModel = new UsersLogic();
+            $return = $userModel->zhuanZhang($this->user);
+            if($return['status'] == 1){
+                $this->success($return['msg']);
+            }else{
+                $this->error($return['msg']);
+            }
+            exit;
+        }
+        $this->assign('user',$this->user);
+        $this->display();
+    }
+
+    /**
+     * 显示推荐码
+     */
+    public function get_qrcode(){
+        $inviteCode = $this->user['invite_code'];
+        if (!$inviteCode){
+            $inviteCode = $this->user_id.rand(1000,9000);
+            $this->user['invite_code'] = $inviteCode;
+        }
+        if (!$this->user['qr_code']){
+            $url = 'http://rdmczch-local.com/Mobile/User/reg.html?invite_code='.$inviteCode;
+            $qrcode = new QRcodeHelp();
+            $qrcodeString = $qrcode->getPng($url);
+            $this->user['qr_code'] = $qrcodeString;
+            M('users')->where(['user_id' => $this->user_id])->save($this->user);
+        }else{
+            $qrcodeString = $this->user['qr_code'];
+        }
+        $url = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/Mobile/User/reg.html?invite_code='.$inviteCode;
+        $this->assign('qr_code',$qrcodeString);
+        $this->assign('url',$url);
+        $this->assign('invite_code',$inviteCode);
+        $this->display();
     }
 }

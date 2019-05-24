@@ -163,6 +163,7 @@ function getAllMenu(){
 					array('name' => '退货单', 'act'=>'return_list', 'control'=>'Order'),
 					//array('name' => '订单日志', 'act'=>'order_log', 'control'=>'Order'),
 					array('name' => '商品评论','act'=>'index','control'=>'Comment'),
+					array('name' => '藏品订单','act'=>'index','control'=>'Product'),
 //					array('name' => '商品咨询','act'=>'ask_list','control'=>'Comment'),
 					
 			)),

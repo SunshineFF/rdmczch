@@ -1,0 +1,79 @@
+
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <td class="text-right">
+                    <a href="javascript:sort('user_id');">ID</a>
+                </td>
+                <td class="text-left">
+                    <span>订单ID</span>
+                </td>
+                <td class="text-left">
+                    <span>订单状态</span>
+                </td>
+                <td class="text-left">
+                    <span>藏品名称</span>
+                </td>
+                <td class="text-left">
+                    <span>购买人</span>
+                </td>
+                <td class="text-left">
+                    <a href="javascript:void(0);">订单金额</a>
+                </td>
+                <td class="text-left">
+                    <span>支付方式</span>
+                </td>
+                <td class="text-left">
+                    <a href="javascript:sort('created_at');">创建日期</a>
+                </td>
+                <td class="text-right">操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="orderList" id="list">
+                <tr>
+                    <td class="text-left">{$list.id}</td>
+                    <td class="text-left">{$list.order_id}</td>
+                    <td class="text-left">
+                        <if condition="$list['status'] eq 0">
+                            未付款
+                        </if>
+                        <if condition="$list['status'] eq 5">
+                            待审核
+                        </if>
+                        <if condition="$list['status'] eq 1">
+                            已付款
+                        </if>
+                    </td>
+                    <td class="text-left">{$list.product_name}</td>
+                    <td class="text-left">{$list.username}</td>
+                    <td class="text-left">{$list.total}</td>
+                    <td class="text-left"> <if condition="$list['pay_method'] eq 'xianxia'">
+                        线下支付
+                    </if>
+                        <if condition="$list['pay_method'] eq 'yue'">
+                           余额支付
+                        </if></td>
+                    <td class="text-left">{:date('Y-m-d H:i',$list['created_at'])}</td>
+                    <td class="text-right">
+                        <a href="{:U('Admin/product/detail',array('id'=>$list['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="row">
+    <div class="col-sm-3 text-left">
+    </div>
+    <div class="col-sm-6 text-right">{$page}</div>
+</div>
+<script>
+    $(".pagination  a").click(function(){
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page);
+    });
+</script>

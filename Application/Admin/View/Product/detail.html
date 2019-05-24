@@ -1,0 +1,84 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <!-- Content Header (Page header) -->
+    <include file="Public/breadcrumb"/>
+    <section class="content">
+        <!-- Main content -->
+        <!--<div class="container-fluid">-->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-list"></i> 订单信息</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="" method="post">
+                            <input type="hidden" name="id" value="{$order.id}">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-2">订单号:</td>
+                                    <td >{$order.order_id}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">藏品名称:</td>
+                                    <td >{$order.product_name}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">购买人:</td>
+                                    <td >{$order.username}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">订单金额:</td>
+                                    <td >{$order.total}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">支付方式:</td>
+                                    <td>
+                                        <span>
+                                            <if condition="$order['status'] eq 0">
+                                        未付款<input type="checkbox" value="1" name="status">
+                                        已付款
+                                    </if></span>
+                                        <span><if condition="$order['status'] eq 5">
+                                        待审核<input type="checkbox" value="1" name="status">
+                                        已付款
+                                    </if></span>
+                                        <span>
+                                             <if condition="$order['status'] eq 1">
+                                                 已付款
+                                             </if>
+                                      </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-2">创建日期:</td>
+                                    <td >{:date('Y-m-d H:i',$order['created_at'])}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <if condition="$order['status'] eq 5 or $order['status'] eq 0"> <button type="submit" class="btn btn-info">
+                                            <i class="ace-icon fa fa-check bigger-110"></i> 保存
+                                        </button></if>
+                                        <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default pull-right" data-original-title="返回"><i class="fa fa-reply"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+</div>
+
+</body>
+</html>

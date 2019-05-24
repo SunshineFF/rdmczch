@@ -1,0 +1,53 @@
+<!--收藏列表开始-->
+<include file="Public/header"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/dis.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/zTreeStyle/zTreeStyle.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.ztree.core-3.0.js" ></script>
+<header>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+            <div class="h-mid">我发展的收益</div>
+            <div class="h-right">
+                <aside class="top_bar">
+                    <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<include file="Public/menu"/>
+
+<div class="collection_list">
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+    <!--查看更多开始-->
+    <!--	<div class="more">-->
+    <!--		<p>查看更多</p>-->
+    <!--	</div>-->
+    <!--查看更多结束-->
+</div>
+<!--收藏列表结束-->
+<include file="Product/footer"/>
+
+<script type="text/javascript">
+    <!--
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    var zNodes = {$data};
+
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+    //-->
+</script>
+</body>
+</html>

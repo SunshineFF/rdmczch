@@ -35,12 +35,38 @@ class ProductController extends MobileBaseController
         return $this->display();
     }
 
+    /**
+     * 支付逻辑
+     */
     public function post_product(){
+        $orderModel = M('product_order');
         try{
-
+            $orderModel->startTrans();
+            $orderData = $this->initOrderData();
+            $return = $this->payOrder($orderData);
+            $orderModel->add($orderData);
+            $orderModel->commit();
+            $this->success($return['msg'],U('User/index'));
         }catch (\Exception $exception){
-
+            $orderModel->rollback();
+            $this->error($exception->getMessage(),U('Product/index'));
         }
+    }
+
+    /** 获取订单方式并进行支付
+     * @param $orderData
+     * @return mixed
+     */
+    protected function payOrder($orderData){
+        $payment = $this->initPayment();
+        return $payment->payForProduct($orderData['total'],$this->user);
+    }
+
+    private function initPayment(){
+        $method = I('method');
+        include_once "plugins/payment/{$method}/{$method}.class.php"; // D:\wamp\www\svn_tpshop\www\plugins\payment\alipay\alipayPayment.class.php
+        $code = '\\'.$method; // \alipay
+        return new $code();
     }
 
     /**
@@ -49,6 +75,7 @@ class ProductController extends MobileBaseController
     public function select_payment_method(){
         try{
             $product = $this->getProductData(I('product_id'));
+            $this->checkUserHasProduct($product['id']);
             $this->assign('product',$product);
         }catch (\Exception $exception){
             $this->error($exception->getMessage());
@@ -56,19 +83,46 @@ class ProductController extends MobileBaseController
         $this->display();
     }
 
+    /**
+     * @param $productId
+     * @throws \Exception
+     */
+    protected function checkUserHasProduct($productId){
+        $condition = [];
+        $condition['user_id'] = $this->user_id;
+        $condition['product_id'] = $productId;
+        $data = M('product_order')->where($condition)->find();
+        if ($data){
+            throw new \Exception('您已经收藏了这个藏品，不能重复收藏');
+        }
+    }
+
+    /** 初始化订单数据
+     * @return array
+     * @throws \Exception
+     */
     protected function initOrderData(){
         $productId = I('product_id');
         $time = time();
         $product = $this->getProductData($productId);
+        $method = I('method');
         $data = [];
         $data['product_id'] = $productId;
         $data['total'] = $product['price'];
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
         $data['user_id'] = $this->user_id;
+        $data['status'] = $this->getStatus($method);
+        $data['pay_method'] = $method;
         $data['order_id'] = date('YmdHis').rand(1000,9999);
+        return $data;
     }
 
+    /** 获取藏品信息
+     * @param $productId
+     * @return mixed
+     * @throws \Exception
+     */
     protected function getProductData($productId){
        $product = M('product')->where(['id'=>$productId])->find();
        if (!$product){
@@ -76,4 +130,34 @@ class ProductController extends MobileBaseController
        }
        return $product;
     }
+
+    /** 根据订单支付方式 确定订单当前状态
+     * @param $method
+     * @return int
+     */
+    protected function getStatus($method){
+        switch ($method){
+            case 'yue':
+                return 1;
+            case 'xianxia':
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    public function user_list(){
+        $sql = "select o.*,p.name,p.thumd_img,p.face_value,p.price,p.jifen from __PREFIX__product_order o left join __PREFIX__product p on p.id = o.product_id
+ where o.user_id=".$this->user_id;
+        $orderList = M('product_order')->query($sql);
+        $this->assign('order_list',$orderList);
+        return $this->display();
+    }
+
+    public function pay_again(){
+        $orderId = I('order_id');
+        M('product_order')->where(['id' =>$orderId])->save(['status' => 5]);
+        $this->success('已提交支付审核，我们会尽快核实！',U('user_list'));
+    }
+
 }

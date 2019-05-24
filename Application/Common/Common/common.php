@@ -59,19 +59,19 @@ function update_user_level($user_id){
     $level_info = M('user_level')->order('level_id')->select();
     $total_amount = M('order')->where("user_id=$user_id AND pay_status=1 and order_status not in (3,5)")->sum('order_amount');
     if($level_info){
-    	foreach($level_info as $k=>$v){
-    		if($total_amount >= $v['amount']){
-    			$level = $level_info[$k]['level_id'];
-    			$discount = $level_info[$k]['discount']/100;
-    		}
-    	}
-    	$user = session('user');
+//    	foreach($level_info as $k=>$v){
+//    		if($total_amount >= $v['amount']){
+//    			$level = $level_info[$k]['level_id'];
+//    			$discount = $level_info[$k]['discount']/100;
+//    		}
+//    	}
+//    	$user = session('user');
     	$updata['total_amount'] = $total_amount;//更新累计修复额度
     	//累计额度达到新等级，更新会员折扣
-    	if(isset($level) && $level>$user['level']){
-    		$updata['level'] = $level;
-    		$updata['discount'] = $discount;	
-    	}
+//    	if(isset($level) && $level>$user['level']){
+//    		$updata['level'] = $level;
+//    		$updata['discount'] = $discount;
+//    	}
     	M('users')->where("user_id=$user_id")->save($updata);
     }
 }

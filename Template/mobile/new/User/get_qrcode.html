@@ -1,0 +1,51 @@
+<include file="Public/header"/>
+<body>
+<header>
+    <div class="tab_nav">
+        <div class="header">
+            <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+            <div class="h-mid">我的推荐码</div>
+            <div class="h-right">
+                <aside class="top_bar">
+                    <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</header>
+<include file="Public/menu"/>
+<div id="tbh5v0">
+    <div class="get-qrcode">
+        <p>推荐码:<span>{$invite_code}</span></p>
+        <div><p style="line-height: 18px">推荐衔接:<span class="float-right cp-link" data-copy=".js-copyText">复制链接</span></p><p class="js-copyText">{$url}</p></div>
+        <p>我的二维码：</p>
+        <img src="/{$qr_code}">
+    </div>
+</div>
+<include file="Public/footer"/>
+<include file="Public/footer_nav"/>
+<script type="text/javascript" src="__STATIC__/js/copy.js"></script>
+<script type="text/javascript">
+    function goTop(){
+        $('html,body').animate({'scrollTop':0},600);
+    }
+
+</script>
+<script type="text/javascript">
+    /**
+     * 复制粘贴功能
+     * 2017-05-25
+     * 参数一：表示复制功能按钮btn 可为id,可为class
+     * 参数二：表示回调
+     * yb
+     */
+    copy.coptText(".cp-link", function(flag) {
+        /**
+         * flag 为true的时候，表示赋值成功，false表示赋值失败，自行处理
+         */
+        return flag ? alert("文字已复制到剪贴板中") : alert("请长按选中复制")
+    });
+
+</script>
+</body>
+</html>

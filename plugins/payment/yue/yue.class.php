@@ -1,6 +1,7 @@
 <?php
 
 use Think\Model\RelationModel;
+use Home\Logic\UsersLogic;
 
 class yue extends RelationModel{
 
@@ -30,6 +31,9 @@ class yue extends RelationModel{
         return null;
     }
 
+    /** 正常订单支付接口
+     * @return array
+     */
     public function respond2(){
         $order_id = I('order_id');
         if (!$order_id){
@@ -64,6 +68,33 @@ class yue extends RelationModel{
         $newMoney = $user['user_money'] - $order['total_amount'];
         $user['user_money'] = $newMoney;
         $userModel->save($user);
+    }
+
+    /**
+     * @param $money
+     * @param $user
+     * @return array
+     * @throws Exception
+     */
+    public function payForProduct($money,$user){
+        if ($money > $user['user_money']){
+            throw new \Exception('您的余额不足，请充值');
+        }
+        $userLogic = new UsersLogic();
+        try{
+            $userLogic->startTrans();
+            $newMoney = $user['user_money'] - $money;
+            $user['user_money'] = $newMoney;
+            $user['tou_zi'] = $user['tou_zi'] + $money;
+            $userLogic->save($user);
+            $userLogic->updateZhiTui($user,$money);
+            accountLogOnly($user['user_id'],$money,'用户购买藏品');
+            $userLogic->commit();
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+
+        return $this->return;
     }
 
 }

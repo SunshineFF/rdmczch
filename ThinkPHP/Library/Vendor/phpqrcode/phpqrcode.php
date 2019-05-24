@@ -34,7 +34,7 @@
  */
  
  
-
+namespace ThinkPHP\Library\Vendor\phpqrcode;
 /*
  * Version: 1.1.4
  * Build: 2010100721
