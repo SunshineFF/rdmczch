@@ -2,6 +2,8 @@
 <include file="Public/header"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/dis.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/zTreeStyle/zTreeStyle.css">
+<script type="text/javascript" src="__STATIC__/js/jquery.ztree.core-3.0.js" ></script>
 <header>
     <div class="tab_nav">
         <div class="header">
@@ -18,12 +20,9 @@
 <include file="Public/menu"/>
 
 <div class="collection_list">
-    <ul>
-        <li>11111</li>
-        <li>2222</li>
-        <li>3333<li>
-        <li>4444</li>
-    </ul>
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
     <!--查看更多开始-->
     <!--	<div class="more">-->
     <!--		<p>查看更多</p>-->
@@ -34,13 +33,21 @@
 <include file="Product/footer"/>
 
 <script type="text/javascript">
-    //	$(function(){
-    //		var layer = 1;
-    //		layui.use(['layer'],function () {
-    //		    layer = layui.layer;
-    //		    layer.msg('sasa');
-    //		})
-    //	})
+    <!--
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    var zNodes = {$data};
+
+    $(document).ready(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    });
+    //-->
 </script>
 </body>
 </html>
