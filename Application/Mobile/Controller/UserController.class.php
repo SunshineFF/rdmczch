@@ -1255,7 +1255,7 @@ class UserController extends MobileBaseController
             $this->user['invite_code'] = $inviteCode;
         }
         if (!$this->user['qr_code']){
-            $url = 'http://rdmczch-local.com/Mobile/User/reg.html?invite_code='.$inviteCode;
+            $url = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/Mobile/Index/index.html?invite_code='.$inviteCode;
             $qrcode = new QRcodeHelp();
             $qrcodeString = $qrcode->getPng($url);
             $this->user['qr_code'] = $qrcodeString;

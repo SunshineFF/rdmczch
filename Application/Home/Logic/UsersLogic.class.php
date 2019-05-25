@@ -210,7 +210,6 @@ class UsersLogic extends RelationModel
             $this->commit();
             if(!$user_id)
                 return array('status'=>-1,'msg'=>'注册失败','result'=>'');
-
         }catch (\Exception $exception){
             $this->rollback();
             return $this->error($exception->getMessage());
