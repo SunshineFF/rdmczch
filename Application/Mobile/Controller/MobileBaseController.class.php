@@ -13,6 +13,8 @@
 namespace Mobile\Controller;
 use Home\Logic\UsersLogic;
 use Think\Controller;
+use Mobile\Model\UserClick;
+
 class MobileBaseController extends Controller {
     public $session_id;
     public $weixin_config;
@@ -28,7 +30,14 @@ class MobileBaseController extends Controller {
         if(isMobile())
             cookie('is_mobile','1',3600); 
         else 
-            cookie('is_mobile','0',3600);                 
+            cookie('is_mobile','0',3600);
+
+        if (session('?user')) {
+            $user = session('user');
+            $user = M('users')->where("user_id = {$user['user_id']}")->find();
+            $userClick = new UserClick();
+            $userClick->updateDataByUser($user);
+        }
         //微信浏览器
 //        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger') && empty($_SESSION['openid'])){
 //            $this->weixin_config = M('wx_user')->find(); //获取微信配置

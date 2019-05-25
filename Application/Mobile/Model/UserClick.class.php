@@ -22,6 +22,9 @@ class UserClick extends \Think\Model
         parent::__construct($name, $tablePrefix, $connection);
     }
 
+    /** 初始化类
+     * @return $this
+     */
     public function initFunction(){
         if (!$this->userLoginc){
             $this->userLoginc = new UsersLogic();
@@ -29,22 +32,63 @@ class UserClick extends \Think\Model
         return $this;
     }
 
+    /** 根据点击量返还金额
+     * @param $user
+     * @return bool
+     */
     public function updateDataByUser($user){
         $this->initFunction();
-        $currentData = $this->getCurrentData($user['user_id']);
-        if ($currentData[self::COUNT] == 10){
+        $data = $this->getCurrentData($user['user_id']);
+        if ($user['tou_zi'] == $user['tou_zi_return']){
             return true;
         }
+        if ($data[self::COUNT] == 10){
+            return true;
+        }
+        $todayMoney = $this->getTodayTotalByUserOnce($user);
+        if (!$todayMoney){
+            return true;
+        }
+        if (($user['tou_zi_return'] + $todayMoney) > $user['tou_zi']){
+            $todayMoney = $todayMoney - ($user['tou_zi_return'] + $todayMoney - $user['tou_zi']);
+        }
         $data[self::UPDATED_AT] = time();
-        $data[self::COUNT] = $currentData[self::COUNT] + 1;
+        $data[self::COUNT] += 1;
+        $data[self::TOTAL] += $todayMoney;
+        try{
+            $this->startTrans();
+            if ($data[self::COUNT] == 1){
+                $this->add($data);
+            }else{
+                $this->save($data);
+            }
+            $data['tou_zi_return'] = ($user['tou_zi_return'] + $todayMoney);
+            $data['user_money'] = ($user['user_money'] + $todayMoney);
+            M('users')->where(['user_id' => $user['user_id']])->save($data);
+            accountLogOnly($user['user_id'],$todayMoney,'点击返还金额');
+            $this->commit();
+            return true;
+        }catch (\Exception $exception){
+            $this->rollback();
+            \Think\Log::write($exception->getMessage().$exception->getTraceAsString(),'WARN');
+            return false;
+        }
+        return false;
     }
 
+    /** 根据用户投资额 获取当天返还的金额
+     * @param $user
+     * @return float|int
+     */
     protected function getTodayTotalByUserOnce($user){
         if (!$user['tou_zi']){
             return 0;
         }
         $rule = $this->getRuleByUser($user);
-        $money = round($user/$rule/10,2);
+        if (!$rule){
+            return 0;
+        }
+        $money = round($user['tou_zi']/$rule/10,2);
         return $money;
     }
 
@@ -68,14 +112,12 @@ class UserClick extends \Think\Model
      * @return bool|int
      */
     public function getRuleByUser($user){
-        $touZi = $user['touzi'];
+        $touZi = $user['tou_zi'];
         if (!$touZi){
             return false;
         }
         $rule = [];
         if($touZi >= 500 && $touZi < 5000){
-            $rule['max'] = 2;
-            $rule['max'] = 2;
             return 250;
         }elseif($touZi >= 5000 && $touZi < 10000){
             return 220;
