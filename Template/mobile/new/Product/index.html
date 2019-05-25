@@ -7,12 +7,14 @@
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/icon/iconfont.css">
     <script type="text/javascript" src="__STATIC__/js/size.js" ></script>
+	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
     <title>Title</title>
 </head>
 <body style="box-sizing: border-box">
 <!--banner图开始-->
 <div class="banner">
-    <img src="__STATIC__/img/product/timg@3x.png">
+    <img src="__STATIC__/img/product/20190522102644.jpg">
 </div>
 <!--banner图结束-->
 <!--收藏列表开始-->
@@ -25,8 +27,9 @@
 					<div class="box-top">
 						<img src="__STATIC__/img/product/{$val.thumd_img}" alt="" />
 						<div>
-							<h5>{$val.name}</h5>
+							<h5 style="font-size: 1.2rem">{$val.name}</h5>
 							<p><span>价值：{$val.face_value}</span></p>
+<!--							<p><span></span></p>-->
 						</div>
 					</div>
 					<div class="box-bottom">
@@ -45,7 +48,6 @@
 <!--		<p>查看更多</p>-->
 <!--	</div>-->
 	<!--查看更多结束-->
->>>>>>> c2b31ea336c09925c8ec1f7686b9e08614af5e38
 </div>
 <!--导航栏结束-->
 <include file="Product/footer"/>
