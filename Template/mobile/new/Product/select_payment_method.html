@@ -2,27 +2,29 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/product/index.css">
     <title></title>
     <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
     <script type="text/javascript" src="__STATIC__/js/common.js"></script>
     <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+    <script src="__PUBLIC__/js/global.js"></script>
 </head>
 <!--banner图开始-->
-<body>
+<body style="background-color: #ffffff">
 
 <div class="product-method">
     <form method="post" action="{:U('Product/post_product')}">
          <div class="method">
              <p data-value="yue" style="display: none;"><span>在线支付</span></p>
-             <p data-value="xianxia" class="seleced"><span>线下报单</span></p>
+             <p data-value="xianxia" class="seleced"><span>线下支付</span></p>
          </div>
         <input type="hidden" name="method" value="xianxia">
         <input type="hidden" name="product_id" value="{$product.id}">
         <div class="pay-info" style="display: block">
             <p><span>支付宝账号：</span>某某某 12345678901</p>
-            <p><span>银行打款：</span>某某某 12345678901</p>
+            <p><span>银行卡账号：</span>某某某 12345678901</p>
             <p><span></span>工商银行白云支行</p>
         </div>
         <button style="display: block;" type="submit" class="hide-button">提交订单</button>

@@ -72,37 +72,12 @@
 .box-top>div{display:inline-block;float: left;padding: 1rem 0;width: 35%;text-align: left;margin-left: 2rem;}
 .box-top{overflow:hidden}
 
-.product-method{padding:2rem;color: #000;font-size: 2rem;}
-.product-method .method p{
-	height: 7rem;
-	margin-bottom: 2rem;
-}
-.product-method .method p span{
-	display: block;
-	padding: 2rem;
-	margin: 0 auto;
-	text-align: center;
-}
-.product-method .method p{
-	background: #ccc;
-}
-.product-method .method p.seleced{
-	background: #32d2b0;
-}
-.product-method .pay-info{
-	display: none;}
-.product-method .pay-info span{display: inline-block;min-width: 14rem;min-height: 2rem;}
-.product-method .pay-info p{margin-bottom:2rem}
-.product-method button{
-	/*display: block;*/
-	margin: 0 auto;
-	box-shadow: none;
-	border: none;
-	background: #32d2b0;
-	padding: 1.5rem 5rem;
-	border-radius: 1rem;
-	color: #fff;
-	font-size: 2rem;
-	margin-top: 4rem;
-	display: none;
-}
+.product-method{padding: 4rem;color: #000;font-size: 2rem;margin-top: 9.5rem;}
+.product-method .method p{height: 3.5rem;margin-bottom: 2rem;color: #ffffff;border-radius: 0.5rem;box-shadow: 3px 3px 10px #b9b9b9;}
+.product-method .method p span{display: block;margin: 0 auto;text-align: center;line-height: 3.5rem;}
+.product-method .method p{background: #ccc;}
+.product-method .method p.seleced{background: #32d2b0;}
+.product-method .pay-info{display: none;}
+.product-method .pay-info span{display: inline-block;min-width: 7rem;/* min-height: 2rem; */}
+.product-method .pay-info p{margin-bottom: 0.8rem;font-size: 1rem;}
+.product-method button{margin: 0 auto;box-shadow: 3px 3px 10px #b9b9b9;border: none;background: #32d2b0;padding: 0.7rem 4rem;border-radius: 0.5rem;color: #fff;font-size: 1rem;margin-top: 2rem;display: none;}
