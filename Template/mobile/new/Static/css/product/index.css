@@ -41,7 +41,7 @@
 .collection_list_img p{margin-top: 1rem;line-height: 1rem;font-size: 1rem;}
 .collection_list_img .box-bottom p{text-align:left;padding-left: 1rem;}
 .collection_list_img .box-bottom{padding-bottom: 0.5rem;}
-.collection_list li{margin-top:2rem;background: #fff;padding: 0.5rem;border-radius: 1rem;box-sizing: border-box;}
+.collection_list li{margin-top:1rem;background: #fff;padding: 0.5rem;border-radius: 1rem;box-sizing: border-box;}
 .box-bottom button{
 	font-size: 1rem;
 	display: block;
