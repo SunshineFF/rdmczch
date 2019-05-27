@@ -1,0 +1,102 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style-type: none;
+}
+/*title*/
+.poster_title{
+    width: 100%;
+    height: 3rem;
+    background: #32d2b0;
+    text-align: center;
+    font-size: 1rem;
+    color: #ffffff;
+}
+/*大海报*/
+.big{
+    width: 60%;
+    height: 25rem;
+    margin: 4rem auto 0;
+}
+.big img{
+    width: 100%;
+    height: 100%;
+}
+
+/*生成海报按钮*/
+.checkin{
+    width: 20%;
+    padding: 0.1rem 1rem;
+    font-size: 1rem;
+    text-align: center;
+    background: #ff2e00;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/*小海报*/
+.small{
+    width: 95%;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+.small li{
+    width: 23%;
+    height: 8rem;
+    float: left;
+    margin-right: 2%;
+    border: 1px solid #ffffff;
+}
+.small li:last-child{
+    margin: 0;
+}
+.small li img{
+    width: 100%;
+    height: 100%;
+}
+.small .cur{
+    border: 1px solid #ff2e00;
+}
+
+/*生成的新海报*/
+.new_poster{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background: #000000;
+    background-color: rgba(0,0,0,0.5);
+}
+.new_poster .kuang{
+    width: 80%;
+    height: 60%;
+    margin: 7rem auto 0;
+    position: relative;
+}
+.new_poster img{
+    width: 100%;
+    height: 100%;
+}
+.regenerate{
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    font-size: 2rem;
+}
+.new{
+    width: 20%;
+    padding: 0.1rem 1rem;
+    font-size: 1rem;
+    text-align: center;
+    background: #ff2e00;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    display: block;
+}
