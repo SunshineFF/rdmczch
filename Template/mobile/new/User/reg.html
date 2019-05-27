@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div class="field pwd">
-							<input type="password" required name="password" placeholder="密码" class="c-form-txt-normal" onBlur="check_password(this.value);" />
+							<input type="password" required name="password" id="password" placeholder="密码" class="c-form-txt-normal" onBlur="check_password(this.value);" />
 							<div class="tips">
 								<span id="password_notice"></span>
 							</div>
@@ -42,6 +42,12 @@
 							<input type="password" required name="password2" placeholder="确认密码" class="c-form-txt-normal" onBlur="check_confirm_password(this.value);" />
 							<div class="tips">
 								<span id="confirm_password_notice"></span>
+							</div>
+						</div>
+						<div class="field pwd">
+							<input type="password" required name="password_2" placeholder="二级密码" class="c-form-txt-normal" onBlur="check_confirm_password2(this.value);" />
+							<div class="tips">
+								<span id="password_2"></span>
 							</div>
 						</div>
 <!--						<div class="field pwd">-->
@@ -208,6 +214,28 @@ function check_confirm_password(confirm_password) {
 		flag = true;
 	}
 }
+
+function check_confirm_password2(password_2) {
+	var password = $(currentForm).find('#password').val();
+	if (password.indexOf(" ") != -1) {
+		$(currentForm).find('#password_2').css('color','red').html("二级不能包含空格");
+		flag = false;
+		return false;
+	}
+	if (password_2.length > 6) {
+		$(currentForm).find('#password_2').css('color','red').html('-二级密码不能大于 6 个字符。');
+		flag = false;
+		return false;
+	}
+	if (password_2 == password) {
+		$(currentForm).find('#password_2').css('color','red').html('登录密码和二级密码不能相同');
+		flag = false;
+	} else {
+		$(currentForm).find('#password_2').css('color','green').html('');
+		flag = true;
+	}
+}
+
 
 
 function check_submit()

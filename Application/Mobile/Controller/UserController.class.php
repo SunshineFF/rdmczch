@@ -875,6 +875,28 @@ class UserController extends MobileBaseController
         $this->display();
     }
 
+    /*
+ * 密码修改
+ */
+    public function password2()
+    {
+        //检查是否第三方登录用户
+        $logic = new UsersLogic();
+        $data = $logic->get_info($this->user_id);
+        $user = $data['result'];
+        if ($user['mobile'] == '' && $user['email'] == '')
+            $this->error('请先到电脑端绑定手机', U('/Mobile/User/index'));
+        if (IS_POST) {
+            $userLogic = new UsersLogic();
+            $data = $userLogic->password2($this->user_id, I('post.old_password'), I('post.new_password'), I('post.confirm_password')); // 获取用户信息
+            if ($data['status'] == -1)
+                $this->error($data['msg']);
+            $this->success($data['msg']);
+            exit;
+        }
+        $this->display();
+    }
+
     function forget_pwd()
     {
         if ($this->user_id > 0) {

@@ -205,6 +205,7 @@ class UsersLogic extends RelationModel
 
         try{
             $this->startTrans();
+            $map['password_2'] = md5(I('password_2'));
             $map = $this->_initUserData($map);
             $user_id = M('users')->add($map);
             $this->commit();
@@ -696,6 +697,29 @@ class UsersLogic extends RelationModel
             return array('status'=>-1,'msg'=>'修改失败','result'=>'');
         return array('status'=>1,'msg'=>'修改成功','result'=>'');
     }
+
+
+    /**
+     * 修改密码
+     * @param $user_id  用户id
+     * @param $old_password  旧密码
+     * @param $new_password  新密码
+     * @param $confirm_password 确认新 密码
+     */
+    public function password2($user_id,$old_password,$new_password,$confirm_password,$is_update=true){
+        $data = $this->get_info($user_id);
+        $user = $data['result'];
+        if($new_password != $confirm_password)
+            return array('status'=>-1,'msg'=>'两次二级密码输入不一致','result'=>'');
+        //验证原密码
+        if($is_update && ($user['password'] != '' && md5($old_password) != $user['password']))
+            return array('status'=>-1,'msg'=>'密码验证失败','result'=>'');
+        $row = M('users')->where("user_id='{$user_id}'")->save(array('password'=>md5($new_password)));
+        if(!$row)
+            return array('status'=>-1,'msg'=>'修改失败','result'=>'');
+        return array('status'=>1,'msg'=>'修改成功','result'=>'');
+    }
+
 
     /**
      * 取消订单
