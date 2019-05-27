@@ -1,6 +1,6 @@
 .dotm_btn2{background:url(../images/all.png) no-repeat;background-size: auto 16px; }
 /*个人中心欢迎页*/
-.user_com{ width:100%; overflow:hidden; background:#F5F5F5}
+.user_com{ width:100%; overflow:hidden; background:#F5F5F5;padding-bottom: 3.5rem;}
 .com_top{ width:100%; height:130px; background:#EC8816 url(../images/userbg.png) no-repeat center bottom; position:relative; z-index:9999}
 .com_top h2{ width:100%; height:40px;}
 .com_top h2 a{ width:50px; display:block; background-color:rgba(28,27,26,0.6); font-size:14px; line-height:30px; color:#FFF; margin-top:8px; float:right; margin-right:10px; -webkit-border-radius:10px; -moz-border-radius:10px; border-radius:20px; text-align:center; font-weight:normal}
@@ -665,3 +665,4 @@ div.main_thh table tr .check_but_thh{text-align: center;}
 }
 .get-qrcode .float-right{float:right}
 .get-qrcode img{display:block;margin: 0 auto;}
+.get-qrcode .line{border-bottom: 1px solid #CCCCCC}
