@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/my_poster.css">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/default.css"/>
+	<link rel="stylesheet" href="/Template/mobile/new/Static/css/public.css">
+	<script src="__PUBLIC__/js/global.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <title>Title</title>
+</head>
+<body style="background-color: #ffffff">
+<div class="tab_nav">
+	<div class="header">
+		<div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+		<div class="h-mid">我的海报</div>
+		<div class="h-right">
+			<aside class="top_bar">
+				<div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
+			</aside>
+		</div>
+	</div>
+</div>
+<from action="{:U('Product/my_poster')}"  method="post">
+	<div class="big">
+		<img src="__STATIC__/img/index/banner.png" alt="">
+	</div>
+	<input type="hidden" value="__STATIC__/img/index/banner.png" name="src" class="src">
+	<div class="checkin" >生成海报</div>
+	<div class="new" style="display: none">重生生成</div>
+</from>
+<div class="small">
+	<ul>
+		<li><img src="__STATIC__/img/index/banner.png" alt=""></li>
+		<li><img src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" alt=""></li>
+		<li><img src="__STATIC__/img/index/banner.png" alt=""></li>
+		<li><img src="__STATIC__/img/index/banner.png" alt=""></li>
+	</ul>
+</div>
+<div class="new_poster"  style="display: none">
+	<div class="kuang">
+		<img src="__STATIC__/img/index/banner.png" alt="">
+		<i class="iconyiliaohangyedeICON- regenerate"></i>
+	</div>
+	<div class="regenerate" ></div>
+</div>
+<include file="Product/footer"/>
+</body>
+</html>
+<script type="text/javascript">
+	// 幕布获取高度
+	$(document).ready(function(){
+		// alert($(window).height()); //浏览器当前窗口可视区域高度
+		height = $(window).height();
+		$(".new_poster").css('height',height);
+	})
+	// 点击小图大图变化
+	$(".small li").click(function(){
+		var src =$(this).children("img").attr("src");
+		$(".big").children("img").attr("src",src);
+		$(".src").val(src);
+		$(this).addClass('cur').siblings().removeClass('cur');
+	})
+	// 点击生成图片
+	$(".checkin").click(function(){
+		$(".checkin").css('display','none');
+		$(".new").css('display','block');
+		$(".small").css('display','none');
+		$.ajax({
+			type: "POST",
+			url: "{:U('Product/ajax_get_poster')}",
+			data: {src:$(".src").val()},
+			dataType: "json",
+			success: function(data){
+				// var src =  1;
+				console.log(data);
+				$(".new_poster").css('display','block');
+				$(".new_poster").children("img").attr("src",data.data);
+			}
+		});
+	})
+	// 点击关闭按钮
+	$(".regenerate").click(function(){
+		$(".new_poster").css('display','none');
+	})
+
+	// 点击重新生成
+	$(".new").click(function(){
+		$(".checkin").css('display','block');
+		$(".new").css('display','none');
+		$(".small").css('display','block');
+	})
+</script>
