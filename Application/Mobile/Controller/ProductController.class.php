@@ -1,7 +1,7 @@
 <?php
 namespace Mobile\Controller;
 
-use Mobile\Controller\MobileBaseController;
+use Mobile\Logic\ImageHelper;
 
 class ProductController extends MobileBaseController
 {
@@ -146,6 +146,10 @@ class ProductController extends MobileBaseController
         }
     }
 
+    /** 用户的收藏列表
+     * @throws \think\db\exception\BindParamException
+     * @throws \think\exception\PDOException
+     */
     public function user_list(){
         $sql = "select o.*,p.name,p.thumd_img,p.face_value,p.price,p.jifen from __PREFIX__product_order o left join __PREFIX__product p on p.id = o.product_id
  where o.user_id=".$this->user_id;
@@ -154,10 +158,26 @@ class ProductController extends MobileBaseController
         return $this->display();
     }
 
+    /**
+     * 付款提交审核
+     */
     public function pay_again(){
         $orderId = I('order_id');
         M('product_order')->where(['id' =>$orderId])->save(['status' => 5]);
         $this->success('已提交支付审核，我们会尽快核实！',U('user_list'));
     }
 
+    /**
+     *  我的海报
+     */
+    public function my_poster(){
+        $this->assign('poster',$this->user['poster']);
+        $this->assign('has_poster',$this->user['poster'] ? 1 : 0);
+        $this->display();
+    }
+
+    public function ajax_get_poster(){
+        $imageHelper = new ImageHelper();
+
+    }
 }
