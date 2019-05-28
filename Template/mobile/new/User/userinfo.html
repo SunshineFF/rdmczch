@@ -56,25 +56,25 @@
                 </form>
             </div>
 
-            <div class="innercontent1">
-                <form method="post" action="" id="edit_mobile" onSubmit="return checkMobileForm()">
-                    <div class="name">
-                        <label for="email_ep"> <span>手机</span>
-                            <input name="mobile" value="{$user.mobile}" id="mobile_ep" placeholder="*手机号码" type="text"/>
-                        </label>
-                    </div>
-                    <div class="name">
-                        <label for="email_ep"> <span>验证码</span>
-                            <input type="text" id="mobile_code" name="mobile_code" placeholder="手机验证码"/>
-                            <input id="zphone" type="button" rel="mobile" value="获取手机验证码 " onClick="sendcode(this)"
-                                   class="zphone">
-                        </label>
-                    </div>
-                    <div class="field submit-btn">
-                        <input type="submit" value="确认修改" class="btn_big1"/>
-                    </div>
-                </form>
-            </div>
+<!--            <div class="innercontent1" style="display: none;">-->
+<!--                <form method="post" action="" id="edit_mobile" onSubmit="return checkMobileForm()">-->
+<!--                    <div class="name">-->
+<!--                        <label for="email_ep"> <span>手机</span>-->
+<!--                            <input name="mobile" value="{$user.mobile}" id="mobile_ep" placeholder="*手机号码" type="text"/>-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div class="name">-->
+<!--                        <label for="email_ep"> <span>验证码</span>-->
+<!--                            <input type="text" id="mobile_code" name="mobile_code" placeholder="手机验证码"/>-->
+<!--                            <input id="zphone" type="button" rel="mobile" value="获取手机验证码 " onClick="sendcode(this)"-->
+<!--                                   class="zphone">-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div class="field submit-btn">-->
+<!--                        <input type="submit" value="确认修改" class="btn_big1"/>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
 
             <div class="innercontent11">
                 <form name="formPassword" action="{:U('User/password')}" method="post" onSubmit="return editPassword()">
@@ -96,6 +96,35 @@
                         <label for="comfirm_password">
                             <input type="password" name="comfirm_password" id="comfirm_password" class="c-f-text"
                                    placeholder="确认密码"/>
+                        </label>
+                    </div>
+                    <div class="field submit-btn">
+                        <input type="submit" value="确认修改" class="btn_big1"/>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="innercontent11">
+                <form name="formPassword" action="{:U('User/password2')}" method="post" onSubmit="return editPassword()">
+                    <h4 class="title">二级密码修改</h4>
+
+                    <div class="field_pwd">
+                        <label for="password">
+                            <input type="password" name="old_password" id="password_2" class="c-f-text"
+                                   placeholder="原二级密码"/>
+                        </label>
+                    </div>
+                    <div class="field_pwd">
+                        <label for="new_password">
+                            <input type="password" name="new_password" id="new_password_2" class="c-f-text"
+                                   placeholder="新二级密码"/>
+                        </label>
+                    </div>
+                    <div class="field_pwd">
+                        <label for="comfirm_password">
+                            <input type="password" name="comfirm_password" id="password_2" class="c-f-text"
+                                   placeholder="确认二级密码"/>
                         </label>
                     </div>
                     <div class="field submit-btn">

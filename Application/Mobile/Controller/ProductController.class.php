@@ -176,10 +176,13 @@ class ProductController extends MobileBaseController
         $this->display();
     }
 
+    /**
+     * 合成二维码
+     */
     public function ajax_get_poster(){
-//        $imageHelper = new ImageHelper();
-        $aa = '{"code":200,"data":"/Template/mobile/new/Static/img/index/banner.png"}';
-        echo $aa;
+
+        $imageHelper = new ImageHelper();
+        $imageHelper->mergeImageFromQRcode($this->user['qr_code'],'Template/mobile/new/Static/img/index/banner.png');
         exit;
     }
 }
