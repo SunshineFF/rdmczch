@@ -1026,9 +1026,11 @@ function calculate_price($user_id=0,$order_goods,$shipping_code = array(),$shipp
         return array('status'=>-6,'msg'=>"你的账户可用余额为:".$user['user_money'],'result'=>''); // 返回结果状态
     
     $goods_id_arr = get_arr_column($order_goods,'goods_id');
-    $goods_arr = M('goods')->where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping'); // 商品id 和重量对应的键值对
-    
-        foreach($order_goods as $key => $val)
+    $goods_arr = M('goods')->where("goods_id in(".  implode(',',$goods_id_arr).")")->getField('goods_id,weight,market_price,is_free_shipping,exchange_integral'); // 商品id 和重量对应的键值对
+    $list = $order_goods;
+    $order_goods = [];
+    $jifen = [];
+        foreach($list as $key => $val)
         {       
 	    //如果商品不是包邮的
             if($goods_arr[$val['goods_id']]['is_free_shipping'] == 0)
@@ -1044,8 +1046,17 @@ function calculate_price($user_id=0,$order_goods,$shipping_code = array(),$shipp
             $anum        += $val['goods_num']; // 购买数量
             $goods_price += $order_goods[$key]['goods_fee']; // 商品总价            
             $store_goods_price[$val['store_id']] += $order_goods[$key]['goods_fee']; // 每个商家 的商品总价
-        }        
-         
+            $val['exchange_integral'] = $goods_arr[$val['goods_id']]['exchange_integral'];
+            if (isset($val['store_id'])){
+                $jifen[$val['store_id']] +=  $val['exchange_integral'] *  $val['goods_num'];
+            }else{
+                $jifen[$val['store_id']] = $val['exchange_integral'] *  $val['goods_num'];
+            }
+            $order_goods[$key] = $val;
+        }
+
+
+
         // 因为当前方法在没有user_id 的情况下也可以调用, 因此 需要判断用户id
         if($user_id)
         {
@@ -1147,7 +1158,8 @@ function calculate_price($user_id=0,$order_goods,$shipping_code = array(),$shipp
             'store_goods_price' => $store_goods_price,//  每个店铺的商品总价            
             'store_point_count' => $store_point_count, // 每个商家平摊使用了多少积分            
             'store_balance'     => $store_balance, // 每个商家平摊用了多少余额            
-        );    
+            'jifen'     => $jifen, // 每个商家平摊用了多少积分
+        );
     return array('status'=>1,'msg'=>"计算价钱成功",'result'=>$result); // 返回结果状态
 }
 

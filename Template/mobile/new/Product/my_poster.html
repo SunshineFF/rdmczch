@@ -24,18 +24,18 @@
 </div>
 <from action="{:U('Product/my_poster')}"  method="post">
 	<div class="big">
-		<img src="__STATIC__/img/index/banner.png" alt="">
+		<if condition="$has_poster eq 1">
+			<img src="{$poster_imag}" alt=""/>
+		</if>
 	</div>
-	<input type="hidden" value="__STATIC__/img/index/banner.png" name="src" class="src">
+	<input type="hidden" value="{$poster_imag}" name="back_img" class="src">
 	<div class="checkin" >生成海报</div>
 	<div class="new" style="display: none">重生生成</div>
 </from>
 <div class="small">
 	<ul>
-		<li><img src="__STATIC__/img/index/banner.png" alt=""></li>
-		<li><img src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" alt=""></li>
-		<li><img src="__STATIC__/img/index/banner.png" alt=""></li>
-		<li><img src="__STATIC__/img/index/banner.png" alt=""></li>
+		<li><img src="/Public/poster/20190528112023.png" data-value="20190528112023.png" alt=""></li>
+		<li><img src="/Public/poster/20190528134854.png" data-value="20190528134854.png" alt=""></li>
 	</ul>
 </div>
 <div class="new_poster"  style="display: none">
@@ -59,7 +59,7 @@
 	$(".small li").click(function(){
 		var src =$(this).children("img").attr("src");
 		$(".big").children("img").attr("src",src);
-		$(".src").val(src);
+		$(".src").val($(this).children("img").attr('data-value'));
 		$(this).addClass('cur').siblings().removeClass('cur');
 	})
 	// 点击生成图片
@@ -70,7 +70,7 @@
 		$.ajax({
 			type: "POST",
 			url: "{:U('Product/ajax_get_poster')}",
-			data: {src:$(".src").val()},
+			data: {back_img:$(".src").val()},
 			dataType: "json",
 			success: function(data){
 				// var src =  1;

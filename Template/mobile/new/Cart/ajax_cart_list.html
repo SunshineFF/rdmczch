@@ -1,4 +1,4 @@
-<style type="text/css">
+ <style type="text/css">
 	.page-shopping .bottom-panel{display: flex;}
 	.page-shopping .bottom-panel .info{margin-top: 4px;width: 50%;}
 	.page-shopping .bottom-panel .right{margin-top: 10px;}
@@ -39,11 +39,11 @@
                   </div>                 
              </div>
            </div>
-           <div style=" position:absolute; right:0px; top:20px; width:100px; height:98px;">
+           <div style=" position:absolute; right:0px; top:20px; width:150px; height:98px;">
              <div class="price">
                <span class="mar_price">￥{$v.market_price}元</span>
                <br>
-               <span>￥{$v.member_goods_price}元</span>
+               <span>￥{$v.member_goods_price}元+ {$v.exchange_integral}积分</span>
               </div>
              <div class="delete">
                <a href="javascript:void(0);" onclick="del_cart_goods({$v.id})">
@@ -89,7 +89,7 @@
 	     </div>
 	   </div>
 	   <div class="info" style="margin-top: 4px;">
-	     <span class="hot" id="cart_amount_desc"><em>总计：</em>￥{$total_price.total_fee}元</span>
+	     <span class="hot" id="cart_amount_desc"><em>总计：</em>￥{$total_price.total_fee}元 + {$total_price.jifen}积分</span>
 	     <br>
 	     <span class="hot_text">不含运费</span>
 	   </div>

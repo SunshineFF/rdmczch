@@ -152,7 +152,7 @@ class GoodsController extends MobileBaseController {
         $goods_id = I("get.id");
         $goods = M('Goods')->where("goods_id = $goods_id")->find();
         if(empty($goods)){
-        	$this->tp404('此商品不存在或者已下架');
+        	$this->error('此商品不存在或者已下架');
         }
         if($goods['brand_id']){
             $brnad = M('brand')->where("id =".$goods['brand_id'])->find();

@@ -31,7 +31,7 @@
 			<dl style="border-bottom:1px solid #eeeeee">
 			<dt style=" position:absolute;" class="dingdan_2"></dt>
 			<dd style=" margin-left:30px;"><span class="zhif">所选支付方式&nbsp;:&nbsp;{$order_info.pay_name}</span>
-				<span class="zhif">应付款金额&nbsp;:&nbsp;￥{$order_info.total_fee}元</span>			 			 
+				<span class="zhif">应付款金额&nbsp;:&nbsp;￥{$order_info.total_fee}元 + <?php echo (int)$order_info['jifen'];?>积分</span>
                 <if condition="$order_info.pay_btn eq 1">
 	                <a href="{:U('Mobile/Cart/cart4',array('order_id'=>$order_info['order_id']))}" class="zhifu" style=" color:#fff; font-size:16px;">去支付</a>
                 </if>			    
@@ -88,7 +88,9 @@
 		          <dd class="name" class="pice" style=" width:55%;">
 	                  <strong>{$good.goods_name}</strong><span>{$good.spec_key_name}</span>
                    </dd>
-		          <dd class="pice" style=" font-size:13px; color:#F60; width:25%;">￥{$good['member_goods_price']}元<em>x{$good['goods_num']}</em></dd>
+		          <dd class="pice" style=" font-size:13px; color:#F60; width:25%;">￥{$good['member_goods_price']}元
+					  <em><?php echo (int)$good['jifen'];?>积分</em>
+					  <em>x{$good['goods_num']}</em></dd>
 		          
 		          <dd class="pice" style=" font-size:13px; color:#F60; width:25%;">                  
                   	<em>
@@ -99,17 +101,17 @@
                   </dd>
                   </dl>                  
 		          </a>
-		          <div class="pic" style=" border:0;"><span>小计：</span><strong>￥{$good['member_goods_price'] * $good['goods_num']}元</strong></div>
+		          <div class="pic" style=" border:0;"><span>小计：</span><strong>￥{$good['member_goods_price'] * $good['goods_num']}元+<?php echo (int)$good['jifen']?>积分</strong></div>
 		    </div>
 	</volist>
 	<!-- end 商品列表-->										       
 			<div class="jiage">
 				<p>商品总价&nbsp;:&nbsp;<span class="price">￥{$order_info.order_amount}元</span></p>				
-				<p>配送费用&nbsp;:&nbsp;<span class="price">￥{$order_info.shipping_price}元</span></p>
-                                <p>优惠券&nbsp;:&nbsp;<span class="price">￥{$order_info.coupon_price}元</span></p>
-				<p>积分&nbsp;:&nbsp;<span class="price">￥{$order_info.integral_money}元</span></p>	
-                                <p>余额&nbsp;:&nbsp;<span class="price">￥{$order_info.user_money}元</span></p>	
-                                <p>活动优惠&nbsp;:&nbsp;<span class="price">￥{$order_info.order_prom_amount}元</span></p>                                
+<!--				<p>配送费用&nbsp;:&nbsp;<span class="price">￥{$order_info.shipping_price}元</span></p>-->
+<!--                                <p>优惠券&nbsp;:&nbsp;<span class="price">￥{$order_info.coupon_price}元</span></p>-->
+				<p>积分&nbsp;:&nbsp;<span class="price"><?php echo (int)$order_info['jifen'];?></span></p>
+<!--                                <p>余额&nbsp;:&nbsp;<span class="price">￥{$order_info.user_money}元</span></p>	-->
+<!--                                <p>活动优惠&nbsp;:&nbsp;<span class="price">￥{$order_info.order_prom_amount}元</span></p>                                -->
 				<p>应付款金额&nbsp;:&nbsp;<span class="price1">￥{$order_info.total_fee}元</span></p>						
 			</div>
 		</div>

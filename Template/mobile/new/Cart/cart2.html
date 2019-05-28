@@ -58,7 +58,7 @@
 	           <if condition="($v2[selected] eq '1') and ($v2[store_id] eq $v[store_id])">
                     <li class="item" >
                       <div class="itemPay list-price-nums" id="itemPay17">
-                        <p class="price">￥{$v2.member_goods_price}元</p>
+                        <p class="price">￥{$v2.member_goods_price}元 + {$v2.exchange_integral}积分</p>
                         <p class="nums">x{$v2.goods_num}</p>
                       </div>
                       <div class="itemInfo list-info" id="itemInfo12">
@@ -71,42 +71,6 @@
                     </li>
                 </if>  
             </foreach>
-			<li class="flow_youhui_no">
-              <div class="checkout_other">
-                <div class="jmbag" href="javascript:void(0);" onClick="showCheckoutOther(this);"><span class="right_arrow_flow"></span>使用优惠券</div>
-                <table class="subbox_other sub_bonus" width="100%">
-                  <tr>
-                    <td  colspan="2">
-                    <input type="radio" class="radio vam ma-ri-10" name="couponTypeSelect[{$v[store_id]}]" checked value="1"  onClick="ajax_order_price();" />
-                     <select id="coupon_id" name="coupon_id[{$v[store_id]}]" class="vam ou-no" onChange="ajax_order_price();">                                                     
-                          <option value="0">选择优惠券</option>
-                         <foreach name="couponList" item="v3">
-                            <if condition="($v3[store_id] eq $v[store_id])">
-                       		  <option value="{$v3['id']}">{$v3['name']}</option>
-                            </if>
-                         </foreach>
-                     </select>                    
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>
-                    &nbsp;或 &nbsp;
-                    <input type="radio" class="radio vam ma-ri-10" name="couponTypeSelect[{$v[store_id]}]"  value="2"  onClick="ajax_order_price();javascript:document.getElementById('Bonus_span_0').style.display='block';" />
-                    <a href="javascript:void(0);"  class="a_other1_h" id="Bonus_a_0">直接输入优惠券</a>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>
-                      <label id="Bonus_span_0" style="display:;">
-                        <input name="couponCode[{$v[store_id]}]" id="bonus_sn_0" type="text"   value="" placeholder="输入优惠券"  class="txt1" style="width:144px;"/>
-                        <input name="validate_bonus" type="button" value="使用" onClick="ajax_order_price();" class="BonusButton" />
-                      </label>
-                    </td>
-                    </tr>
-                  
-                </table>
-              </div>
-            </li>      
 			<li class="flow_youhui_no">
        			<label id="Bonus_span_0">
        			   选择物流： 
@@ -125,25 +89,7 @@
                         <input type="text" placeholder="给卖家留言" name="user_note[{$v[store_id]}]" style="vertical-align:middle" class="txt1">            
                  </label>
             </li>                            
-</foreach>            
-            
-            <li class="flow_youhui_no">
-       			<label id="Bonus_span_0">
-       			   使用余额：
-                   <input id="user_money" name="user_money"  type="text"   placeholder="输入余额" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d.]/g,'')" class="txt1" style="width:100px;"/>
-                   <input name="validate_bonus" type="button" value="使用" onClick="ajax_order_price();" class="BonusButton" />
-                 	您的可用余额<em>{$user['user_money']}</em>
-                 </label>
-            </li>
-            
-            <li class="flow_youhui_no">
-       			<label id="Bonus_span_0">
-       			   使用积分：
-                   <input id="pay_points" name="pay_points" type="text"   placeholder="输入积分"  onpaste="this.value=this.value.replace(/[^\d]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d]/g,'')" class="txt1" style="width:100px;"/>
-                   <input name="validate_bonus" type="button" value="使用" onClick="ajax_order_price();" class="BonusButton" />
-                 	您的可用积分<em>{$user['pay_points']}</em>
-                 </label>
-            </li>
+</foreach>
           </ul>
         </div>
       </section>
@@ -183,19 +129,14 @@
             <div class="panel panel-default info-box">
               <div class="con-ct fo-con">
                 <ul class="ct-list order_total_ul" id="ECS_ORDERTOTAL" >
-                  <li class="order_total_li" > 
-                  		*该订单完成后，您将获得 <span class="price">相应的</span> 积分<br/>
-                  </li>
                   <li>
                    <div class="subtotal">
                       <span class="total-text">商品总额：</span><em class="price">￥{$total_price.total_fee}元</em><br/>
                       <span class="total-text">配送费用：</span>￥<em class="price" id="postFee">{$total_price.shipping_price}</em>元<br/>
-                      <span class="total-text">使用优惠券：</span>-&nbsp;¥&nbsp;<em class="price" id="couponFee">0</em>元<br/>
-                      <span class="total-text">使用积分：</span>-&nbsp;¥&nbsp;<em class="price" id="pointsFee">0</em>元<br/>
-                      <span class="total-text">使用余额：</span>-&nbsp;¥&nbsp;<em class="price" id="balance">0</em>元<br/>
-                      <span class="total-text">优惠活动：</span>-&nbsp;¥&nbsp;<em class="price" id="order_prom_amount">0</em>元<br/>                      
-                      <span class="total-text">应付金额：</span>￥<strong class="price_total" id="payables">0</strong>元
-                      <span class="total-text" style=""></span> 
+                      <span class="total-text">优惠活动：</span>-&nbsp;¥&nbsp;<em class="price" id="order_prom_amount">0</em>元<br/>
+                      <span class="total-text">应付金额：</span>￥<strong class="price_total" id="payables">{$total_price.total_fee}</strong>元<br/>
+                       <span class="total-text">应付积分：</span><strong class="price_total" id="payjifen">{$total_price.jifen}</strong>
+                      <span class="total-text" style=""></span>
                    </div>
                   </li>
                 </ul>

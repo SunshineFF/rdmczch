@@ -132,7 +132,7 @@ class CartController extends MobileBaseController {
         $shippingList2 = M('plugin')->where("type = 'shipping'")->getField('code,name'); // 查找物流插件
         foreach($shippingList as $k => $v)
             $shippingList[$k]['name']  = $shippingList2[$v['shipping_code']];                
-        
+
         $Model = new \Think\Model(); // 找出这个用户的优惠券 没过期的  并且 订单金额达到 condition 优惠券指定标准的               
         $sql = "select c1.name,c1.money,c1.condition, c2.* from __PREFIX__coupon as c1 inner join __PREFIX__coupon_list as c2  on c2.cid = c1.id and c1.type in(0,1,2,3) and order_id = 0
             where c2.uid = {$this->user_id}  and ".time()." < c1.use_end_time and c1.condition <= {$result['total_price']['total_fee']} and c2.store_id in (".implode(',', $store_id_arr).")";
@@ -172,7 +172,7 @@ class CartController extends MobileBaseController {
 		
 		$address = M('UserAddress')->where("address_id = $address_id")->find();
 		$order_goods = M('cart')->where("user_id = {$this->user_id} and selected = 1")->select();
-                $result = calculate_price($this->user_id,$order_goods,$shipping_code,0,$address[province],$address[city],$address[district],$pay_points,$user_money,$coupon_id,$couponCode);                
+        $result = calculate_price($this->user_id,$order_goods,$shipping_code,0,$address[province],$address[city],$address[district],$pay_points,$user_money,$coupon_id,$couponCode);
 		if($result['status'] < 0)	
 			exit(json_encode($result));      	
 
@@ -193,7 +193,8 @@ class CartController extends MobileBaseController {
                     'store_point_count' => $result['result']['store_point_count'], // 每个商家平摊使用了多少积分            
                     'store_balance'=>$result['result']['store_balance'], // 每个商家平摊用了多少余额
                     'store_goods_price'=>$result['result']['store_goods_price'], // 每个商家的商品总价
-                );   
+                    'jifen'=>$result['result']['jifen'], // 每个商家的商品总价
+                );
                 // 提交订单        
                 if($_REQUEST['act'] == 'submit_order')
                 {  
@@ -219,6 +220,7 @@ class CartController extends MobileBaseController {
         if($master_order_sn)
         {                       
             $sum_order_amount = M('order')->where("master_order_sn = '$master_order_sn'")->sum('order_amount');
+            $sum_jifen = M('order')->where("master_order_sn = '$master_order_sn'")->sum('jifen');
             if($sum_order_amount == 0){                
                 $order_order_list = U("Home/User/order_list");
                 header("Location: $order_order_list");
@@ -248,12 +250,14 @@ class CartController extends MobileBaseController {
                 $bankCodeList[$val['code']] = unserialize($val['bank_code']);        
             }                
         }
+
         $bank_img = include 'Application/Home/Conf/bank.php'; // 银行对应图片        
         $payment = M('Plugin')->where("`type`='payment' and status = 1")->select();        
         $this->assign('paymentList',$paymentList);        
         $this->assign('bank_img',$bank_img);
         $this->assign('master_order_sn', $master_order_sn); // 主订单号
         $this->assign('sum_order_amount', $sum_order_amount); // 所有订单应付金额        
+        $this->assign('sum_jifen', (int)$sum_jifen); // 所有订单应付积分
         $this->assign('order',$order);
         $this->assign('bankCodeList',$bankCodeList);        
         $this->assign('pay_date',date('Y-m-d', strtotime("+1 day")));
