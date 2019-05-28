@@ -17,11 +17,15 @@
 <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
 <script type="text/javascript" src="__STATIC__/js/size.js" ></script>
+<!--<script type="text/javascript" src="__STATIC__/js/lunbo.js" ></script>-->
 <script src="__PUBLIC__/js/global.js"></script>
 <script src="__PUBLIC__/js/mobile_common.js"></script>
-
+    <script type="text/javascript" src="__STATIC__/js/lunbo/swiper-3.4.2.min.js" ></script>
+    <script type="text/javascript" src="__STATIC__/js/lunbo/swiper-3.4.2.jquery.min.js" ></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/js/lunbo/swiper-3.4.2.min.css"/>
 </head>
-<body>
+<body style="font-size: 100%">
+
 <div class="con">
 <!--头部开始-->
 
@@ -36,11 +40,33 @@
 <!--头部结束-->
 <div class="content">
     <!--轮播图开始-->
-    <div class="banner">
-        <img src="__STATIC__/img/index/banner.png" alt="">
+<!--    <div id="main">-->
+<!--        <img class="pic" style="display:block;" src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" />-->
+<!--        <img class="pic" src="__STATIC__/img/index/9b787593b9e5af35b8eeb89d3b0adf5.jpg" />-->
+<!--        <img class="pic" src="__STATIC__/img/index/20190524182222.jpg" />-->
+<!--        <img class="pic" src="__STATIC__/img/index/20190524182003.jpg" />-->
+<!--    </div>-->
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" /></div>
+            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/9b787593b9e5af35b8eeb89d3b0adf5.jpg" /></div>
+            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190524182222.jpg" /></div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
     </div>
     <!--轮播图结束-->
 
+    <script>
+        var mySwiper = new Swiper ('.swiper-container', {
+            autoplay : 3000,
+            speed:10,
+
+            // 如果需要分页器
+            pagination: '.swiper-pagination',
+        })
+    </script>
 
     <!--工厂直销开始-->
     <div class="factory">
@@ -49,88 +75,41 @@
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
         </div>
         <ul>
-            <li>
-                <a href="{:U('Goods/goodsInfo?id=201')}">
-                    <img src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" alt="">
-                    <div class="price">
-                        <div class="price_left">
-                            <span>￥14+12积分</span>
-                            <b>安之清纯沐浴露1008ml</b>
-                            <i style="color: #ff2e00;padding: 0 0.5rem">￥14</i><i style="color: #a7a7a7; text-decoration:line-through;">￥26</i>
+            <foreach name="hot_goods" item="v">
+                <li>
+                    <a href="{:U('Goods/goodsInfo?id=201')}">
+                        <img src="{$v.original_img}" alt="">
+                        <div class="price">
+                            <div class="price_left">
+                                <span>{$v.keywords}</span>
+                                <b>{$v.goods_name}</b>
+                                <i style="color: #ff2e00;padding: 0 0.3rem">￥{$v.cost_price}</i><i style="color: #a7a7a7; text-decoration:line-through;">￥{$v.market_price}</i>
+                            </div>
+                            <div class="price_right">
+                                <p>立即购买</p>
+                            </div>
                         </div>
-                        <div class="price_right">
-                            <p>立即购买</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{:U('Goods/goodsInfo?id=195')}">
-                    <img src="__STATIC__/img/index/9b787593b9e5af35b8eeb89d3b0adf5.jpg" alt="">
-                    <div class="price">
-                        <div class="price_left">
-                            <span>￥60+30积分</span>
-                            <b>晓膳铁棍山药粉（30条罐装）</b>
-                            <i style="color: #ff2e00;padding: 0 0.5rem">￥60</i><i style="color: #a7a7a7; text-decoration:line-through;">￥98</i>
-                        </div>
-                        <div class="price_right">
-                            <p>立即购买</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{:U('Goods/goodsInfo?id=168')}">
-                <img src="__STATIC__/img/index/20190524182222.jpg" alt="">
-                <div class="price">
-                    <div class="price_left">
-                        <span>￥18+50积分</span>
-                        <b>威帮洗衣液1L</b>
-                        <i style="color: #ff2e00;padding: 0 0.5rem">￥18</i><i style="color: #a7a7a7; text-decoration:line-through;">￥75</i>
-                    </div>
-                    <div class="price_right">
-                        <p>立即购买</p>
-                    </div>
-                </div>
-                </a>
-            </li>
-            <li>
-                <a href="{:U('Goods/goodsInfo?id=189')}">
-                    <img src="__STATIC__/img/index/20190524182003.jpg" alt="">
-                    <div class="price">
-                        <div class="price_left">
-                            <span>￥59+30积分</span>
-                            <b>好夫人多功能电煮锅1.6L</b>
-                            <i style="color: #ff2e00;padding: 0 0.5rem">￥59</i><i style="color: #a7a7a7; text-decoration:line-through;">￥90</i>
-                        </div>
-                        <div class="price_right">
-                            <p>立即购买</p>
-                        </div>
-                    </div>
-                </a>
-            </li>
+                    </a>
+                </li>
+            </foreach>
         </ul>
     </div>
     <!--工厂直销结束-->
 
 <!--    群主店铺开始-->
-<!--    <div class="shop">-->
-<!--        <div class="shop_title">-->
-<!--            <b class="fl" style="font-size: 1rem;color: #000000">群主店铺</b>-->
-<!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>-->
-<!--        </div>-->
-<!--        <div class="shop_img">-->
-<!--            <div class="main fl" style="width: 48%;margin-right: 0.3rem"><img src="__STATIC__/img/index/timg13@2x.png"></div>-->
-<!--            <ul>-->
-<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/timg5@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/12@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/timg2@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="shop">
+        <div class="shop_title">
+            <b class="fl" style="font-size: 1rem;color: #000000">群主店铺</b>
+            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>
+        </div>
+        <div class="shop_img">
+            <div class="main fl" style="width: 48%;margin-right: 0.3rem"><img src="__STATIC__/img/index/timg13@2x.png"></div>
+            <ul>
+                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>
+                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>
+            </ul>
+        </div>
+    </div>
 <!--    群主店铺结束-->
 
 <!--&lt;!&ndash;积分商城图片开始&ndash;&gt;-->
@@ -389,6 +368,7 @@ $('.search-type li').click(function() {
 });
 $('#searchtype').val($(this).attr('0'));
 </script>
+
 <script src="__PUBLIC__/js/jqueryUrlGet.js"></script><!--获取get参数插件-->
 <script> set_first_leader(); //设置推荐人 </script>
 </body>
