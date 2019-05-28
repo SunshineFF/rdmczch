@@ -177,7 +177,9 @@ class ProductController extends MobileBaseController
     }
 
     public function ajax_get_poster(){
-        $imageHelper = new ImageHelper();
-
+//        $imageHelper = new ImageHelper();
+        $aa = '{"code":200,"data":"/Template/mobile/new/Static/img/index/banner.png"}';
+        echo $aa;
+        exit;
     }
 }

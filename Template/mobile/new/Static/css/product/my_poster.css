@@ -17,7 +17,7 @@ li{
 /*大海报*/
 .big{
     width: 60%;
-    height: 25rem;
+    height: 21rem;
     margin: 4rem auto 0;
 }
 .big img{
@@ -45,9 +45,10 @@ li{
     overflow: hidden;
     margin: 0 auto;
     margin-top: 2rem;
+    margin-bottom: 4rem;
 }
 .small li{
-    width: 23%;
+    width: 22.9%;
     height: 8rem;
     float: left;
     margin-right: 2%;
