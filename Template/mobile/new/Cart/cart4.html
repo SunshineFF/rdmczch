@@ -49,6 +49,15 @@
                     </if>                        
             </em>
         </li>
+          <li>支付积分：
+              <em>
+                  <if condition="$sum_jifen neq ''">
+                      {$sum_jifen}
+                      <else />
+                      {$order['jifen']}
+                  </if>
+              </em>
+          </li>
       </ul>
     </div>
     

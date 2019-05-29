@@ -206,6 +206,7 @@ class UsersLogic extends RelationModel
         try{
             $this->startTrans();
             $map['password_2'] = md5(I('password_2'));
+            $map['pay_points'] = 100;
             $map = $this->_initUserData($map);
             $user_id = M('users')->add($map);
             $this->commit();

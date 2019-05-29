@@ -112,7 +112,7 @@ if(parseInt(is_distribut) == 1 && parseInt(user_id) > 0)
         </div>
         <dl class="goods_price">
           <script type="text/javascript" src="__STATIC__/js/lefttime.js"></script>
-          <dt> <span id="goods_price">￥{$goods.shop_price}元</span><font>价格：￥{$goods.market_price}元</font> </dt>
+          <dt> <span id="goods_price">￥{$goods.shop_price}元 + {$goods.exchange_integral}积分</span><font>价格：￥{$goods.market_price}元</font> </dt>
         </dl>
         <ul class="price_dottm">
           <li style=" text-align:left">折扣：{$goods.discount}折</li>
@@ -400,7 +400,9 @@ function get_goods_price()
 	}
     var flash_sale_price = parseFloat("{$goods['flash_sale']['price']}");
     (flash_sale_price > 0) && (goods_price = flash_sale_price);
-	$("#goods_price").html('￥'+goods_price+'元'); // 变动价格显示
+
+    var jifen = "+ {$goods.exchange_integral}积分";
+	$("#goods_price").html('￥'+goods_price+'元 '+jifen); // 变动价格显示
 
 }
 

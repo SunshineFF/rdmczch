@@ -120,7 +120,8 @@ class CartLogic extends RelationModel
                     'prom_type'       => $goods['prom_type'],   // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
                     'prom_id'         => $goods['prom_id'],   // 活动id
                     'store_id'        => $goods['store_id'],   // 店铺id
-        );                
+                    'jifen'        => $goods['exchange_integral'],   // 店铺id
+        );
 
        // 如果商品购物车已经存在 
        if($catr_goods) 
@@ -169,9 +170,9 @@ class CartLogic extends RelationModel
             $user[user_id] = 0;
         }
                                 
-        $cartList = M('Cart')->where($where)->select();  // 获取购物车商品 
+        $cartList = M('Cart')->where($where)->select();  // 获取购物车商品
         $anum = $total_price =  $cut_fee = 0;
-
+        $productIds = [];
         foreach ($cartList as $k=>$val){
         	$cartList[$k]['goods_fee'] = $val['goods_num'] * $val['member_goods_price'];
         	$cartList[$k]['store_count']  = getGoodNum($val['goods_id'],$val['spec_key']); // 最多可购买的库存数量        	
@@ -183,14 +184,40 @@ class CartLogic extends RelationModel
                 
                 $cut_fee += $val['goods_num'] * $val['market_price'] - $val['goods_num'] * $val['member_goods_price'];                
         	$total_price += $val['goods_num'] * $val['member_goods_price'];
+        	$productIds[] = $val['goods_id'];
         }
-
-        $total_price = array('total_fee' =>$total_price , 'cut_fee' => $cut_fee,'num'=> $anum,); // 总计        
+        $jifen = 0;
+        $this->addProductExchangeIntegral($cartList,$productIds,$jifen);
+        $total_price = array('total_fee' =>$total_price , 'cut_fee' => $cut_fee,'num'=> $anum,'jifen' => $jifen); // 总计
         setcookie('cn',$anum,null,'/');
         if($mode == 1) return array('cartList' => $cartList, 'total_price' => $total_price);
         return array('status'=>1,'msg'=>'','result'=>array('cartList' =>$cartList, 'total_price' => $total_price));
-    }       
-    
+    }
+
+
+    /** 购物车添加积分逻辑
+     * @param $cartList
+     * @param $productIds
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function addProductExchangeIntegral(&$cartList,$productIds,&$jifen){
+        $goods = M('goods')->field(['exchange_integral','goods_id'])->where(['goods_id' => ['in',$productIds]])->select();
+        foreach ($goods as $key => $good){
+            $goods[$good['goods_id']] = $good['exchange_integral'];
+            unset($goods[$key]);
+        }
+        foreach ($cartList as $key => $item){
+            $goodId = $item['goods_id'];
+            if (isset($goods[$goodId])){
+                $item['exchange_integral'] = $goods[$goodId];
+                $jifen += $goods[$goodId] * $item['goods_num'];
+                $cartList[$key] = $item;
+            }
+        }
+    }
+
 /**
  * 计算商品的的运费 
  * @param type $shipping_code 物流 编号
@@ -349,6 +376,7 @@ function cart_freight2($shipping_code,$province,$city,$district,$weight,$store_i
                         'order_prom_id'    =>$car_price['store_order_prom_id'][$k],//'订单优惠活动id',
                         'order_prom_amount'=>$car_price['store_order_prom_amount'][$k],//'订单优惠活动优惠了多少钱',
                         'store_id'         =>$k,  // 店铺id
+                        'jifen'         =>$car_price['jifen'][$k],  // 店铺id
                 );
                 $order_id = M("Order")->data($data)->add();               
                 // 记录订单操作日志
@@ -375,6 +403,7 @@ function cart_freight2($shipping_code,$province,$city,$district,$weight,$store_i
                    $data2['prom_type']          = $val['prom_type']; // 0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠
                    $data2['prom_id']            = $val['prom_id']; // 活动id
                    $data2['store_id']           = $val['store_id']; // 店铺id
+                   $data2['jifen']           = $val['jifen']; // 店铺id
                    $data2['distribut']          = $goods['distribut']; // 三级分销金额
                    $data2['commission']         = M('goods_category')->where("id = {$goods['cat_id3']}")->getField('commission'); // 商品抽成比例
                    $order_goods_id              = M("OrderGoods")->data($data2)->add(); 

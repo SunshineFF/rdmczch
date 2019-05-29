@@ -66,6 +66,7 @@ class PaymentController extends MobileBaseController {
                 $order = M('order')->where("master_order_sn = '$master_order_sn'")->find();
                 $order['order_sn'] = $master_order_sn; // 临时修改 给支付宝那边去支付
                 $order['order_amount'] = M('order')->where("master_order_sn = '$master_order_sn'")->sum('order_amount'); // 临时修改 给支付宝那边去支付
+                $order['jifen'] = M('order')->where("master_order_sn = '$master_order_sn'")->sum('jifen'); // 临时修改 给支付宝那边去支付
             }else{
                 M('order')->where("order_id = $order_id")->save(array('pay_code'=>$this->pay_code,'pay_name'=>$payment_arr[$this->pay_code]));            
                 $order = M('order')->where("order_id = $order_id")->find();     
@@ -84,11 +85,11 @@ class PaymentController extends MobileBaseController {
            }
            $order_id = $order['order_id'];
 
-
            $this->assign('payment_name',$this->payment->getData('name'));
            $this->assign('payment_code',$this->payment->getData('code'));
            $this->assign('code_str', $code_str);
            $this->assign('money', $order['order_amount']);
+           $this->assign('jifen', (int)$order['jifen']);
            $this->assign('order_id', $order_id);
            $this->assign('master_order_sn', $master_order_sn); // 主订单号
            $this->display('payment');  // 分跳转 和不 跳转 

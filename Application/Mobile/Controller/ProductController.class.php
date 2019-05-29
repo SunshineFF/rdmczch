@@ -2,6 +2,7 @@
 namespace Mobile\Controller;
 
 use Mobile\Logic\ImageHelper;
+use Mobile\Logic\QRcodeHelp;
 
 class ProductController extends MobileBaseController
 {
@@ -171,8 +172,8 @@ class ProductController extends MobileBaseController
      *  我的海报
      */
     public function my_poster(){
-        $this->assign('poster',$this->user['poster']);
-        $this->assign('has_poster',$this->user['poster'] ? 1 : 0);
+        $this->assign('poster_imag','/'.$this->user['poster_imag']);
+        $this->assign('has_poster',$this->user['poster_imag'] ? 1 : 0);
         $this->display();
     }
 
@@ -180,9 +181,49 @@ class ProductController extends MobileBaseController
      * 合成二维码
      */
     public function ajax_get_poster(){
-
+        $baseDir = 'Public/poster/';
+        $posterImage = [
+            '20190528112023.png' => [
+                'x' => 267,
+                'y' => 418,
+                'width' => '235'
+            ],
+            '20190528134854.png' =>[
+                'x' => 220,
+                'y' => 642,
+                'width' => '315'
+            ]
+        ];
+        $img = I('back_img') ? I('back_img') : '20190528134854.png';
+        $backImage = $baseDir.$img;
         $imageHelper = new ImageHelper();
-        $imageHelper->mergeImageFromQRcode($this->user['qr_code'],'Template/mobile/new/Static/img/index/banner.png');
+        $return = [];
+        try{
+            $image = $imageHelper->mergeImageFromQRcode($this->user['qr_code'],$backImage,$posterImage[$img]['width'],$posterImage[$img]['x'],$posterImage[$img]['y']);
+            if ($this->user['poster_imag']){
+                $root = str_replace('\\','/',getcwd().'/');
+                unlink($root.$this->user['poster_imag']);
+            }
+            $image = $this->getImagePositonDir($image);
+            $this->user['poster_imag'] = $image;
+            M('users')->where(['user_id' => $this->user_id])->save(['poster_imag'=> $image]);
+            $return['code'] = 200;
+            $return['data'] = $image;
+            echo json_encode($return);
+            exit;
+        }catch (\Exception $exception){
+            $return['code'] = 400;
+            $return['code'] = "出现了一些未知的的错误，在紧急修复中。";
+            \Think\Log::write($exception->getMessage().$exception->getTraceAsString(),'WARN');
+        }
+        echo \GuzzleHttp\json_encode($return);
         exit;
+    }
+
+    protected function getImagePositonDir($path){
+        $image = end(explode('/',$path));
+        $QRcodeHelp = new QRcodeHelp();
+        $path = $QRcodeHelp->getTodayDir().'/'.$image;
+        return $path;
     }
 }
