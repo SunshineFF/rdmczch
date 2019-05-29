@@ -1,4 +1,4 @@
 .idea/*
 Application/Runtime/*
 Public/upload/*
-Application/Common/Conf/db.php
+Application/Common/Conf/*
