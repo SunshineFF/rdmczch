@@ -186,12 +186,22 @@ class ProductController extends MobileBaseController
             '20190528112023.png' => [
                 'x' => 267,
                 'y' => 418,
-                'width' => '235'
+                'width' => 235
             ],
             '20190528134854.png' =>[
                 'x' => 220,
                 'y' => 642,
-                'width' => '315'
+                'width' => 315
+            ],
+            '20190529101216.png' => [
+                'x' => 247,
+                'y' => 873,
+                'width' => 260
+            ],
+            '20190529101229.png' => [
+                'x' => 356,
+                'y' => 263,
+                'width' => 145
             ]
         ];
         $img = I('back_img') ? I('back_img') : '20190528134854.png';
@@ -199,7 +209,7 @@ class ProductController extends MobileBaseController
         $imageHelper = new ImageHelper();
         $return = [];
         try{
-            $image = $imageHelper->mergeImageFromQRcode($this->user['qr_code'],$backImage,$posterImage[$img]['width'],$posterImage[$img]['x'],$posterImage[$img]['y']);
+            $image = $imageHelper->mergeImageFromQRcode($this->getQRcode(),$backImage,$posterImage[$img]['width'],$posterImage[$img]['x'],$posterImage[$img]['y']);
             if ($this->user['poster_imag']){
                 $root = str_replace('\\','/',getcwd().'/');
                 unlink($root.$this->user['poster_imag']);
@@ -226,4 +236,25 @@ class ProductController extends MobileBaseController
         $path = $QRcodeHelp->getTodayDir().'/'.$image;
         return $path;
     }
+
+    /** 获取二维码地址
+     * @return string
+     */
+    protected function getQRcode(){
+        if ($this->user['qr_code']){
+            return $this->user['qr_code'];
+        }
+        $inviteCode = $this->user['invite_code'];
+        if (!$inviteCode){
+            $inviteCode = $this->user_id.rand(1000,9000);
+            $this->user['invite_code'] = $inviteCode;
+        }
+        $url = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/Mobile/Index/index.html?invite_code='.$inviteCode;
+        $qrcode = new QRcodeHelp();
+        $qrcodeString = $qrcode->getPng($url);
+        $this->user['qr_code'] = $qrcodeString;
+        M('users')->where(['user_id' => $this->user_id])->save($this->user);
+        return $qrcodeString;
+    }
+
 }

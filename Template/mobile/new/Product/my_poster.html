@@ -34,6 +34,8 @@
 	<ul>
 		<li><img src="/Public/poster/20190528112023.png" data-value="20190528112023.png" alt=""></li>
 		<li><img src="/Public/poster/20190528134854.png" data-value="20190528134854.png" alt=""></li>
+		<li><img src="/Public/poster/20190529101216.png" data-value="20190529101216.png" alt=""></li>
+		<li><img src="/Public/poster/20190529101229.png" data-value="20190529101229.png" alt=""></li>
 	</ul>
 </div>
 <div class="new_poster"  style="display: none">
@@ -55,9 +57,9 @@
 	})
 	// 点击小图大图变化
 	$(".small li").click(function(){
-		var src =$(this).children("img").attr("src");
-		$(".big").children("img").attr("src",src);
-		$(".src").val($(this).children("img").attr('data-value'));
+		var src =$(this).find("img").attr("src");
+		$(".big").find("img").attr("src",src);
+		$(".src").val($(this).find("img").attr('data-value'));
 		$(this).addClass('cur').siblings().removeClass('cur');
 	})
 	// 点击生成图片
@@ -72,9 +74,10 @@
 			dataType: "json",
 			success: function(data){
 				// var src =  1;
-				console.log(data);
+				$(".new_poster").find("img").attr("src",'/'+data.data);
+				$(".big").find("img").attr("src",'/'+data.data);
 				$(".new_poster").css('display','block');
-				$(".new_poster").children("img").attr("src",data.data);
+
 			}
 		});
 	})
