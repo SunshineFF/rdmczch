@@ -37,18 +37,28 @@
                                     </td>
                                     <td class="text-warning">保存后，生成新的二维码</td>
                                 </tr>  
-                                -->                             
+                                -->
                                 <tr>
                                     <td>店铺LOGO：</td>
                                     <td><div style="width: 200px;height: 80px;">
-                                    		 <img height="80" id="store_logo" src="<empty name='store.store_logo'><else/>{$store.store_logo}</empty>" nc_type="store_label">
-         								 </div>
-         								 <input type="hidden" name="store_logo" value="{$store.store_logo}">
-                         		 		<input type="button" class="button" onClick="GetUploadify(1,'store_logo','seller','callback1')"  value="上传  logo"/>
-                                   </td>
-                                	<td  class="text-warning">建议使用宽200像素-高60像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</td>
-                                </tr>                                    
-                            	<tr>
+                                        <img height="80" id="store_logo" src="<empty name='store.store_logo'><else/>{$store.store_logo}</empty>" nc_type="store_label">
+                                    </div>
+                                        <input type="hidden" name="store_logo" value="{$store.store_logo}">
+                                        <input type="button" class="button" onClick="GetUploadify(1,'store_logo','seller','callback1')"  value="上传  logo"/>
+                                    </td>
+                                    <td  class="text-warning">建议使用宽200像素-高60像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</td>
+                                </tr>
+                                <tr>
+                                    <td>店铺首页展示图：</td>
+                                    <td><div style="width: 200px;height: 80px;">
+                                        <img height="80" id="store_index" src="<empty name='store.store_logo'><else/>{$store.store_index}</empty>" nc_type="store_label">
+                                    </div>
+                                        <input type="hidden" name="store_index" value="{$store.store_index}">
+                                        <input type="button" class="button" onClick="GetUploadify(1,'store_index','seller','callback3')"  value="上传  logo"/>
+                                    </td>
+                                    <td  class="text-warning">建议使用宽200像素-高60像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</td>
+                                </tr>
+                                <tr>
                                     <td>店铺banner：</td>
                                     <td><div style="height:100px;">
                                     		 <img height="120" id="store_banner" src="<empty name='store.store_banner'>__PUBLIC__/images/not_adv.jpg<else/>{$store.store_banner}</empty>" nc_type="store_label">
@@ -158,6 +168,11 @@ function callback1(img_str){
 function callback2(img_str){
 	$('input[name="store_banner"]').val(img_str);
 	$('#store_banner').attr('src',img_str);
+}
+
+function callback3(img_str){
+    $('input[name="store_index"]').val(img_str);
+    $('#store_index').attr('src',img_str);
 }
 </script>
 </body>

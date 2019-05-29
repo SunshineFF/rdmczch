@@ -16,6 +16,26 @@ use Mobile\Model\StoreModel;
 
 class IndexController extends MobileBaseController {
 
+    /** 首页群主店铺ID
+     * @var array
+     */
+    protected $sellerProducts = [1,2,3,7];
+
+    /** 抢购产品ID
+     * @var array
+     */
+    protected $qiangGou = [201,195,168,189];
+
+    /** 首页工厂直销ID
+     * @var array
+     */
+    protected $zhixiao = [201,195,168,189];
+
+    /** 新品预售ID
+     * @var array
+     */
+    protected $xinpin = [201,195,168,189];
+
     public function index(){    
         /*
             //获取微信配置
@@ -28,10 +48,16 @@ class IndexController extends MobileBaseController {
             print_r($signPackage);
         */
 //        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
-        $hot_goods = M('goods')->where(['goods_id' => ['in',[201,195,168,189]]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
-//        var_dump($hot_goods);
+        $hot_goods = M('goods')->where(['goods_id' => ['in',$this->zhixiao]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页工厂直销
+        $group_store = M('store')->where(['store_id' => ['in',$this->sellerProducts]])->order('store_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺首图
+//        var_dump($group_store);
+        $flash_sale= M('goods')->where(['goods_id' => ['in',$this->qiangGou]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页限时抢购
+        $pre_sale= M('goods')->where(['goods_id' => ['in',$this->xinpin]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//新品预售
         $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,TPSHOP_CACHE_TIME)->select();
         $this->assign('thems',$thems);
+        $this->assign('group_store',$group_store);
+        $this->assign('pre_sale',$pre_sale);
+        $this->assign('flash_sale',$flash_sale);
         $this->assign('hot_goods',$hot_goods);
 //        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
 //        $this->assign('favourite_goods',$favourite_goods);
