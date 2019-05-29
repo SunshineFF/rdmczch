@@ -49,9 +49,9 @@
 
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" /></div>
-            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/9b787593b9e5af35b8eeb89d3b0adf5.jpg" /></div>
-            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190524182222.jpg" /></div>
+            <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190529110711.png" /></div>
+            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110846.png" /></div>
+            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110715.png" /></div>
         </div>
         <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
@@ -76,14 +76,14 @@
         </div>
         <ul>
             <foreach name="hot_goods" item="v">
-                <li>
-                    <a href="{:U('Goods/goodsInfo?id=201')}">
+                <li>'Blog/cate'
+                    <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                         <img src="{$v.original_img}" alt="">
                         <div class="price">
                             <div class="price_left">
                                 <span>{$v.keywords}</span>
                                 <b>{$v.goods_name}</b>
-                                <i style="color: #ff2e00;padding: 0 0.3rem">￥{$v.cost_price}</i><i style="color: #a7a7a7; text-decoration:line-through;">￥{$v.market_price}</i>
+                                <i style="color: #ff2e00;">￥{$v.cost_price}</i><i style="color: #a7a7a7; text-decoration:line-through;">￥{$v.market_price}</i>
                             </div>
                             <div class="price_right">
                                 <p>立即购买</p>
@@ -100,37 +100,49 @@
     <div class="shop">
         <div class="shop_title">
             <b class="fl" style="font-size: 1rem;color: #000000">群主店铺</b>
-            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>
+            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="{:U('Index/street')}" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>
         </div>
         <div class="shop_img">
-            <div class="main fl" style="width: 48%;margin-right: 0.3rem"><img src="__STATIC__/img/index/timg13@2x.png"></div>
             <ul>
-                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>
-                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>
+                <foreach name="group_store" item="v">
+                    <li><a href="{:U('Store/index',array('store_id'=>$v['store_id']))}"><img src="{$v.store_index}" alt=""></a></li>
+                </foreach>
+<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
+<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
             </ul>
         </div>
     </div>
 <!--    群主店铺结束-->
 
-<!--&lt;!&ndash;积分商城图片开始&ndash;&gt;-->
-<!--<div class="integral_img"><img src="__STATIC__/img/index/20190524114929.png" alt=""></div>-->
-<!--&lt;!&ndash;积分商城图片结束&ndash;&gt;-->
+<!--积分商城图片开始-->
+<div class="integral_img"><img src="__STATIC__/img/index/20190524114929.png" alt=""></div>
+<!--积分商城图片结束-->
 
-<!--&lt;!&ndash;    积分兑换开始&ndash;&gt;-->
-<!--<div class="exchange">-->
-<!--    <div class="exchange_title">-->
-<!--        <b class="fl" style="font-size: 1rem;color: #000000">积分兑换</b>-->
+<!--    积分兑换开始-->
+<div class="exchange">
+    <div class="exchange_title">
+        <b class="fl" style="font-size: 1rem;color: #000000">限时抢购</b>
 <!--        <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
-<!--    </div>-->
-<!--    <ul>-->
-<!--        <li>-->
-<!--            <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
-<!--            <div class="exchange_left fl">-->
-<!--                <span>3000积分</span>-->
-<!--                <b>麦特来XO</b>-->
-<!--            </div>-->
-<!--            <div class="exchange_right fl">立即兑换</div>-->
-<!--        </li>-->
+    </div>
+    <ul>
+        <foreach name="flash_sale" item="v">
+            <li>
+                <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
+                    <img src="{$v.original_img}" alt="">
+                    <div class="exchange_left fl">
+                        <span>{$v.keywords}</span>
+                        <b>{$v.goods_name}</b>
+                    </div>
+                    <div class="exchange_right fl">立即兑换</div>
+                </a>
+            </li>
+        </foreach>
 <!--        <li>-->
 <!--            <img src="__STATIC__/img/index/20190524105323.png" alt="">-->
 <!--            <div class="exchange_left fl">-->
@@ -139,62 +151,38 @@
 <!--            </div>-->
 <!--            <div class="exchange_right fl">立即兑换</div>-->
 <!--        </li>-->
-<!--        <li>-->
-<!--            <img src="__STATIC__/img/index/20190524105328.png" alt="">-->
-<!--            <div class="exchange_left fl">-->
-<!--                <span>3000积分</span>-->
-<!--                <b>麦特来XO</b>-->
-<!--            </div>-->
-<!--            <div class="exchange_right fl">立即兑换</div>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--            <img src="__STATIC__/img/index/20190524105330.png" alt="">-->
-<!--            <div class="exchange_left fl">-->
-<!--                <span>3000积分</span>-->
-<!--                <b>麦特来XO</b>-->
-<!--            </div>-->
-<!--            <div class="exchange_right fl">立即兑换</div>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--</div>-->
-<!--&lt;!&ndash;    积分兑换结束&ndash;&gt;-->
-<!--&lt;!&ndash;新品预售开始&ndash;&gt;-->
-<!--    <div class="integral_img"><img src="__STATIC__/img/index/20190524114933.png" alt=""></div>-->
-<!--&lt;!&ndash;新品预售结束&ndash;&gt;-->
+    </ul>
+</div>
+<!--    积分兑换结束-->
+<!--新品预售开始-->
+    <div class="integral_img"><img src="__STATIC__/img/index/20190524114933.png" alt=""></div>
+<!--新品预售结束-->
 
-<!--&lt;!&ndash;新品预售开始&ndash;&gt;-->
-<!--    <div class="pre_sale">-->
-<!--        <div class="pre_sale_title">-->
-<!--            <b class="fl" style="font-size: 1rem;color: #000000">新品预售</b>-->
+<!--新品预售开始-->
+    <div class="pre_sale">
+        <div class="pre_sale_title">
+            <b class="fl" style="font-size: 1rem;color: #000000">新品预售</b>
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
-<!--        </div>-->
-<!--        <ul>-->
+        </div>
+        <ul>
+            <foreach name="pre_sale" item="v">
+                <li>
+                    <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
+                        <img src="{$v.original_img}" alt="">
+                        <p>{$v.goods_name}</p>
+                        <p style="color: #ff2e00">￥128</p>
+                        <span>点击预售</span>
+                    </a>
+                </li>
+            </foreach>
 <!--            <li>-->
 <!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
 <!--                <p>尼奥智能机器人</p>-->
 <!--                <p style="color: #ff2e00">￥128</p>-->
 <!--                <span>点击预售</span>-->
 <!--            </li>-->
-<!--            <li>-->
-<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
-<!--                <p>尼奥智能机器人</p>-->
-<!--                <p style="color: #ff2e00">￥128</p>-->
-<!--                <span>点击预售</span>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
-<!--                <p>尼奥智能机器人</p>-->
-<!--                <p style="color: #ff2e00">￥128</p>-->
-<!--                <span>点击预售</span>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <img src="__STATIC__/img/index/图层3拷贝@2x.png" alt="">-->
-<!--                <p>尼奥智能机器人</p>-->
-<!--                <p style="color: #ff2e00">￥128</p>-->
-<!--                <span>点击预售</span>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+        </ul>
+    </div>
 <!--新品预售结束-->
 </div>
 </div>
@@ -243,6 +231,7 @@
     </section>
 </div>
 <!--搜索子页面-->
+<a href="javascript:goTop();" class="gotop"><img src="__STATIC__/images/topup.png"></a>
 <script>
 /*
 var Tday = new Array();
