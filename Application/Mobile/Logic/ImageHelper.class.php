@@ -26,7 +26,7 @@ class ImageHelper{
         imagecopymerge($image_2, $image_1, $x, $y, 0, 0, imagesx($image_1), imagesy($image_1), 100);
         // 输出合成图片
         //imagepng($image[,$filename]) — 以 PNG 格式将图像输出到浏览器或文件
-        $merge = $root.$this->QRcodeHelp->getTodayDir().'/'.time().'.png';
+        $merge = $root.$this->QRcodeHelp->getTodayDir(true).'/'.time().'.png';
         imagepng($image_2,$merge);
         return $merge;
     }
@@ -57,6 +57,10 @@ class ImageHelper{
         // 图片按比例合并在一起。
         imagecopyresampled($temp, $in_pic, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
         // 销毁输入图片
+        $dir = $root.$this->imageDir;
+        if (!is_dir($dir)){
+            mkdir($dir,0777,true);
+        }
         $fileName = $root.$this->imageDir.time().".jpg";
         imagejpeg($temp, $fileName);
         imagedestroy($in_pic);

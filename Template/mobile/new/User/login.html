@@ -7,29 +7,31 @@
 <title>登录-{$tpshop_config['shop_info_store_title']}</title>
 <meta http-equiv="keywords" content="{$tpshop_config['shop_info_store_keyword']}" />
 <meta name="description" content="{$tpshop_config['shop_info_store_desc']}" />
-
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
-<link rel="stylesheet" type="text/css" href="__STATIC__/css/login.css"/>  
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/login.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/icon/iconfont.css"/>
 <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
 <script type="text/javascript" src="__STATIC__/js/common.js"></script>
 <script type="text/javascript" src="__STATIC__/js/layer.js" ></script>
+
 </head>
 <body>
   <header id="header" class='header'>
     <div class="h-left"><a href="javascript:history.back(-1)" class="sb-back"></a></div>
-	<div class="h-mid">会员登录     </div>
+	<div class="h-mid">会员登录</div>
  </header>
+  <div class="logo"><img src="__STATIC__/images/logo.png" alt=""></div>
   	<div class="denglu">
 		<form action="" method="post">        	
             <div class="Login">
 				<dl>
-	            <dt>用户名：</dt>
-			    	<dd><input type="text" name="username" id="username" placeholder="请输入邮箱/手机号" value="" /></dd>
+	            <dt><i class="iconshouji"></i>手机号</dt>
+			    	<dd><input type="text" name="username" id="username" value="" /></dd>
 				</dl>
-                <dl style=" margin-top:15px;">
-                <dt>密码：</dt>
-					<dd><input type="password" name="password" id="password" placeholder="密码"/></dd>
+                <dl style=" margin-top:1.5rem;">
+                <dt><i class="iconmima"></i>密码</dt>
+					<dd><input type="password" name="password" id="password"/></dd>
 	            </dl>
 				<div class="field submit-btn">
 					<input type="button" class="btn_big1" onClick="checkSubmit()" value="登 录" />
@@ -50,11 +52,11 @@
                   <a href="{:U('User/forget_pwd')}" >忘记密码？</a>
                 </span>
               </div>
-              <div class="third-area ">
-                <div class="third-area-a">第三方登录</div>
-                <a class="ta-qq" href="{:U('LoginApi/login',array('oauth'=>'qq'))}" target="_blank" title="QQ"></a>
-                <a class="ta-alipay" href="{:U('LoginApi/login',array('oauth'=>'alipay'))}" target="_blank" title="alipay"></a>
-              </div>
+<!--              <div class="third-area ">-->
+<!--                <div class="third-area-a">第三方登录</div>-->
+<!--                <a class="ta-qq" href="{:U('LoginApi/login',array('oauth'=>'qq'))}" target="_blank" title="QQ"></a>-->
+<!--                <a class="ta-alipay" href="{:U('LoginApi/login',array('oauth'=>'alipay'))}" target="_blank" title="alipay"></a>-->
+<!--              </div>-->
             </div>			
           </div>
 		</form>
