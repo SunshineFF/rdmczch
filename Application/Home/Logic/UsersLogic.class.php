@@ -291,7 +291,7 @@ class UsersLogic extends RelationModel
     protected function _initUserParent(&$user){
         $zhitui = $this->where(['invite_code' => $_POST['invite_code']])->find();
         if (!$zhitui){
-            throw new \Exception('推荐人手机号填写不正确');
+            throw new \Exception('推荐码填写不正确');
         }
         $user['zhitui_id'] = $zhitui['user_id'];
       //  $parent = $this->getUserParent($zhitui);  //双线，默认分配小区
