@@ -24,6 +24,8 @@
 	<div class="big">
 		<if condition="$has_poster eq 1">
 			<img src="{$poster_imag}" alt=""/>
+			<else />
+			<img src="" data-value="20190530143903.png" alt="">
 		</if>
 	</div>
 	<input type="hidden" value="{$poster_imag}" name="back_img" class="src">
@@ -32,10 +34,10 @@
 </from>
 <div class="small">
 	<ul>
-		<li><img src="/Public/poster/20190528112023.png" data-value="20190528112023.png" alt=""></li>
-		<li><img src="/Public/poster/20190528134854.png" data-value="20190528134854.png" alt=""></li>
-		<li><img src="/Public/poster/20190529101216.png" data-value="20190529101216.png" alt=""></li>
-		<li><img src="/Public/poster/20190529101229.png" data-value="20190529101229.png" alt=""></li>
+		<li class="cur"><img src="/Public/poster/20190530143903.png" data-value="20190530143903.png" alt=""></li>
+		<li><img src="/Public/poster/20190530143900.png" data-value="20190530143900.png" alt=""></li>
+		<li><img src="/Public/poster/20190530143856.png" data-value="20190530143856.png" alt=""></li>
+		<li><img src="/Public/poster/20190530143850.png" data-value="20190530143850.png" alt=""></li>
 	</ul>
 </div>
 <div class="new_poster"  style="display: none">
@@ -54,6 +56,9 @@
 		// alert($(window).height()); //浏览器当前窗口可视区域高度
 		height = $(window).height();
 		$(".new_poster").css('height',height);
+		if(!$('.big img').attr('src')){
+			$('.small li:nth-child(1)').click();
+		}
 	})
 	// 点击小图大图变化
 	$(".small li").click(function(){

@@ -183,22 +183,22 @@ class ProductController extends MobileBaseController
     public function ajax_get_poster(){
         $baseDir = 'Public/poster/';
         $posterImage = [
-            '20190528112023.png' => [
+            '20190530143903.png' => [
                 'x' => 267,
                 'y' => 418,
                 'width' => 235
             ],
-            '20190528134854.png' =>[
+            '20190530143856.png' =>[
                 'x' => 220,
                 'y' => 642,
                 'width' => 315
             ],
-            '20190529101216.png' => [
+            '20190530143900.png' => [
                 'x' => 247,
                 'y' => 873,
                 'width' => 260
             ],
-            '20190529101229.png' => [
+            '20190530143850.png' => [
                 'x' => 356,
                 'y' => 263,
                 'width' => 145
@@ -233,7 +233,7 @@ class ProductController extends MobileBaseController
     protected function getImagePositonDir($path){
         $image = end(explode('/',$path));
         $QRcodeHelp = new QRcodeHelp();
-        $path = $QRcodeHelp->getTodayDir().'/'.$image;
+        $path = $QRcodeHelp->getTodayDir(true).'/'.$image;
         return $path;
     }
 
@@ -253,7 +253,7 @@ class ProductController extends MobileBaseController
         $qrcode = new QRcodeHelp();
         $qrcodeString = $qrcode->getPng($url);
         $this->user['qr_code'] = $qrcodeString;
-        M('users')->where(['user_id' => $this->user_id])->save($this->user);
+        M('users')->where(['user_id' => $this->user_id])->save(['qr_code' => $qrcodeString]);
         return $qrcodeString;
     }
 

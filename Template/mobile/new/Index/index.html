@@ -68,26 +68,45 @@
         })
     </script>
 
+<!--    导航栏-->
+    <div class="nav">
+        <ul>
+            <li>
+                <i class="icongongchangguanli"></i>
+                <p style="margin-top: -7px">工厂直销</p>
+            </li>
+            <li>
+                <i class="iconshop"></i>
+                <p style="margin-top: -7px">群主店铺</p>
+            </li>
+            <li>
+                <i class="iconshijian"></i>
+                <p style="margin-top: -7px">积分兑换</p>
+            </li>
+            <li>
+                <i class="iconlabelb"></i>
+                <p style="margin-top: -7px">新品预售</p>
+            </li>
+        </ul>
+    </div>
+
     <!--工厂直销开始-->
     <div class="factory">
-        <div class="factory_title">
-            <b class="fl" style="font-size: 1rem;color: #000000">工厂直销</b>
+<!--        <div class="factory_title">-->
+<!--            <b class="fl" style="font-size: 1rem;color: #000000">工厂直销</b>-->
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
-        </div>
+<!--        </div>-->
+        <div class="factory_banner"><img src="__STATIC__/img/index/20190531175758.png" alt=""></div>
         <ul>
             <foreach name="hot_goods" item="v">
-                <li>'Blog/cate'
+                <li>
                     <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                         <img src="{$v.original_img}" alt="">
                         <div class="price">
-                            <div class="price_left">
-                                <span>{$v.keywords}</span>
-                                <b>{$v.goods_name}</b>
-                                <i style="color: #ff2e00;">￥{$v.cost_price}</i><i style="color: #a7a7a7; text-decoration:line-through;">￥{$v.market_price}</i>
-                            </div>
-                            <div class="price_right">
-                                <p>立即购买</p>
-                            </div>
+                            <b>{$v.goods_name}</b>
+                            <p>￥{$v.shop_price}+{$v.exchange_integral}积分</p>
+                            <i style="color: #a7a7a7; text-decoration:line-through;" class="factory_sale">原价￥{$v.market_price}</i>
+                            <span><i class="iconai-cart" style="font-size: 15px"></i></span>
                         </div>
                     </a>
                 </li>
@@ -161,7 +180,7 @@
 <!--新品预售开始-->
     <div class="pre_sale">
         <div class="pre_sale_title">
-            <b class="fl" style="font-size: 1rem;color: #000000">新品预售</b>
+            <b class="fl" style="font-size: 1rem;color: #000000">新品</b>
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
         </div>
         <ul>
@@ -170,8 +189,8 @@
                     <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                         <img src="{$v.original_img}" alt="">
                         <p>{$v.goods_name}</p>
-                        <p style="color: #ff2e00">￥128</p>
-                        <span>点击预售</span>
+                        <p style="color: #ff2e00">￥{$v.market_price}</p>
+<!--                        <span>点击预售</span>-->
                     </a>
                 </li>
             </foreach>

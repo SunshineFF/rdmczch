@@ -50,7 +50,7 @@ class IndexController extends MobileBaseController {
 //        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
         $hot_goods = M('goods')->where(['goods_id' => ['in',$this->zhixiao]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页工厂直销
         $group_store = M('store')->where(['store_id' => ['in',$this->sellerProducts]])->order('store_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺首图
-//        var_dump($group_store);
+//        var_dump($hot_goods);
         $flash_sale= M('goods')->where(['goods_id' => ['in',$this->qiangGou]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页限时抢购
         $pre_sale= M('goods')->where(['goods_id' => ['in',$this->xinpin]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//新品预售
         $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,TPSHOP_CACHE_TIME)->select();
