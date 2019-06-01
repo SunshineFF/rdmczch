@@ -330,6 +330,10 @@ class CartController extends MobileBaseController {
     {
         $ids = I("ids"); // 商品 ids
         $result = M("Cart")->where(" id in ($ids)")->delete(); // 删除id为5的用户数据
+        $where = " session_id = '$this->session_id' "; // 默认按照 session_id 查询
+        $this->user_id && $where = " user_id = ".$this->user_id; // 如果这个用户已经等了则按照用户id查询
+        $count = M('cart')->where($where)->count();
+        setcookie('cn',$count,0,'/');
         $return_arr = array('status'=>1,'msg'=>'删除成功','result'=>''); // 返回结果状态
         exit(json_encode($return_arr));
     }

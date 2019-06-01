@@ -49,7 +49,7 @@ class yue extends RelationModel{
             $this->return['msg'] = '您的余额不足，请充值';
             return $this->return;
         }
-        if ( true || $order['jifen'] > $user['pay_points']){
+        if ($order['jifen'] > $user['pay_points']){
             $this->return['code'] = 400;
             $this->return['msg'] = '您的积分不足，请获取积分';
             return $this->return;
@@ -72,6 +72,7 @@ class yue extends RelationModel{
     protected function changeUserMoney($user,$order,$userModel){
         $newMoney = $user['user_money'] - $order['total_amount'];
         $user['user_money'] = $newMoney;
+        $user['pay_points'] = $user['pay_points'] - $order['jifen'];
         $userModel->save($user);
     }
 
