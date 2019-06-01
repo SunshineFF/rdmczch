@@ -30,12 +30,12 @@
 <!--头部开始-->
 
 <div class="head">
-    <a href="{:U('Index/index')}"><i class="iconshouye  fl"></i></a>
+    <a href="{:U('Index/index')}" style="border-right: 1px solid #ededed;"><i class="iconsaoma"></i></a>
     <div class="txt fl">
         <input type="text" id="search_text" class="search_text" placeholder="请输入关键字进行搜索"/>
 <!--        <i class="iconsousuo fr"></i>-->
     </div>
-    <a href="{:U('Cart/cart')}"><i class="iconai-cart  fr"></i></a>
+    <a href="{:U('Cart/cart')}" style="border-left: 1px solid #ededed;"><i class="iconxiaoxi"></i></a>
 </div>
 <!--头部结束-->
 <div class="content">
@@ -60,8 +60,8 @@
 
     <script>
         var mySwiper = new Swiper ('.swiper-container', {
-            autoplay : 3000,
-            speed:10,
+            autoplay : 1000,
+            speed:1000,
 
             // 如果需要分页器
             pagination: '.swiper-pagination',
@@ -72,31 +72,39 @@
     <div class="nav">
         <ul>
             <li>
-                <i class="icongongchangguanli"></i>
-                <p style="margin-top: -7px">工厂直销</p>
+                <a href="#factory">
+                    <i class="icongongchangguanli"></i>
+                    <p style="margin-top: -7px">工厂直销</p>
+                </a>
             </li>
             <li>
-                <i class="iconshop"></i>
-                <p style="margin-top: -7px">群主店铺</p>
+                <a href="#shop">
+                    <i class="iconshop"></i>
+                    <p style="margin-top: -7px">群主店铺</p>
+                </a>
             </li>
             <li>
-                <i class="iconshijian"></i>
-                <p style="margin-top: -7px">积分兑换</p>
+                <a href="#integral_img">
+                    <i class="iconshijian"></i>
+                    <p style="margin-top: -7px">限时抢购</p>
+                </a>
             </li>
             <li>
-                <i class="iconlabelb"></i>
-                <p style="margin-top: -7px">新品预售</p>
+                <a href="#news">
+                    <i class="iconlabelb"></i>
+                    <p style="margin-top: -7px">新品预售</p>
+                </a>
             </li>
         </ul>
     </div>
 
     <!--工厂直销开始-->
-    <div class="factory">
+    <div class="factory" id="factory">
 <!--        <div class="factory_title">-->
 <!--            <b class="fl" style="font-size: 1rem;color: #000000">工厂直销</b>-->
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
 <!--        </div>-->
-        <div class="factory_banner"><img src="__STATIC__/img/index/20190531175758.png" alt=""></div>
+        <div class="factory_banner"><img src="__STATIC__/img/index/20190601141827.png" alt=""></div>
         <ul>
             <foreach name="hot_goods" item="v">
                 <li>
@@ -116,10 +124,10 @@
     <!--工厂直销结束-->
 
 <!--    群主店铺开始-->
-    <div class="shop">
+    <div class="shop" id="shop">
         <div class="shop_title">
-            <b class="fl" style="font-size: 1rem;color: #000000">群主店铺</b>
-            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="{:U('Index/street')}" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>
+            <b class="fl" style="font-size: 0.8rem;color: #000000">群主店铺</b>
+<!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="{:U('Index/street')}" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>-->
         </div>
         <div class="shop_img">
             <ul>
@@ -140,25 +148,24 @@
 <!--    群主店铺结束-->
 
 <!--积分商城图片开始-->
-<div class="integral_img"><img src="__STATIC__/img/index/20190524114929.png" alt=""></div>
+<div class="integral_img" id="integral_img"><img src="__STATIC__/img/index/20190601141829.png" alt=""></div>
 <!--积分商城图片结束-->
 
 <!--    积分兑换开始-->
 <div class="exchange">
-    <div class="exchange_title">
-        <b class="fl" style="font-size: 1rem;color: #000000">限时抢购</b>
+<!--    <div class="exchange_title">-->
+<!--        <b class="fl" style="font-size: 1rem;color: #000000">限时抢购</b>-->
 <!--        <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
-    </div>
+<!--    </div>-->
     <ul>
         <foreach name="flash_sale" item="v">
             <li>
                 <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                     <img src="{$v.original_img}" alt="">
-                    <div class="exchange_left fl">
-                        <span>{$v.keywords}</span>
-                        <b>{$v.goods_name}</b>
-                    </div>
-                    <div class="exchange_right fl">立即兑换</div>
+                    <b>{$v.goods_name}</b>
+                    <p>{$v.exchange_integral}积分</p>
+                    <i style="color: #a7a7a7; text-decoration:line-through;" class="factory_sale">原价￥{$v.market_price}</i>
+                    <span><i class="iconai-cart" style="font-size: 15px"></i></span>
                 </a>
             </li>
         </foreach>
@@ -174,15 +181,15 @@
 </div>
 <!--    积分兑换结束-->
 <!--新品预售开始-->
-    <div class="integral_img"><img src="__STATIC__/img/index/20190524114933.png" alt=""></div>
+    <div class="news" id="news"><img src="__STATIC__/img/index/20190601151520.png" alt=""></div>
 <!--新品预售结束-->
 
 <!--新品预售开始-->
     <div class="pre_sale">
-        <div class="pre_sale_title">
-            <b class="fl" style="font-size: 1rem;color: #000000">新品</b>
+<!--        <div class="pre_sale_title">-->
+<!--            <b class="fl" style="font-size: 1rem;color: #000000">新品</b>-->
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="" style="color: #6d6d6d;">更多</a> <i class="icongengduo"></i></span>-->
-        </div>
+<!--        </div>-->
         <ul>
             <foreach name="pre_sale" item="v">
                 <li>
@@ -346,7 +353,7 @@ function getGoodsList(){
 	});
 }
 </script>
-<include file="Product/footer"/>
+<include file="Public/footer"/>
 <script>
 function goTop(){
 	$('html,body').animate({'scrollTop':0},600);

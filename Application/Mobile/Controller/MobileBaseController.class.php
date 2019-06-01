@@ -82,8 +82,9 @@ class MobileBaseController extends Controller {
        	  	 $tpshop_config['hot_keywords'] = explode('|', $v['value']);
        	  }       	  
           $tpshop_config[$v['inc_type'].'_'.$v['name']] = $v['value'];
-       }                        
-       
+       }
+       $modelName = current(explode('/',$_SERVER['PATH_INFO']));
+       $this->assign('current_model', $modelName);
        $goods_category_tree = get_goods_category_tree();    
        $this->cateTrre = $goods_category_tree;
        $this->assign('goods_category_tree', $goods_category_tree);                     
