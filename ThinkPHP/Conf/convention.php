@@ -70,7 +70,7 @@ return  array(
     'DB_SLAVE_NO'           =>  '', // 指定从服务器序号
 
     /* 数据缓存设置 */
-    'DATA_CACHE_TIME'       =>  0,      // 数据缓存有效期 0表示永久缓存
+    'DATA_CACHE_TIME'       =>  600,      // 数据缓存有效期 0表示永久缓存
     'DATA_CACHE_COMPRESS'   =>  false,   // 数据缓存是否压缩缓存
     'DATA_CACHE_CHECK'      =>  false,   // 数据缓存是否校验缓存
     'DATA_CACHE_PREFIX'     =>  '',     // 缓存前缀
@@ -117,9 +117,9 @@ return  array(
     'TMPL_R_DELIM'          =>  '}',            // 模板引擎普通标签结束标记
     'TMPL_VAR_IDENTIFY'     =>  'array',     // 模板变量识别。留空自动判断,参数为'obj'则表示对象
     'TMPL_STRIP_SPACE'      =>  true,       // 是否去除模板文件里面的html空格与换行
-    'TMPL_CACHE_ON'         =>  true,        // 是否开启模板编译缓存,设为false则每次都会重新编译
+    'TMPL_CACHE_ON'         =>  false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
     'TMPL_CACHE_PREFIX'     =>  '',         // 模板缓存前缀标识，可以动态改变
-    'TMPL_CACHE_TIME'       =>  0,         // 模板缓存有效期 0 为永久，(以数字为值，单位:秒)
+    'TMPL_CACHE_TIME'       =>  1,         // 模板缓存有效期 0 为永久，(以数字为值，单位:秒)
     'TMPL_LAYOUT_ITEM'      =>  '{__CONTENT__}', // 布局模板的内容替换标识
     'LAYOUT_ON'             =>  false, // 是否启用布局
     'LAYOUT_NAME'           =>  'layout', // 当前布局名称 默认为layout
