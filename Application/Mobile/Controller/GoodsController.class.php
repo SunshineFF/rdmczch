@@ -298,7 +298,7 @@ class GoodsController extends MobileBaseController {
         //    $this->error ('请输入搜索关键词');
         
     	$goodsLogic = new \Home\Logic\GoodsLogic(); // 前台商品操作逻辑类    	     
-    	$filter_goods_id = M('goods')->where(" goods_state = 1 and is_on_sale=1 and goods_name like '%{$q}%'  ")->cache(true)->getField("goods_id",true);
+    	$filter_goods_id = M('goods')->where(" goods_state = 1 and is_on_sale=1 and (goods_name like '%{$q}%' or keywords like '%{$q}%')  ")->cache(true)->getField("goods_id",true);
     	
     	// 过滤帅选的结果集里面找商品
     	if($brand_id || $price)// 品牌或者价格

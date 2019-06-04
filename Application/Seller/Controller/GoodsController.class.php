@@ -159,6 +159,7 @@ class GoodsController extends BaseController {
                     $_POST['extend_cat_id_3'] && ($Goods->extend_cat_id = I('extend_cat_id_3'));
                     $Goods->shipping_area_ids = implode(',',$_POST['shipping_area_ids']);
                     $Goods->shipping_area_ids = $Goods->shipping_area_ids ? $Goods->shipping_area_ids : '';
+                    $Goods->distribut =  $Goods->distribut ? $Goods->distribut : 0;
                     
                     $type_id = M('goods_category')->where("id = $cat_id3")->getField('type_id'); // 找到这个分类对应的type_id
                     $store_goods_examine = M('store')->where(array('store_id'=>STORE_ID))->getField('goods_examine');

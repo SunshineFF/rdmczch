@@ -298,6 +298,8 @@ class UsersLogic extends RelationModel
         }else{
             $zhitui = $this->order('user_id desc')->find();
         }
+
+
         $user['zhitui_id'] = $zhitui['user_id'];
       //  $parent = $this->getUserParent($zhitui);  //双线，默认分配小区
         $parent = $this->getUserParentNew($zhitui);  //单线只开放大区
@@ -320,6 +322,11 @@ class UsersLogic extends RelationModel
             //拿到关系表
             $parent = $this->where(['user_id' => current($parentArray)])->find();
             $allChild = unserialize($parent['all_child']);
+            $lastParent = end($allChild);
+            $parentId = current($lastParent);
+            $parent = $this->where(['user_id' => $parentId])->find();
+        }elseif($user['all_child']){
+            $allChild = unserialize($user['all_child']);
             $lastParent = end($allChild);
             $parentId = current($lastParent);
             $parent = $this->where(['user_id' => $parentId])->find();
