@@ -6,7 +6,7 @@
               <!--<dd>CEO邮箱：ceo@tp-shop.cn</dd>-->
               <dd>客服邮箱：673964249@qq.com</dd>
             </dl>
-	    <tpshop sql="select * from `__PREFIX__article_cat` where parent = 2" key="k" item='v'>
+	    <tpshop sql="select * from `__PREFIX__article_cat` where parent_id = 2" key="k" item='v'>
 	    	<dl class="foot-item foot-list">
               <dt class="">{$v[cat_name]}</dt>
               <tpshop sql="select * from `__PREFIX__article` where cat_id = $v[cat_id]" key="k2" item='v2'>
