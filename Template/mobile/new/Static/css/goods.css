@@ -29,12 +29,12 @@
 #pagenavi a { width: 10px; height: 10px; line-height: 99em; background: #b5b5b5; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; margin: 0 4px; overflow: hidden; cursor: pointer; display: inline-block; *display:inline;*zoom:1;filter:alpha(Opacity=80);-moz-opacity:0.8;opacity: 0.8;}
 #pagenavi a.active { background: #C00; }
 
-.product_info{ width:100%; overflow:hidden;}
-.right{ width:18%; float:left; height:50px; font-size:16px;color:#333; border-left:1px solid #e2dfdf; margin-left:-1px; text-align:center}
-.right .share{ width:40px; height:50px; margin:auto;background:url(../images/pub_goods.png) no-repeat;background-size: auto 350px;background-position:0 -150px;}
+.product_info{width:100%;overflow:hidden;}
+.right{width: 21%;float: right;height: 1.8rem;color: red;margin-left: -1px;position: absolute;right: -0.6rem;top: 2.5rem;background: #edecec;border-radius: 1rem 0 0 1rem;line-height: 1.7rem;padding-left: 0.5rem;overflow: hidden;}
+.right i{font-size: 17px;color: #ff2e00;}
+.right span{font-size: 12px;color: #ff2e00;}
 
-
-.goods_price{ width:95%; margin:auto; overflow:hidden; padding-top:10px;}
+.goods_price{width: 100%;overflow:hidden;padding-top:10px;position: relative;padding-left: 10px;box-sizing: border-box;}
 .goods_price dt{ width:100%; overflow:hidden; height:30px;}
 .goods_price dt span{ display:block; float:left; font-size:24px; line-height:30px; color:#dd2726;font-weight: 600}
 .goods_price dt em{ display:block; float:left; margin-left:8px; padding-left:5px; padding-right:5px; height:12px; font-size:10px; color:#FFF; text-align:center; line-height:12px; margin-top:6px; background:#dd0303; padding-top:4px; padding-bottom:3px;}
@@ -46,8 +46,9 @@
 .goods_price dd p{text-indent:10px;float:left;font-size:12px; line-height:30px; color:#999;}
 
 
-.price_dottm{ width:95%; height:30px; margin:auto}
-.price_dottm li{ width:33.3%; float:left; height:30px; font-size:13px; line-height:30px; text-align:center; color:#666}
+.price_dottm{overflow: hidden;float: right;width: 50%}
+.price_dottm li{width: 50%;float:left;height:30px;font-size:13px;line-height:30px;text-align:center;color:#666;}
+.price_dottm li i{font-size: 20px;color: #8d8d8d;}
 
 /*优惠活动*/
 .huodong{ background:#F2F2F2; width:100%; overflow:hidden}
@@ -63,9 +64,10 @@
 .youhui_list1 li{ width:50%; float:left; font-size:14px;  line-height:30px; color:#666;}
 .youhui_list1 li img{ display:inline-block; width:22px;height:22px; margin-right:7px; margin-left:12px;}
 /*属性弹出下拉菜单css*/
+#search_ka{background: #ffffff}
 .navContent{display: none;}
 .ui-sx{ width:100%; overflow:hidden;}
-.subNavBox{ overflow:hidden; margin-left:10px; padding-bottom:0px; margin-right:10px; }
+.subNavBox{overflow:hidden; margin-left:10px; padding-bottom:0px; margin-right:10px;}
 .subNav{background: url(../images/arrow_down_off.png) no-repeat right center;background-size: auto 13px;}
 .subNav.on{background: url(../images/arrow_down_on.png) no-repeat right center;background-size: auto 14px;}
 .subNav strong{ display:block;width:100%; height:40px;border-bottom:1px solid #eeeeee; color:#666; font-weight:normal; font-size:16px; line-height:40px;}
@@ -96,6 +98,8 @@
 .navContent li .item1 .ui-number .num{display:inline-block;border:0;width:40px; height:30px;float:left; text-align:center; font-size:12px; line-height:30px; color:#666;font-size:20px;text-align:center}
 .navContent li .item1 .ui-number .increase{display:inline-block;background:none;border:0;border-left:1px solid #ddd9da;float:left; width:30px; height:30px;font-size:24px; line-height:30px;color:#F8849C;background: url(../images/flow/shop-cart.png) no-repeat -23px -25px; background-size: 60px;text-indent:-9999px}
 
+.activity{overflow: hidden;width: 95%;margin: 0 auto;color: #666;font-size: 16px}
+.activity span{color: #ff2e00;margin-left: 4rem;font-size: 15px}
 /*看了又看*/
 .scroll_best { text-align: center; margin:0px 8px;}
 .scroll_best .hd { height: 20px; overflow: hidden; font-size: 0; position:absolute; width:100%; }
@@ -260,227 +264,227 @@
 /*详情页面配送方式和门店自提*/
 .shipping{ line-height:25px; }
 .list-entry-extra {
-	border-bottom: 1px solid #e1e1e1;
-	border-width: 0 0 1px 0;
-	background-size: auto 13px;
-	position: relative;
-	margin-left: 10px;
-	margin-right: 10px; padding-bottom:10px;
+    border-bottom: 1px solid #e1e1e1;
+    border-width: 0 0 1px 0;
+    background-size: auto 13px;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px; padding-bottom:10px;
 }
 
 .list-entry-extra .row01 {
-	padding-top: 14px;
-	position: relative;
-	display: -webkit-box;
-	display: -moz-box;
-	display: box;
-	width: 100%;
+    padding-top: 14px;
+    position: relative;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    width: 100%;
 }
 
 .list-entry-extra .row01 .col01 {
-	font-weight: normal;
-	font-size: 16px;color: #666;
-	width: 50px;
-	display: block;
+    font-weight: normal;
+    font-size: 16px;color: #666;
+    width: 50px;
+    display: block;
 }
 .list-entry-extra .row01 .col01, .list-entry-extra .row01 .col02 {
-	vertical-align: top;
+    vertical-align: top;
 }
 .address01 {
-	padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 .address01 {
-	position: relative;
+    position: relative;
 }
 .address01 span {
-	font-size: 14px;
-	display: inline-block;
-	margin-right: 10px;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 10px;
 }
 .icon-location {
-	display: inline-block;
-	width: 13px;
-	height: 16px;
-	background: url('../images/detail-sprites.png') no-repeat center center;
-	background-size: 11px 16px;
+    display: inline-block;
+    width: 13px;
+    height: 16px;
+    background: url('../images/detail-sprites.png') no-repeat center center;
+    background-size: 11px 16px;
 }
 .icon {
-	display: inline-block;
-	vertical-align: middle;
-	font-style: normal;
+    display: inline-block;
+    vertical-align: middle;
+    font-style: normal;
 }
 .row01col03 {
-	color: #f58a8a;
-	font-size: 14px;
-	line-height: 15px;
-	padding-bottom: 5px;
-	padding-right: 20px;
+    color: #f58a8a;
+    font-size: 14px;
+    line-height: 15px;
+    padding-bottom: 5px;
+    padding-right: 20px;
 }
 
 /*代码增加_star PC功能同步_自提点*/
 .fo-con .ct-list li.shipping_type {
-	padding: 15px 0px;
+    padding: 15px 0px;
 }
 .fo-con .ct-list li.shipping_type p {
-	padding: 0px 10px
+    padding: 0px 10px
 }
 .con-ct .ct-list li.J_store p.ziti {
-	width: auto;
-	height: auto;
-	margin: 10px 0px 0px;
-	border-top: #d9d9d9 solid 1px
+    width: auto;
+    height: auto;
+    margin: 10px 0px 0px;
+    border-top: #d9d9d9 solid 1px
 }
 .con-ct .ct-list li.J_store p.ziti span.zitidian {
-	display: block;
-	width: auto;
-	height: 40px;
-	line-height: 40px;
-	color: #FF0000;
+    display: block;
+    width: auto;
+    height: 40px;
+    line-height: 40px;
+    color: #FF0000;
 }
 .con-ct .ct-list li.J_store p.ziti .revise {
-	display: block;
-	width: auto;
-	color: #000;
-	height: 30px;
-	line-height: 30px;
+    display: block;
+    width: auto;
+    color: #000;
+    height: 30px;
+    line-height: 30px;
 }
 .con-ct .ct-list li.J_store p.ziti .revise span {
-	display: block;
-	text-align: left;
-	width: 80%;
-	float: left
+    display: block;
+    text-align: left;
+    width: 80%;
+    float: left
 }
 .con-ct .ct-list li.J_store p.ziti .revise font {
-	display: block;
-	color: #FF0000;
-	width: 20%;
-	text-align: right;
-	float: right;
+    display: block;
+    color: #FF0000;
+    width: 20%;
+    text-align: right;
+    float: right;
 }
 .pop {
-	padding: 15px 10px
+    padding: 15px 10px
 }
 .pop .pop_head {
-	background: #F7F7F7;
-	height: 40px;
-	line-height: 40px;
-	text-indent: 10px;
-	font-size: 14px;
-	border-bottom: #D9D9D9 1px solid;
-	border-top-right-radius: 3px;
-	border-top-left-radius: 3px;
+    background: #F7F7F7;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 10px;
+    font-size: 14px;
+    border-bottom: #D9D9D9 1px solid;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 .pop .pop_body {
-	background: #ffffff;
-	width: 100%;
+    background: #ffffff;
+    width: 100%;
 }
 .pop .pop_body table {
 }
 .pop .pop_body table.choose_ziti td {
-	padding: 10px 0px;
-	border-bottom: #D9D9D9 1px solid;
-	text-indent: 10px;
+    padding: 10px 0px;
+    border-bottom: #D9D9D9 1px solid;
+    text-indent: 10px;
 }
 .pop .pop_body table td p.no_ziti {
-	height: 50px;
-	line-height: 50px;
-	text-align: center
+    height: 50px;
+    line-height: 50px;
+    text-align: center
 }
 .pop .pop_body table.choose_ziti td.you_ziti {
-	text-indent: 0
+    text-indent: 0
 }
 .pop .pop_body table td a.ziti_list {
-	position: relative;
-	display: inline-block;
-	width: 95%;
-	text-align: left;
+    position: relative;
+    display: inline-block;
+    width: 95%;
+    text-align: left;
 }
 .pop .pop_body table td a.ziti_list p {
-	height: 20px;
-	line-height: 20px
+    height: 20px;
+    line-height: 20px
 }
 .pop .pop_body table td a.ziti_list p.ziti_name {
-	height: 25px;
-	line-height: 25px
+    height: 25px;
+    line-height: 25px
 }
 .pop .pop_body table td a.ziti_list .i-icon-arrow-right {
-	position: absolute;
-	top: 50%;
-	left: 95%;
-	margin-top: -10px
+    position: absolute;
+    top: 50%;
+    left: 95%;
+    margin-top: -10px
 }
 .pop .pop_body table td a.ziti_list p.ziti_name span {
-	font-size: 14px;
-	color: #666
+    font-size: 14px;
+    color: #666
 }
 #pickup_point {
-	color: #ff3300
+    color: #ff3300
 }
 #pickup_point .pickup-location {
-	vertical-align: middle;
-	font-style: normal;
-	display: inline-block;
-	width: 13px;
-	height: 16px;
-	margin-left: 5px;
-	background: url('../images/detail-sprites.png') no-repeat center center;
-	background-size: 11px 16px;
+    vertical-align: middle;
+    font-style: normal;
+    display: inline-block;
+    width: 13px;
+    height: 16px;
+    margin-left: 5px;
+    background: url('../images/detail-sprites.png') no-repeat center center;
+    background-size: 11px 16px;
 }
 .sidebar-content1 {
-	display: none;
-	position: fixed!important;
-	top: 0px;
-	left: 40%;
-	width: 60%;
-	height: 100%;
-	overflow: scroll;
-	z-index: 100;
-	background: #666;
-	opacity: 0.95;
-	padding: 0px;
-	overflow: hidden;
+    display: none;
+    position: fixed!important;
+    top: 0px;
+    left: 40%;
+    width: 60%;
+    height: 100%;
+    overflow: scroll;
+    z-index: 100;
+    background: #666;
+    opacity: 0.95;
+    padding: 0px;
+    overflow: hidden;
 }
 #pickup_point_list {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 #pickup_point_list .no_ziti{
-	width: 90%;height: 95%;padding: 5%;text-align:center;color:#fff; font-size:14px
+    width: 90%;height: 95%;padding: 5%;text-align:center;color:#fff; font-size:14px
 }
 #pickup_point_list ul {
-	width: 90%;
-	height: 95%;
-	padding: 5%;
-	overflow-y: scroll
+    width: 90%;
+    height: 95%;
+    padding: 5%;
+    overflow-y: scroll
 }
 #pickup_point_list ul li {
-	margin-bottom: 15px;
-	color: #fff
+    margin-bottom: 15px;
+    color: #fff
 }
 #pickup_point_list ul li p {
-	font-size:14px;
+    font-size:14px;
 
-	line-height: 20px;
+    line-height: 20px;
 }
 #pickup_point_list ul li p.shop_name {
-	font-size: 14px;
-	border-bottom: 1px #a6a6a6 solid;
+    font-size: 14px;
+    border-bottom: 1px #a6a6a6 solid;
 
-	line-height: 30px;
-	margin-bottom: 5px;
+    line-height: 30px;
+    margin-bottom: 5px;
 }
 #BgDiv {
-	background-color: #e3e3e3;
-	position: absolute;
-	z-index: 100;
-	left: 0;
-	top: 0;
-	display: none;
-	width: 100%;
-	height: 100%;
-	opacity: 0.7;
-	filter: alpha(opacity=70);
-	-moz-opacity: 0.7;
+    background-color: #e3e3e3;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
 }
 .row01col04{ font-size:14px; color:#000;}
 #treelist_dummy{height:14px; line-height:14px; width:200px; border:none; background: url(../images/icojiantou1.png) no-repeat right 4px; background-size:auto 13px; padding-top:5px; padding-bottom:5px;}
@@ -498,108 +502,162 @@
 .twos{font-size: 12px;color: #999;line-height: 14px}
 .bor_sli{overflow: hidden; border-bottom: 1px solid #dedede; padding-bottom: 12px; }
 .assess-btns-box {
-	position: relative;
-	padding-top: 10px;
-	width: 100%;
-	overflow: hidden;
-	height: 29px;
-	padding-bottom: 10px;
-	background-color: #fff;
+    position: relative;
+    padding-top: 10px;
+    width: 100%;
+    overflow: hidden;
+    height: 29px;
+    padding-bottom: 10px;
+    background-color: #fff;
 }
 .assess-btns-box:before {
-	position: absolute;
-	content: '';
-	-webkit-transform: scaleY(0.5);
-	transform: scaleY(0.5);
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 1px;
-	border-top: 1px solid #e0e0e0;
+    position: absolute;
+    content: '';
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #e0e0e0;
 }
 .assess-btns {
-	width: 200%;
-	-webkit-transform: scale(0.5,0.5);
-	transform: scale(0.5,0.5);
-	transform-origin: left top;
-	-webkit-transform-origin: left top;
-	margin-top: 10px
+    width: 200%;
+    -webkit-transform: scale(0.5,0.5);
+    transform: scale(0.5,0.5);
+    transform-origin: left top;
+    -webkit-transform-origin: left top;
+    margin-top: 10px
 }
 .assess-like-btn {
-	float: left;
-	margin-left: 20px;
+    float: left;
+    margin-left: 20px;
 }
 .assess-like-btn, .assess-reply-btn {
-	font-size: 0;
-	position: relative;
-	width: 45%;
-	text-align: center;
-	border: 1px solid #e0e0e0;
-	border-radius: 6px;
-	-webkit-tap-highlight-color: transparent;
-	cursor: pointer;
+    font-size: 0;
+    position: relative;
+    width: 45%;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }
 
 .btn-like-icon {
-	width: 32px;
-	height: 28px;
-	margin-right: 4px;
+    width: 32px;
+    height: 28px;
+    margin-right: 4px;
 }
 .assess-btns-icon {
-	display: inline-block;
-	margin-top: 16px;
-	margin-right: 6px;
-	vertical-align: top;
-	background: url("../images//assess-btns-icon.png?v=1") 0 0 no-repeat;
-	background-size: 94px 28px;
+    display: inline-block;
+    margin-top: 16px;
+    margin-right: 6px;
+    vertical-align: top;
+    background: url("../images//assess-btns-icon.png?v=1") 0 0 no-repeat;
+    background-size: 94px 28px;
 }
 .assess-btns-num {
-	font-size: 26px;
-	line-height: 58px;
-	display: inline-block;
-	height: 58px;
-	color: #bfbfbf;
+    font-size: 26px;
+    line-height: 58px;
+    display: inline-block;
+    height: 58px;
+    color: #bfbfbf;
 }
 .assess-like-btn .like {
-	font-style: normal;
-	opacity: 0;
+    font-style: normal;
+    opacity: 0;
 }
 .assess-reply-btn {
-	float: right;
-	margin-right: 20px;
+    float: right;
+    margin-right: 20px;
 }
 .assess-btns:after {
-	font-size: 0;
-	display: block;
-	visibility: hidden;
-	clear: both;
-	height: 0;
-	content: '';
+    font-size: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: '';
 }
 .btn-reply-icon {
-	width: 30px;
-	height: 28px;
-	margin-right: 6px;
-	background-position: -64px 0;
+    width: 30px;
+    height: 28px;
+    margin-right: 6px;
+    background-position: -64px 0;
 }
 .assess-like-btn:hover{
-	font-size: 12px
+    font-size: 12px
 }
 .bac-po{
-	background-position: -30px 0;
+    background-position: -30px 0;
 }
 .message_comm{
-	padding: 6px 0;
+    padding: 6px 0;
 }
 .bottom-to-top {
-	position: fixed;
-	bottom: 56px;
-	right: 8px;
-	width: 35px;
-	height: 35px;
-	z-index: 20;
-	display: none;
-	transform-origin: 0;
-	opacity: 1;
-	transform: scale(1,1);
+    position: fixed;
+    bottom: 56px;
+    right: 8px;
+    width: 35px;
+    height: 35px;
+    z-index: 20;
+    display: none;
+    transform-origin: 0;
+    opacity: 1;
+    transform: scale(1,1);
+}
+
+/*幕布*/
+.curtain{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
+/*选择属性*/
+.information{
+    width: 100%;
+    height: 65%;
+    background: #ffffff;
+    position: fixed;
+    bottom: 0;
+    padding: 1.5rem 1rem;
+    box-sizing: border-box;
+}
+.information .msg{
+    width: 100%;
+    height: 23.5%;
+    border-bottom: 1px solid #bababa;
+}
+.information .msg img{
+    width: 6rem;
+    height: 5.8rem;
+    float: left;
+}
+.information .msg .msg_small{
+    float: left;
+    margin-left: 2rem;
+    width: 60%;
+    overflow: hidden;
+    font-size: 15px;
+}
+.information .model{
+    width: 100%;
+    height: 16%;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #bababa;
+    font-size: 14px;
+}
+.information .model li{
+    float: left;
+    border: 1px solid #d5d5d5;
+    border-radius: 5rem;
+    margin-right: 1rem;
+    margin-top: 0.2rem;
+    line-height: 1.5rem;
+    text-align: center;
+    overflow: hidden;
+    padding: 0.1rem 1rem;
+    font-size: 13px;
 }

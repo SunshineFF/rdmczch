@@ -97,7 +97,7 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
 
                 <!-- JiaThis Button BEGIN -->
                 <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt" target="_blank">
-                    <div id="pro_share" class="share"></div>
+                    <i class="iconhongbao-"></i><span>分享有礼</span>
                 </a>
                 <script>
                     var jiathis_config = {
@@ -119,9 +119,8 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
             </div>
         </dl>
         <ul class="price_dottm">
-          <li style=" text-align:left">折扣：无</li>
-          <li>{$commentStatistics.c0}人评价</li>
-          <li style=" text-align:right">{$goods.sale_num}人已付款</li>
+          <li>月销：497</li>
+          <li><i class="icondianzan"></i> {$commentStatistics.c0}人赞过</li>
         </ul>
       </div>
 <if condition="($prom_goods neq null) OR ($prom_order neq null)">      
@@ -148,7 +147,9 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
 	      <div class="blank10"></div>
 	      </div>
       </section>
-</if>      
+</if>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
 <!-------商品属性-------->
 <if condition="$filter_spec neq ''">  
 <section id="search_ka">
@@ -194,18 +195,10 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
         </div>
       </section>
       <section id="search_ka">
-        <div class="ui-sx bian1">
-          <div class="subNavBox" >
-            <div class="subNav"><strong>会员专享价</strong></a></div>
-            <ul class="navContent" >
-              <li  class="user_price">
-                <p> <span class="key">铜牌会员：</span> <b class="p-price-v">9.8折</b> </p>
-                <p> <span class="key">金牌会员：</span> <b class="p-price-v">9.5折</b> </p>
-                <p> <span class="key">钻石会员：</span> <b class="p-price-v">9折</b> </p>
-              </li>
-            </ul>
+          <div class="activity">
+              <i>活动</i><span>分享产品即可获取100块现金红包</span>
+
           </div>
-        </div>
       </section>
 <script type="text/javascript">
 $(function(){
@@ -361,6 +354,55 @@ function goTop(){
     <dd class="goumai"><a style="display:block;" href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a> </dd>
   </dl>
 </div>
+<div class="curtain">
+    <div class="information">
+        <div class="msg">
+            <img src="{$goods.original_img}" alt="">
+            <div class="msg_small">
+                <p style="font-size: 18px;font-weight: 600">￥{$goods.shop_price}元 + {$goods.exchange_integral}积分</p>
+                <p>库存：{$goods.store_count}</p>
+            </div>
+        </div>
+        <div class="model">
+            <p>型号</p>
+            <ul>
+                <li>01</li>
+                <li>02</li>
+            </ul>
+        </div>
+        <div class="model">
+            <p>颜色</p>
+            <ul>
+                <li>玫瑰金</li>
+                <li>天空蓝</li>
+            </ul>
+        </div>
+        <section id="search_ka">
+            <div class="ui-sx bian1">
+                <div class="subNavBox">
+                    <div class="subNav on"><strong>购买数量</strong></div>
+                    <ul class="navContent" style="display: block;">
+                        <li style=" border-bottom:1px solid #eeeeee">
+                            <div class="item1">
+                  <span class="ui-number">
+                  <button type="button" class="decrease" onClick="goods_cut();">-</button>
+                    <input type="text" class="num" id="number" name="goods_num" value="1" min="1" max="1000"/>
+                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+                  <button type="button" class="increase" onClick="goods_add();">+</button>
+                  </span> </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var high = $(window).height();
+        $(".curtain").css('height',high)
+    })
+</script>
 <script type="text/javascript">
 $(document).ready(function(){	
 	// 更新商品价格

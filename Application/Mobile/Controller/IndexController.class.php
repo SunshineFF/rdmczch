@@ -19,17 +19,17 @@ class IndexController extends MobileBaseController {
     /** 首页群主店铺ID
      * @var array
      */
-    protected $sellerProducts = [24,23,25,70];
+    protected $sellerProducts = [24,23,25,21];
 
     /** 抢购产品ID
      * @var array
      */
-    protected $qiangGou = [201,195,168,189];
+    protected $qiangGou = [201,195,170,189];
 
     /** 首页工厂直销ID
      * @var array
      */
-    protected $zhixiao = [222,226,170,215];
+    protected $zhixiao = [243,168,212,199];
 
     /** 新品预售ID
      * @var array

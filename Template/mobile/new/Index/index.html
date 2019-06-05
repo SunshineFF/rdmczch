@@ -163,7 +163,7 @@
                 <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                     <img src="{$v.original_img}" alt="">
                     <b>{$v.goods_name}</b>
-                    <p>{$v.exchange_integral}积分</p>
+                    <p>￥{$v.shop_price}+{$v.exchange_integral}积分</p>
                     <i style="color: #a7a7a7; text-decoration:line-through;" class="factory_sale">原价￥{$v.market_price}</i>
                     <span><i class="iconai-cart" style="font-size: 15px"></i></span>
                 </a>
@@ -196,7 +196,8 @@
                     <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                         <img src="{$v.original_img}" alt="">
                         <p>{$v.goods_name}</p>
-                        <p style="color: #ff2e00">￥{$v.market_price}</p>
+                        <p style="color: #ff2e00">￥{$v.shop_price}</p>
+                        <p style="color: #ff2e00">{$v.exchange_integral}积分</p>
 <!--                        <span>点击预售</span>-->
                     </a>
                 </li>
