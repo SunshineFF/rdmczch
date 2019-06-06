@@ -87,6 +87,12 @@ class UserController extends BaseController {
             if($password != '' && $password != $password2){
                 exit($this->error('两次输入密码不同'));
             }
+            if ($_POST['level'] == 2){
+                if ($user['tou_zi'] < 10000){
+                    exit($this->error('用户的藏品额度大于10000才能成为群主。'));
+                }
+            }
+
             if($password == '' && $password2 == ''){
                 unset($_POST['password']);
             }else{
@@ -405,5 +411,22 @@ class UserController extends BaseController {
             echo "<script>parent.{$call_back}({$res});</script>";
             exit();
         }
+    }
+
+    /**
+     * 编辑用户钱包金额
+     */
+    public function add_tou_zi(){
+        $userId = I('user_id');
+        if (!$userId){
+            exit(json_encode(['code'=>400,'msg'=>'请先添加用户在再编辑相关参数。']));
+        }
+        $data = [
+            'tou_zi' => I('tou_zi'),
+            'pay_points' => I('pay_points'),
+            'user_money' => I('user_money'),
+        ];
+        M('users')->where(['user_id' => I('user_id')])->save($data);
+        exit(json_encode(['code'=>200,'msg'=>'编辑成功']));
     }
 }

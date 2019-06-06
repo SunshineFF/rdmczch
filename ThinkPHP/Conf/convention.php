@@ -164,6 +164,6 @@ return  array(
     'FILE_UPLOAD_TYPE'      =>  'Local',    // 文件上传方式
     'DATA_CRYPT_TYPE'       =>  'Think',    // 数据加密方式
     'URL_MODULE_MAP' => [
-        'index' => 'mobile'
+        'Index' => 'Mobile'
     ]
 );
