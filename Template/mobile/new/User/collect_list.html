@@ -15,14 +15,12 @@
 </header>
 <include file="Public/menu"/>
 <div id="tbh5v0">
- <!--
 <div class="sc_nav">
     <ul>
-      <li><a href="{:U('User/collect_list')}" class="tab_head on" id="goods_ka1" >收藏的宝贝</a></li>
-      <li><a href="{:U('User/collect_list')}" class="tab_head " id="goods_ka2" >收藏的店铺</a></li>
-     </ul>
- </div>
--->
+        <li><a href="{:U('User/collect_list')}" class="tab_head on" id="goods_ka1" >收藏的宝贝</a></li>
+        <li><a href="{:U('User/collect_list',['type' => 2])}" class="tab_head" id="goods_ka2" >收藏的店铺</a></li>
+    </ul>
+</div>
 <div class="main" id="user_goods_ka_1">
 <empty name="goods_list">
 <div id="list_0_0" class="font12">您没有任何收藏哦！</div>

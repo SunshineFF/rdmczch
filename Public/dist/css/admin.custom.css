@@ -1,0 +1,24 @@
+.content .row{position:relative}
+#poper{position:absolute;text-align: center;width: 100%;top: 20%;}
+#poper form{
+    width: 80%;
+    background: #fff;
+    margin: 0 auto;
+    padding: 50px;
+    border: 1px solid;
+}
+#poper form span{display:inline-block;width:30%;text-align: right;padding-right: 30px;}
+#poper form .form-field{
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 50%;
+}
+.form-field button{
+    box-shadow: none;
+    margin-top: 20px;
+    padding: 4px 30px;
+    background: #5cdad5;
+    border: none;
+    border-radius: 5px;
+}
+#poper form .form-field input{padding-left:5px}

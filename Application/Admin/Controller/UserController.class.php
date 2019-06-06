@@ -102,8 +102,10 @@ class UserController extends BaseController {
         $user['first_lower'] = M('users')->where("first_leader = {$user['user_id']}")->count();
         $user['second_lower'] = M('users')->where("second_leader = {$user['user_id']}")->count();
         $user['third_lower'] = M('users')->where("third_leader = {$user['user_id']}")->count();
+        $userLevel = M('user_level')->select();
  
         $this->assign('user',$user);
+        $this->assign('userLevel',$userLevel);
         $this->display();
     }
     

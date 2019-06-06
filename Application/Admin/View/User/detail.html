@@ -1,4 +1,5 @@
 <include file="Public/min-header"/>
+
 <div class="wrapper">
     <!-- Content Header (Page header) -->
    <include file="Public/breadcrumb"/>
@@ -22,7 +23,8 @@
                     </tr>
                     <tr>
                         <td>用户积分:</td>
-                        <td>{$user.pay_points} <span style="margin-left:100px;">账户余额：{$user.user_money}</span></td>
+                        <td>{$user.pay_points} <span style="margin-left:100px;">账户余额：{$user.user_money}</span>
+                            <span style="margin-left:100px;">藏品额度：{$user.tou_zi}</span><span id="add_tou_zi">修改</span></td>
                         <td></td>
                     </tr>
 
@@ -65,6 +67,17 @@
                         <td>手机:</td>
                         <td>
                             <input type="text" class="form-control" name="mobile" value="{$user.mobile}">
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>用户等级:</td>
+                        <td>
+                            <select name="level">
+                                <foreach name="userLevel" item="level">
+                                    <option value="{$level.level_id}">{$level.level_name}</option>
+                                </foreach>
+                            </select>
                         </td>
                         <td></td>
                     </tr>
@@ -156,7 +169,21 @@
 
             </div>
         </div>
- 	  </div> 
+ 	  </div>
+        <div id="poper">
+            <form action="{:U('Admin/User/add_tou_zi')}" method="post">
+                <div class="form-field">
+                    <span>藏品金额</span><input type="number" name="tou_zi" value="{$user.tou_zi}"/>
+                </div>
+                <div class="form-field">
+                    <span>积分</span><input type="number" name="pay_points" value="{$user.pay_points}"/>
+                </div>
+                <div class="form-field">
+                    <span>余额</span><input type="number" name="user_money" value="{$user.user_money}"/>
+                </div>
+                <div class="form-field"><button type="submit">保存</button><button class="close-button" type="button">关闭</button></div>
+            </form>
+        </div>
     </div>    <!-- /.content -->
    </section>
 </div>
@@ -183,8 +210,10 @@
             return false;
         }
         return true;
-
     }
+    $('#add_tou_zi').click(function () {
+        $('#poper').show();
+    })
 </script>
 
 </body>
