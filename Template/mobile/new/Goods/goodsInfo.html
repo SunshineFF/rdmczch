@@ -48,13 +48,13 @@ var process_request = "正在处理您的请求...";
 <div class="banner">
   <div id="slider" class="slider" style="overflow: hidden; visibility: visible; list-style: none; position: relative;">
     <ul id="sliderlist" class="sliderlist" style="position: relative; overflow: hidden; transition: left 600ms ease; -webkit-transition: left 600ms ease;">
-<!--       <foreach  name="goods_images_list" item="pic">-->
-<!--      	<li style="float: left; display: block; width: 100%;"><span><a  href="javascript:void(0)">-->
-<!--      	<img title="" width="100%" src="{$pic.image_url}"></a></span></li>-->
-<!--       </foreach>-->
-        <li style="float: left; display: block; width: 100%;"><span><a  href="javascript:void(0)">
-      	<img title="" width="100%" height="400px" src="__STATIC__/images/20190604173845.png"></a></span>
-        </li>
+       <foreach  name="goods_images_list" item="pic">
+      	<li style="float: left; display: block; width: 100%;"><span><a  href="javascript:void(0)">
+      	<img title="" width="100%" height="400px" src="{$pic.image_url}"></a></span></li>
+       </foreach>
+<!--        <li style="float: left; display: block; width: 100%;"><span><a  href="javascript:void(0)">-->
+<!--      	<img title="" width="100%" height="400px" src="__STATIC__/images/20190604173845.png"></a></span>-->
+<!--        </li>-->
 
     </ul>
     <div id="pagenavi">
@@ -86,7 +86,7 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
 		as[active].className='active';
 	}});
 </script>
-	  <form name="buy_goods_form" method="post" id="buy_goods_form" >
+
       <div class="product_info">
 
         <dl class="goods_price">
@@ -151,55 +151,23 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
 <div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
 <div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
 <!-------商品属性-------->
-<if condition="$filter_spec neq ''">  
 <section id="search_ka">
-<!---属性---->
-<div class="ui-sx bian1"> 
-<div class="subNavBox"> 
-	<div class="subNav"><strong>选择商品属性</strong></div>
-    <ul class="navContent"> 
-    <foreach item="spec" key="key" name="filter_spec">
-    <li>   
-          <div class="title">{$key}</div>
-          <div class="item">
-          <foreach name="spec" item="v2" key="k2">
-	          <a href="javascript:;" onclick="switch_spec(this);" title="{$v2[item]}" <if condition="$k2 eq 0">class="hover"</if>>
-	          	<input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>/>
-          		{$v2[item]}            
-          	  </a>
-           </foreach>
-          </div>                    
-    </li>
-    </foreach>
-       </ul>  
-    </div>
-    </div>    
-</section> 
-</if>
-      <section id="search_ka">
-        <div class="ui-sx bian1">
-          <div class="subNavBox">
-            <div class="subNav on"><strong>购买数量</strong></div>
-            <ul class="navContent" style="display: block;">
-              <li style=" border-bottom:1px solid #eeeeee">
-                <div class="item1"> 
-                  <span class="ui-number">
-                  <button type="button" class="decrease" onClick="goods_cut();">-</button>
-                    <input type="text" class="num" id="number" name="goods_num" value="1" min="1" max="1000"/>
-                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
-                  <button type="button" class="increase" onClick="goods_add();">+</button>
-                  </span> </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section id="search_ka">
-          <div class="activity">
-              <i>活动</i><span>分享产品即可获取100块现金红包</span>
-
-          </div>
-      </section>
+  <div class="activity">
+      <i>活动</i><span><i class="iconhongbao-"></i>分享产品即可获取100块现金红包</span>
+  </div>
+</section>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<section id="search_ka">
+  <div class="choice">
+      <i>选择</i><span>选择适合的属性&数量</span>
+  </div>
+</section>
+<section id="search_ka">
+  <div class="service">
+      <i>服务</i><span>包邮&15天内发货</span>
+  </div>
+</section>
 <script type="text/javascript">
 $(function(){
 	$(".subNav").click(function(){		
@@ -299,7 +267,7 @@ function changeAtt1(t) {
           <span><a href="{:U('Store/index',array('store_id'=>$store[store_id]))}" style=" margin-left:3%;"><em class="bg2"></em>进入店铺</a></span> </div>
         </section>
       </div></if>
-    </form>
+
   </div>
   <div class="main" id="user_goods_ka_2" style="display:none">
     <div class="product_main" style=" margin-top:40px;"> <!-- 产品图片 -->
@@ -332,12 +300,11 @@ function changeAtt1(t) {
         </ul>
     </div>
 <div class="my_comment_list" id="ECS_MYCOMMENTS"> </div>
-
 </div>
  	</div>
 </div>
 <script>
-function goTop(){
+function goTop(){commentList
 	$('html,body').animate({'scrollTop':0},600);
 }
 </script> 
@@ -350,11 +317,12 @@ function goTop(){
     <li><a href="javascript:collect_goods({$goods.goods_id})" id="favorite_add"><em class="goods_nav3"></em><span>收藏</span></a></li>
   </ul>
   <dl>
-    <dd class="flow"><a class="button active_button" href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a> </dd>
-    <dd class="goumai"><a style="display:block;" href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a> </dd>
+    <dd class="jiagou"><a class="button active_button" href="javascript:void(0);">加入购物车</a> </dd>
+    <dd class="buy"><a style="display:block;" href="javascript:void(0);">立即购买</a> </dd>
   </dl>
 </div>
-<div class="curtain">
+<div class="curtain" style="display: none">
+    <form name="buy_goods_form" method="post" id="buy_goods_form" >
     <div class="information">
         <div class="msg">
             <img src="{$goods.original_img}" alt="">
@@ -363,20 +331,45 @@ function goTop(){
                 <p>库存：{$goods.store_count}</p>
             </div>
         </div>
-        <div class="model">
-            <p>型号</p>
-            <ul>
-                <li>01</li>
-                <li>02</li>
-            </ul>
-        </div>
-        <div class="model">
-            <p>颜色</p>
-            <ul>
-                <li>玫瑰金</li>
-                <li>天空蓝</li>
-            </ul>
-        </div>
+<!--        <div class="model">-->
+<!--            <p>型号</p>-->
+<!--            <ul>-->
+<!--                <li>01</li>-->
+<!--                <li>02</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="model">-->
+<!--            <p>颜色</p>-->
+<!--            <ul>-->
+<!--                <li>玫瑰金</li>-->
+<!--                <li>天空蓝</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+        <if condition="$filter_spec neq ''">
+            <section id="search_ka">
+                <!---属性---->
+                <div class="ui-sx bian1">
+                    <div class="subNavBox">
+                        <div class="subNav"><strong>选择商品属性</strong></div>
+                        <ul class="navContent">
+                            <foreach item="spec" key="key" name="filter_spec">
+                                <li>
+                                    <div class="title">{$key}</div>
+                                    <div class="item">
+                                        <foreach name="spec" item="v2" key="k2">
+                                            <a href="javascript:;" onclick="switch_spec(this);" title="{$v2[item]}" <if condition="$k2 eq 0">class="hover"</if>>
+                                            <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>/>
+                                            {$v2[item]}
+                                            </a>
+                                        </foreach>
+                                    </div>
+                                </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </if>
         <section id="search_ka">
             <div class="ui-sx bian1">
                 <div class="subNavBox">
@@ -395,8 +388,36 @@ function goTop(){
                 </div>
             </div>
         </section>
+        <dl>
+            <dd class="flow"><a class="button active_button" href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a> </dd>
+            <dd class="goumai"><a style="display:block;" href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a> </dd>
+        </dl>
+    </form>
     </div>
 </div>
+<script type="text/javascript">
+    // 点击选择出现属性框
+    $(".choice").click(function(){
+        $(".curtain").css('display','block');
+    })
+
+    // 点击空白地方隐藏选择属性框
+    $(".curtain").click(function(){
+        $(this).hide()
+    })
+    $(".information").click(function(e){
+        e.stopPropagation();
+    })
+
+    $(".jiagou").click(function(){
+        $(".curtain").css('display','block');
+    })
+    $(".buy").click(function(){
+        $(".curtain").css('display','block');
+    })
+</script>
+
+
 <script type="text/javascript">
     $(document).ready(function(){
         var high = $(window).height();

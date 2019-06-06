@@ -360,9 +360,9 @@ a{
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     font-size: 12px;
-    padding: 0 1rem;
     box-sizing: border-box;
-    text-align: left;
+    text-align: center;
+    margin-top: 0.5rem;
 }
 .pre_sale li a{
     color: #000000;

@@ -77,7 +77,7 @@
 .navContent li .title{ width:100%;font-size:16px; line-height:30px; color:#666; margin-top:5px;}
 .navContent li .item{ overflow:hidden; border-bottom:1px solid #eeeeee; padding-bottom:5px;}
 .navContent li .item a{ padding-left:10px; padding-right:10px; border:1px solid #CCC; line-height:30px; display:inline-block;	-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px; margin-right:5px; margin-bottom:10px;}
-.navContent li .item a.hover{ background:#dd2726; color:#FFF; border:1px solid #dd2726;	-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.navContent li .item a.hover{border: 1px solid #d5d5d5;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5rem;}
 
 .navContent li .purchase{ font-size:14px; line-height:25px; color:#666;}
 .navContent li .purchase_v{font-size:16px; line-height:25px; color:#dd2724; font-weight:bold}
@@ -98,7 +98,13 @@
 .navContent li .item1 .ui-number .num{display:inline-block;border:0;width:40px; height:30px;float:left; text-align:center; font-size:12px; line-height:30px; color:#666;font-size:20px;text-align:center}
 .navContent li .item1 .ui-number .increase{display:inline-block;background:none;border:0;border-left:1px solid #ddd9da;float:left; width:30px; height:30px;font-size:24px; line-height:30px;color:#F8849C;background: url(../images/flow/shop-cart.png) no-repeat -23px -25px; background-size: 60px;text-indent:-9999px}
 
-.activity{overflow: hidden;width: 95%;margin: 0 auto;color: #666;font-size: 16px}
+.choice{overflow: hidden;width: 95%;margin: 0 auto;color: #666;font-size: 16px;border-bottom: 1px solid #dfdfdf}
+.choice span{color: #000000;margin-left: 4rem;font-size: 15px}
+
+.service{overflow: hidden;width: 95%;margin: 0 auto;color: #666;font-size: 16px;}
+.service span{color: #000000;margin-left: 4rem;font-size: 15px}
+
+.activity{overflow: hidden;width: 95%;margin: 0 auto;color: #666;font-size: 16px;padding: 0.3rem 0;}
 .activity span{color: #ff2e00;margin-left: 4rem;font-size: 15px}
 /*看了又看*/
 .scroll_best { text-align: center; margin:0px 8px;}
@@ -143,13 +149,13 @@
 .score{padding-bottom:20px; text-align:center; font-size:16px; line-height:50px; color:#666; margin-top:30px;}
 
 .comment_list li { width:100%; overflow:hidden; padding-bottom:10px;background: white;margin-top: 14px;padding: 10px 0 0 0}
-.content_head{ width:90%; overflow:hidden; margin:auto; padding-left:8px; padding-right:8px; padding-bottom:10px;}
+.content_head{ width:90%; overflow:hidden; margin:auto; padding-left:8px; padding-right:8px;}
 .comment_item .content_head .info {overflow:hidden; width:100%}
-.comment_item .content_head .info .name { display:inline-block;float:left; font-size:12px; color:#666; line-height:30px;}
+.comment_item .content_head .info .name { display:inline-block;float:left; font-size:12px; color:#000000; line-height:30px;}
 .comment_item .content_head .info .name em{ display:inline-block; margin-left:8px}
 .comment_item .content_head .info .name em img{ height:12px;}
 .content_head .one{float:left;overflow:hidden;line-height:30px;padding-right: 10px;}
-.content_head .two{ float:right;overflow:hidden; font-size:14px; line-height:30px; color:#666; text-indent:10px;}
+.content_head .two{float: left;overflow: hidden;font-size: 12px;line-height: 30px;color: #bebebe;text-align: left;}
 
 .comment_item .content_head .star_box { display: inline-block; width:100%; overflow:hidden; height:30px;}
 .comment_item .content_head .star_box span{ display:inline-block; float:left; font-size:14px; line-height:35px; color:#999;}
@@ -172,8 +178,8 @@
 
 .sd_img{ width:100%; overflow:hidden}
 .sd_img dl{ width:100%; overflow:hidden}
-.sd_img dl dd{ float:left;width:50px; height:50px; margin:5px;}
-.sd_img dl dd img{ width:50px; height:50px;}
+.sd_img dl dd{ float:left;width:100px; height:100px; margin-bottom:0.5rem;margin-right: 1rem}
+.sd_img dl dd img{ width:100px; height:100px;border: 1px solid #c8c8c8;}
 /*底部导航*/
 .bian{ border-right:1px solid #eeeeee; margin-left:-1px;}
 .footer_nav{ width:100%; height:50px; position:fixed; z-index:100; bottom:0px; background:#f8f8f8;border-top:1px solid #eeeeee;max-width: 640px;}
@@ -188,8 +194,8 @@
 .footer_nav dl{ width:60%; float:left; height:50px;}
 .footer_nav dl dd{ width:50%; float:left; height:51px;text-align:center; margin-top:-1px;}
 .footer_nav dl dd a{ font-size:18px; line-height:51px; color:#FFF }
-.footer_nav dl .flow{ background:#ff9c00}
-.footer_nav dl .goumai{ background:#dd2726}
+.footer_nav dl .jiagou{ background:#ff9c00}
+.footer_nav dl .buy{ background:#dd2726}
 
 
 /*加减号*/
@@ -500,7 +506,7 @@
 .satr_img{clear: both;}
 .satr_img img{width: 20%}
 .twos{font-size: 12px;color: #999;line-height: 14px}
-.bor_sli{overflow: hidden; border-bottom: 1px solid #dedede; padding-bottom: 12px; }
+.bor_sli{overflow: hidden;}
 .assess-btns-box {
     position: relative;
     padding-top: 10px;
@@ -614,21 +620,23 @@
     position: fixed;
     bottom: 0;
     background: rgba(0,0,0,0.5);
+    z-index: 101;
 }
 /*选择属性*/
 .information{
     width: 100%;
-    height: 65%;
     background: #ffffff;
     position: fixed;
     bottom: 0;
     padding: 1.5rem 1rem;
     box-sizing: border-box;
+    overflow: hidden;
 }
 .information .msg{
     width: 100%;
-    height: 23.5%;
     border-bottom: 1px solid #bababa;
+    overflow: hidden;
+    padding-bottom: 1rem;
 }
 .information .msg img{
     width: 6rem;
@@ -660,4 +668,16 @@
     overflow: hidden;
     padding: 0.1rem 1rem;
     font-size: 13px;
+}
+.information dd{
+    text-align: center;
+    width: 40%;
+    margin: 0 auto;
+    background: #ff2e00;
+    color: #ffffff;
+    margin-top: 2rem;
+    border-radius: 5rem;
+}
+.information dd a{
+    color: #ffffff;
 }

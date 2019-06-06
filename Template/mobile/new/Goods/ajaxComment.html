@@ -17,13 +17,14 @@
 	            <div class=" comment_star">
 	              <div class="bor_sli">
 		              <div class="one"><em><img src="{$user['head_pic']|default=" __STATIC__/images/user68.jpg"}"></em></div>
-		              <div class="name">
-		              		{$v['nickname']}
-		              </div>
+		              <div class="name">{$v['nickname']}</div>
+					  <br>
 		              <div class="two">{$v['add_time']|date="Y-m-d H:i:s",###}</div>
+					  <div style="height: 0;clear: both"></div>
+					  <p> {$v['content']|htmlspecialchars_decode}</p>
 	              </div>
-	              <div class="satr_img"><em><img src="__STATIC__/images/stars{$v['goods_rank']|ceil}.png" alt="" /></em></div>
-	              <p> {$v['content']|htmlspecialchars_decode}</p>
+<!--	              <div class="satr_img"><em><img src="__STATIC__/images/stars{$v['goods_rank']|ceil}.png" alt="" /></em></div>-->
+
 					<if condition="strlen($v['pay_time']) gt 0"><div class="twos">购买日期：{$v.pay_time|date="Y-m-d H:i:s",###}</div></if>
 					<if condition="strlen($v['spec_key_name']) gt 0"><div class="twos">规格：{$v.spec_key_name}</div></if>
 	            </div>
@@ -35,7 +36,7 @@
 					<dl id="gallery">
 						<foreach name="v['img']" key="key" item="v2">
 						    <dd>
-						    	<a href="{$v2}"><img src="{$v2}" width="100px" heigth="100px"></a>
+						    	<a href="{$v2}"><img src="{$v2}"></a>
 						    </dd>
 						</foreach>
 					</dl>
@@ -129,4 +130,17 @@
 </script>
  <script>
 	 ajax_sourch_submit_hide();
+ </script>
+
+ <script type="text/javascript">
+	 var a = $(".my_comment_list .name").html();
+	 var a = parseInt(a);
+	 var b = a.toString();
+	 if(b.length == 11){
+		 var tel = a;
+		 tel = "" + tel;
+		 var tel1 =tel.replace(tel.substring(3,7), "****")
+		 $(".my_comment_list .name").html(tel1);
+	 }
+
  </script>

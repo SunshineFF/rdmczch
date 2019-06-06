@@ -40,13 +40,6 @@
 <!--头部结束-->
 <div class="content">
     <!--轮播图开始-->
-<!--    <div id="main">-->
-<!--        <img class="pic" style="display:block;" src="__STATIC__/img/index/d7032bbc8e5411b2b5d5a198b2e0fb0.jpg" />-->
-<!--        <img class="pic" src="__STATIC__/img/index/9b787593b9e5af35b8eeb89d3b0adf5.jpg" />-->
-<!--        <img class="pic" src="__STATIC__/img/index/20190524182222.jpg" />-->
-<!--        <img class="pic" src="__STATIC__/img/index/20190524182003.jpg" />-->
-<!--    </div>-->
-
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190529110711.png" /></div>
@@ -129,6 +122,27 @@
             <b class="fl" style="font-size: 0.8rem;color: #000000">群主店铺</b>
 <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="{:U('Index/street')}" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>-->
         </div>
+        <!--轮播图开始-->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190529110711.png" /></div>
+                <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110846.png" /></div>
+                <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110715.png" /></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <!--轮播图结束-->
+
+        <script>
+            var mySwiper = new Swiper ('.swiper-container', {
+                autoplay : 1000,
+                speed:1000,
+
+                // 如果需要分页器
+                pagination: '.swiper-pagination',
+            })
+        </script>
         <div class="shop_img">
             <ul>
                 <foreach name="group_store" item="v">
@@ -195,9 +209,8 @@
                 <li>
                     <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                         <img src="{$v.original_img}" alt="">
-                        <p>{$v.goods_name}</p>
-                        <p style="color: #ff2e00">￥{$v.shop_price}</p>
-                        <p style="color: #ff2e00">{$v.exchange_integral}积分</p>
+                        <p style="font-weight: 600">{$v.goods_name}</p>
+                        <p style="color: #ff2e00">￥{$v.shop_price}+{$v.exchange_integral}积分</p>
 <!--                        <span>点击预售</span>-->
                     </a>
                 </li>
