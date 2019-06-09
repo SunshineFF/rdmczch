@@ -42,6 +42,15 @@ var process_request = "正在处理您的请求...";
          </aside>
       </div>
     </div>
+    <div class="header1">
+          <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"><i class="iconshangyiyehoutuifanhui-yuankuang"></i></a></div>
+          <div class="h-right">
+              <aside class="top_bar">
+                  <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"><i class="icongengduomore"></i></a> </div>
+                  <a href="{:U('Mobile/Cart/cart')}" class="show_cart"><i class="icongouwuche1"></i></a>
+              </aside>
+          </div>
+    </div>
   </div>
 <include file="Public/menu"/> 
   <div class="main" id="user_goods_ka_1" style="display:block;">
@@ -517,6 +526,17 @@ $(document).ready(function(){
 	  }
 	  $('#tp_cart_info').html(cart_cn);
 });
+
+window.onscroll=function(){
+    var high = $(window).scrollTop();
+    var num = (high/150).toFixed(1);
+    console.log(num);
+    $(".header").css('opacity',num);
+    var high1 = 150-high;
+    var num = (high1/150).toFixed(1);
+    $(".header1").css('opacity',num);
+}
+
 </script>
 <script src="__PUBLIC__/js/jqueryUrlGet.js"></script><!--获取get参数插件-->
 <script> set_first_leader(); //设置推荐人 </script>

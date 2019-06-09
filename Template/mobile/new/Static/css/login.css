@@ -14,9 +14,9 @@ body{
 .denglu{ width:100%; margin:auto; overflow:hidden;}
 .Login{width: 80%;margin:auto;overflow:hidden;padding-top: 3rem;}
 .Login dl{ width:100%; overflow:hidden; overflow:hidden;border-bottom: 1px solid #cecece}
-.Login dl dt{width:25%;float:left;font-size:14px;/* line-height: 44px; */color:#9a9a9a;}
+.Login dl dt{width:10%;float:left;font-size:14px;/* line-height: 44px; */color:#9a9a9a;}
 .Login dl dt i{font-size: 25px;margin-right: 0.5rem;color: #9a9a9a}
-.Login dl dd{width:75%;float:left;height: 44px;}
+.Login dl dd{width:90%;float:left;height: 44px;}
 .Login dl dd input{border:none;height: 100%;line-height:30px;width:95%;padding-left: 5px;-webkit-appearance: none;-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;border-radius: 0;-webkit-rtl-ordering: logical;-webkit-user-select: text;cursor: auto;background-color: white;font-size:14px;line-height: 44px;}
 .ng-foot .ng-cookie-area{font-size: 14px;text-align: left;color: #999; vertical-align: middle; width: 35%; float: left; cursor: pointer }
 .ng-foot .ng-link-area { color: #999;  float: right; width:60%; text-align: right;}

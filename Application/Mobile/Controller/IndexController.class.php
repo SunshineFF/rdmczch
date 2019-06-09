@@ -16,21 +16,20 @@ use Mobile\Model\StoreModel;
 
 class IndexController extends MobileBaseController {
 
-    /** 首页群主店铺ID
+    /** 首页群主店铺产品ID
      * @var array
      */
-    protected $sellerProducts = [24,23,25,21];
+    protected $sellerProducts = [250,249];
 
     /** 抢购产品ID
      * @var array
      */
-    protected $qiangGou = [201,195,170,189];
+    protected $qiangGou = [262,246,247,264,211,212];
 
     /** 首页工厂直销ID
      * @var array
      */
-    protected $zhixiao = [243,168,212,199];
-
+    protected $zhixiao = [268,267,266,265,263,252,251,243,242,233,222,221,199,168,201,260];
     /** 新品预售ID
      * @var array
      */
@@ -49,7 +48,7 @@ class IndexController extends MobileBaseController {
         */
 //        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
         $hot_goods = M('goods')->where(['goods_id' => ['in',$this->zhixiao]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页工厂直销
-        $group_store = M('store')->where(['store_id' => ['in',$this->sellerProducts]])->order('store_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺首图
+        $group_store = M('goods')->where(['goods_id' => ['in',$this->sellerProducts]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺展示产品
 //        var_dump($hot_goods);
         $flash_sale= M('goods')->where(['goods_id' => ['in',$this->qiangGou]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页限时抢购
         $pre_sale= M('goods')->where(['goods_id' => ['in',$this->xinpin]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//新品预售
