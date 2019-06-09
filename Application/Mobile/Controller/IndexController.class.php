@@ -59,9 +59,44 @@ class IndexController extends MobileBaseController {
         $this->assign('pre_sale',$pre_sale);
         $this->assign('flash_sale',$flash_sale);
         $this->assign('hot_goods',$hot_goods);
+        $this->assign('store_banner',$this->getStoreFromCurrentUser());
 //        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
 //        $this->assign('favourite_goods',$favourite_goods);
         $this->display();
+    }
+
+    /** 初始化群主店铺的banner
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function getStoreFromCurrentUser(){
+        $default = [];
+        if (session('?user')) {
+            $user = session('user');
+            $store = M('store')->where(['user_id' => $user['qun_id']])->find();
+        }else{
+            $store = M('store')->where(['user_id' => 21])->find();
+        }
+        if (is_array($store) && $store['mb_slide']){
+            $default['image'] = explode(',',$store['mb_slide']);
+            $default['url'] = explode(',',$store['mb_slide_url']);
+            return $default;
+        }else{
+            return [
+                'image' => [
+                    '/Template/mobile/new/Static/img/index/20190529110711.png',
+                    '/Template/mobile/new/Static/img/index/20190529110711.png',
+                    '/Template/mobile/new/Static/img/index/20190529110711.png'
+                ],
+                'url' => [
+                    '/Store/index/store_id/21.html',
+                    '/Store/index/store_id/21.html',
+                    '/Store/index/store_id/21.html',
+                ]
+            ];
+        }
     }
 
     /**
