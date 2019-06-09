@@ -132,24 +132,26 @@ a{
 .factory ul{
     width: 100%;
     overflow: hidden;
-    /* padding-top: 1rem; */
     box-sizing: border-box;
+    padding-left: 0.3rem;
 }
 .factory li{
     float: left;
     width: 48%;
     margin-bottom: 1rem;
     background: #ffffff;
-    margin-right: 0.9rem;
-    padding: 0.3rem;
+    margin-right: 0.8rem;
     box-sizing: border-box;
     border-radius: 0.5rem;
     box-shadow: 1px 1px 8px #c3c3c3;
     border-top: 1px solid #f3f3f3;
+    overflow: hidden;
+    padding: 0.3rem;
 }
 .factory li img{
     width: 100%;
     height: 11rem;
+    margin-bottom: 0.3rem;
 }
 .factory li:nth-of-type(even){margin-right: 0;}
 .factory .price{
@@ -223,20 +225,67 @@ a{
     width: 100%;
     padding-left: 0.3rem;
     overflow: hidden;
+    margin-top: 0.5rem;
+    box-sizing: border-box;
 }
 .shop .shop_img li{
-    width: 47%;
-    margin-right: 0.9rem;
     float: left;
-    margin-bottom: 0.4rem;
-    height: 6.1rem;
+    width: 48%;
+    margin-bottom: 1rem;
+    background: #ffffff;
+    margin-right: 0.6rem;
+    padding: 0.3rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 8px #c3c3c3;
+    position: relative;
+    height: 17rem;
+    border-top: 1px solid #f3f3f3;
 }
 .shop .shop_img li:nth-of-type(even){
     margin-right: 0;
 }
 .shop .shop_img li img{
     width: 100%;
-    height: 100%;
+    height: 11rem;
+    margin-bottom: 0.3rem;
+}
+.shop .shop_img b{
+    float: left;
+    font-size: 15px;
+    line-height: 1.3rem;
+    color: #000;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    width: 100%;
+    transform: scale(1.0);
+    font-weight: 500;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.shop .shop_img p{
+    color: #ff0000;
+    line-height: 1.3rem;
+    font-size: 15px;
+    transform: scale(1.0);
+    padding-left: 0.2rem;
+    box-sizing: border-box;
+}
+.shop .shop_img li span{
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #c2c2c2;
+    float: right;
+    border-radius: 1.5rem;
+    margin-right: 0.3rem;
+    position: absolute;
+    right: 0.3rem;
+    bottom: 0.5rem;
+    text-align: center;
 }
 /*群主店铺结束*/
 
@@ -248,21 +297,40 @@ a{
     background: #ffffff;
 }
 .integral_img img{
-    width: 64%;
+    width: 50%;
     margin: 0 auto;
     margin-top: 1rem;
 }
 /*积分商城图片结束*/
 
 /*积分兑换开始*/
-.exchange{width: 100%;overflow: hidden;background: #ffffff}
+.exchange{
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    padding-left: 0.3rem;
+    box-sizing: border-box;
+}
 .exchange_title{
     width: 100%;
     overflow: hidden;
     padding: 0.5rem;
     box-sizing: border-box;
 }
-.exchange li{float: left;width: 48%;margin-bottom: 1rem;background: #ffffff;margin-right: 0.9rem;padding: 0.3rem;box-sizing: border-box;border-radius: 0.5rem;box-shadow: 1px 1px 8px #c3c3c3;position: relative;height: 17rem;border-top: 1px solid #f3f3f3;}
+.exchange li{
+    float: left;
+    width: 48%;
+    margin-bottom: 1rem;
+    background: #ffffff;
+    margin-right: 0.6rem;
+    padding: 0.3rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 8px #c3c3c3;
+    position: relative;
+    height: 17rem;
+    border-top: 1px solid #f3f3f3;
+}
 .exchange li:nth-of-type(even){margin: 0;}
 .exchange li span{
     display: block;
@@ -277,7 +345,7 @@ a{
     bottom: 0.5rem;
     text-align: center;
 }
-.exchange li img{width: 100%;height: 11rem;}
+.exchange li img{width: 100%;height: 11rem;margin-bottom: 0.3rem;}
 .exchange p{
     color: #ff0000;
     line-height: 1.3rem;
@@ -344,6 +412,7 @@ a{
     padding-bottom: 0.5rem;
     height: 10.5rem;
     border-radius: 0.5rem;
+    padding-top: 1rem;
 }
 .pre_sale li:last-child{
     margin-right: 0;

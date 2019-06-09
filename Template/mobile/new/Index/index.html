@@ -45,6 +45,7 @@
             <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190529110711.png" /></div>
             <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110846.png" /></div>
             <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110715.png" /></div>
+            <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190609173901.png" /></div>
         </div>
         <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
@@ -125,9 +126,8 @@
         <!--轮播图开始-->
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190529110711.png" /></div>
-                <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110846.png" /></div>
-                <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190529110715.png" /></div>
+                <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190609183927.png" /></div>
+                <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190609183930.png" /></div>
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
@@ -146,7 +146,15 @@
         <div class="shop_img">
             <ul>
                 <foreach name="group_store" item="v">
-                    <li><a href="{:U('Store/index',array('store_id'=>$v['store_id']))}"><img src="{$v.store_index}" alt=""></a></li>
+                <li>
+                    <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
+                        <img src="{$v.original_img}" alt="">
+                        <b>{$v.goods_name}</b>
+                        <p>￥{$v.shop_price}+{$v.exchange_integral}积分</p>
+                        <i style="color: #a7a7a7; text-decoration:line-through;" class="factory_sale">原价￥{$v.market_price}</i>
+                        <span><i class="iconai-cart" style="font-size: 15px"></i></span>
+                    </a>
+                </li>
                 </foreach>
 <!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
 <!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->

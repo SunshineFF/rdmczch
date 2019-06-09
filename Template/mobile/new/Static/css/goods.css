@@ -1,10 +1,10 @@
 /*=========index-top========*/
 .sidebar-back{animation:sidebar-body-back .2s 1 ease 0;-webkit-animation:sidebar-body-back .2s 1 ease 0;left:0;}
-.header {width: 100%;height: 2rem;position: fixed;top: 0;z-index: 99;border: 0;max-width: 640px;background: -webkit-linear-gradient(left, red , blue);background: -o-linear-gradient(right, red, blue);background: -moz-linear-gradient(right, red, blue);background: linear-gradient(to right, #ff1414, #f6208a);}
+.header {opacity: 0;width: 100%;height: 2rem;position: fixed;top: 0;z-index: 100;border: 0;max-width: 640px;background: -webkit-linear-gradient(left, red , blue);background: -o-linear-gradient(right, red, blue);background: -moz-linear-gradient(right, red, blue);background: linear-gradient(to right, #ff1414, #f6208a);}
 .h-left{float:left;width:15%;height: 100%;}
 .h-left a{background: none;display: block;height: 100%;}
-.h-left a i{height: 100%;display: block;font-size: 30px;line-height: 30px;color: #ffffff}
-.h-right{float:left;width: 25%;height: 100%;}
+.h-left a i{height: 100%;display: block;font-size: 30px;line-height: 30px;color: #ffffff;padding-top: 0.1rem}
+.h-right{float:right;width: 25%;height: 100%;}
 
 
 .h-mid {width: 60%;height: 2rem;float:left;text-align:center;font-size:1.6rem;line-height:40px;position:relative;}
@@ -14,16 +14,27 @@
 .h-mid ul li a.on { color:#fcd23e; border-bottom:2px solid #fcd23e }
 .h-mid ul li img{ display:block; width:40px; height:40px; float:right; }
 
+/*二级头*/
+.header1 {width: 100%;height: 2rem;position: fixed;top: 0;z-index: 99;border: 0;max-width: 640px;}
+.header1 .h-left{float:left;width:15%;height: 100%;}
+.header1 .h-left a{background: none;display: block;height: 100%;}
+.header1 .h-left a i{height: 100%;display: block;font-size: 30px;line-height: 30px;color: #ffffff;padding-top: 0.1rem}
+.header1 .h-left a i:before{background: rgba(0,0,0,0.3);border-radius: 5rem}
+.header1 .h-right{float:right;width: 25%;height: 100%;}
+.header1 #show_more i:before{background: rgba(0,0,0,0.3);border-radius: 5rem;padding: 0.3rem;}
+.header1 .show_cart i:before{background: rgba(0,0,0,0.3);border-radius: 5rem}
+
 /*弹出菜单*/
 .top_bar{float:right;display:block;width: 100%;margin-right: 0px;height: 100%;background:none;}
 #show_more {background: none;width: 30px;height: 100%;float: right;line-height: 32px;margin-left: 10px;margin-top: 0}
-#show_more i{font-size: 15px;color: #ffffff}
+#show_more i{height: 100%;display: block;font-size: 20px;line-height: 30px;color: #ffffff;padding-top: 0.1rem}
+#show_more i:before{padding-left: 0.3rem}
 .show_cart{float:right;width:40px;height: 100%;background: none;position: relative;text-align: center;line-height: 2rem}
-.show_cart i{font-size: 30px;color: #ffffff}
+.show_cart i{height: 100%;display: block;font-size: 30px;line-height: 30px;color: #ffffff;padding-top: 0.1rem}
 .goods_nav{ width:30%; float:right; right:5px; overflow:hidden; position:fixed;margin-top:25px; z-index:100}
 
 /*商品*/
-.banner{ width:100%; overflow:hidden; margin-top:2rem;}
+.banner{ width:100%; overflow:hidden;}
 .slider{ width:100%; overflow:hidden; position:relative}
 #pagenavi { position: absolute; left: 0; bottom:15px; text-align: center; width: 100%; }
 #pagenavi a { width: 10px; height: 10px; line-height: 99em; background: #b5b5b5; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; margin: 0 4px; overflow: hidden; cursor: pointer; display: inline-block; *display:inline;*zoom:1;filter:alpha(Opacity=80);-moz-opacity:0.8;opacity: 0.8;}
@@ -96,7 +107,7 @@
 
 .navContent li .item1 .ui-number .decrease{ display:inline-block; background:none; font-size:24px; line-height:30px; border:0;width:30px; float:left; height:30px; color:#F8849C; border-right:1px solid #ddd9da;text-indent:-9999px;background: url(../images/flow/shop-cart.png) no-repeat 6px -25px; background-size: 60px}
 .navContent li .item1 .ui-number .num{display:inline-block;border:0;width:40px; height:30px;float:left; text-align:center; font-size:12px; line-height:30px; color:#666;font-size:20px;text-align:center}
-.navContent li .item1 .ui-number .increase{display:inline-block;background:none;border:0;border-left:1px solid #ddd9da;float:left; width:30px; height:30px;font-size:24px; line-height:30px;color:#F8849C;background: url(../images/flow/shop-cart.png) no-repeat -23px -25px; background-size: 60px;text-indent:-9999px}
+.navContent li .item1 .ui-number .increase{display:inline-block;background:none;border:0;border-left:1px solid #ddd9da;float:left; width:30px; height:30px;font-size:24px; line-height:30px;color:#F8849C;background: url(../images/flow/shop-cart.png) no-repeat -23px -25px; background-size: 60px;text-indent:-9999px;outline: none}
 
 .choice{overflow: hidden;width: 95%;margin: 0 auto;color: #666;font-size: 16px;border-bottom: 1px solid #dfdfdf}
 .choice span{color: #000000;margin-left: 4rem;font-size: 15px}
