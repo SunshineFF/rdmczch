@@ -53,7 +53,7 @@
 <!--						<div class="field pwd">-->
 <!--							<input type="text" name="parent_phone" placeholder="上级手机号" class="c-form-txt-normal" required />-->
 <!--						</div>-->
-						<div class="field pwd">
+						<div class="field pwd" style="display: none">
 							<input type="text" name="invite_code" value="{$invite_code}" placeholder="邀请码" class="c-form-txt-normal" />
 						</div>
 						<div class="yanzheng"  style=" margin-top:0px;">
@@ -262,6 +262,7 @@ function sendcode(o){
 			success:function(res){
 				if(res.status==1){
 					countdown(o);
+					layer.open({content:res.msg,time:2});
 				}else{
 					layer.open({content:res.msg,time:2});
 				}
@@ -270,7 +271,7 @@ function sendcode(o){
 	}
 }
 
-var wait = 150;
+var wait = 60;
 function countdown(obj, msg) {
 	obj = $(obj);
 	if (wait == 0) {

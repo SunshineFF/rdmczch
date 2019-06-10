@@ -126,8 +126,10 @@
         <!--轮播图开始-->
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img class="pic" style="display:block;" src="__STATIC__/img/index/20190609183927.png" /></div>
-                <div class="swiper-slide"><img class="pic" src="__STATIC__/img/index/20190609183930.png" /></div>
+                <foreach name="store_banner.image" item="imageOne" key="key">
+                    <?php if(!$imageOne) continue; ?>
+                    <div class="swiper-slide"><a href="{$store_banner['url'][$key]}"><img class="pic" src="{$imageOne}" /></a></div>
+                </foreach>
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
@@ -145,7 +147,7 @@
         </script>
         <div class="shop_img">
             <ul>
-                <foreach name="group_store" item="v">
+                <foreach name="recomend_goods" item="v">
                 <li>
                     <a href="{:U('Goods/goodsInfo',array('id'=>$v['goods_id']))}">
                         <img src="{$v.original_img}" alt="">
@@ -156,14 +158,6 @@
                     </a>
                 </li>
                 </foreach>
-<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/2@2x.png" alt=""></li>-->
-<!--                <li><img src="__STATIC__/img/index/1@2x.png" alt=""></li>-->
             </ul>
         </div>
     </div>

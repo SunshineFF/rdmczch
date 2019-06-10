@@ -5,11 +5,12 @@ include_once 'Request/V20170525/QuerySendDetailsRequest.php';
 
 
 
-function sendSms() {
-    
+function sendSmsAction($mobile,$code) {
+
+    $settings = tpCache('sms'); // 获取短信配置
     //此处需要替换成自己的AK信息
-    $accessKeyId = "LTAIuFAA3s62bXtF";
-    $accessKeySecret = "VciKvIpsBAwVuKmp5jqphXXzUHsgpy";
+    $accessKeyId = $settings['sms_appkey'];
+    $accessKeySecret = $settings['sms_secretKey'];
     //短信API产品名
     $product = "Dysmsapi";
     //短信API产品域名
@@ -24,19 +25,18 @@ function sendSms() {
     
     $request = new Dysmsapi\Request\V20170525\SendSmsRequest;
     //必填-短信接收号码
-    $request->setPhoneNumbers($_GET['mobile']);
+    $request->setPhoneNumbers($mobile);
     //必填-短信签名
-    $request->setSignName("505coder吕束俊");
+    $request->setSignName($settings['sms_product']);
     //必填-短信模板Code
-    $request->setTemplateCode("SMS_77300036");
+    $request->setTemplateCode($settings['sms_templateCode']);
     //选填-假如模板中存在变量需要替换则为必填(JSON格式)
-    $request->setTemplateParam("{\"number\":\"".$_GET['code']."\"}");
+    $request->setTemplateParam("{\"code\":\"".$code."\"}");
     //选填-发送短信流水号
-    $request->setOutId("1234");
+   // $request->setOutId("1234");
     
     //发起访问请求
     $acsResponse = $acsClient->getAcsResponse($request);
-    print_r($acsResponse);
     return $acsResponse;
     
     
@@ -77,6 +77,6 @@ function querySendDetails() {
     
 }
 
-sendSms();
+//sendSms();
 //querySendDetails();
 ?>

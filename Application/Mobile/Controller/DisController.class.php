@@ -36,13 +36,26 @@ class DisController extends MobileBaseController
         return $this->display();
     }
 
+    /** 初始化用户数据
+     * @param $user
+     * @return array
+     * @throws \think\db\exception\BindParamException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     protected function initDataFromUser($user){
-        if (!$user['parent_path']){
+        if (!$user['parent_path'] && !$user['all_child']){
             return [];
         }
-        $firstParentId = current(explode(',',$user['parent_path']));
-        $userModel = M('users');
-        $firstParent = $userModel->where(['user_id' => $firstParentId])->find();
+        if($user['parent_path']){
+            $firstParentId = current(explode(',',$user['parent_path']));
+            $userModel = M('users');
+            $firstParent = $userModel->where(['user_id' => $firstParentId])->find();
+        }else{
+            $firstParent = $user;
+        }
         $dataNew = [];
         $allChild = unserialize($firstParent['all_child']);
         $current = $user['user_id'];

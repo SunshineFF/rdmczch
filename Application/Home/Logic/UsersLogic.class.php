@@ -301,12 +301,17 @@ class UsersLogic extends RelationModel
 
 
         $user['zhitui_id'] = $zhitui['user_id'];
+        $user['qun_id'] = $zhitui['qun_id'] ? $zhitui['qun_id'] : $this->getQunIdFromUser($zhitui);
       //  $parent = $this->getUserParent($zhitui);  //双线，默认分配小区
         $parent = $this->getUserParentNew($zhitui);  //单线只开放大区
         $user['parent'] = $parent;
         $parentId = $parent['user_id'];
         $user['parent_id'] = $parentId;
         $this->_updateZhiTuiJifen($user['zhitui_id']);
+    }
+
+    public function getQunIdFromUser($user){
+        return $user['user_id'];
     }
 
     /** 根据直推账号获取推荐人
@@ -910,7 +915,7 @@ class UsersLogic extends RelationModel
     public function touZi($user){
         $money = $_POST['money'];
         if ((int)$money < 500){
-            return array('status'=>-1,'msg'=>'投资金额必须大于500');
+            return array('status'=>-1,'msg'=>'收藏金额必须大于500');
         }
         if ($money > $user['user_money']){
             return array('status'=>-1,'msg'=>'请填写正确的额度');
@@ -921,8 +926,8 @@ class UsersLogic extends RelationModel
 //        $this->where(['user_id'=>$user['user_id']])->setDec('user_money',$money);
         $this->where(['user_id' => $user['user_id']])->save($user);
         $this->updateZhiTui($user,$money);
-        accountLogOnly($user['user_id'],$money,'用户投资');
-        return array('status'=>1,'msg'=>'投资成功');
+        accountLogOnly($user['user_id'],$money,'用户收藏');
+        return array('status'=>1,'msg'=>'收藏成功');
     }
 
     /** 更新直推用户奖励
@@ -1431,5 +1436,12 @@ class UsersLogic extends RelationModel
             \Think\Log::write($exception->getMessage().$exception->getTraceAsString(),'WARN');
             return ['status' => -1,'msg'=>'转账失败，请联系技术人员'];
         }
+    }
+
+    /**
+     * 厂家分润
+     */
+    public function updateUserJiangJin($order){
+
     }
 }

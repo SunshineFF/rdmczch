@@ -175,17 +175,17 @@ class UserController extends MobileBaseController
             $password = I('post.password', '');
             $password2 = I('post.password2', '');
             //是否开启注册验证码机制
+//
+            if (check_mobile($username) && tpCache('sms.regis_sms_enable')) {
+                $code = I('post.mobile_code', '');
 
-//            if (check_mobile($username) && tpCache('sms.regis_sms_enable')) {
-//                $code = I('post.mobile_code', '');
-//
-//                if (!$code)
-//                    $this->error('请输入验证码');
-//                $check_code = $logic->sms_code_verify($username, $code, $this->session_id);
-//                if ($check_code['status'] != 1)
-//                    $this->error($check_code['msg']);
-//
-//            }
+                if (!$code)
+                    $this->error('请输入验证码');
+                $check_code = $logic->sms_code_verify($username, $code, $this->session_id);
+                if ($check_code['status'] != 1)
+                    $this->error($check_code['msg']);
+
+            }
 
             $data = $logic->reg($username, $password, $password2);
             if ($data['status'] != 1)
@@ -990,7 +990,9 @@ class UserController extends MobileBaseController
         $type = I('type');
         $send = I('send');
         $logic = new UsersLogic();
-        $logic->send_validate_code($send, $type);
+        $res = $logic->send_validate_code($send, $type);
+        echo json_encode($res);
+        exit;
     }
 
     public function check_validate_code()
