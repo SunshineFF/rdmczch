@@ -79,6 +79,8 @@ class IndexController extends MobileBaseController {
             $store = M('store')->where(['user_id' => 21])->find();
         }
         if (is_array($store) && $store['mb_slide']){
+            $recomend_goods = M('goods')->field('goods_content',true)->where(array('store_id'=>$store['store_id'],'is_recommend'=>1))->order('goods_id desc')->limit(2)->select();
+            $this->assign('recomend_goods',$recomend_goods);
             $default['image'] = explode(',',$store['mb_slide']);
             $default['url'] = explode(',',$store['mb_slide_url']);
             return $default;

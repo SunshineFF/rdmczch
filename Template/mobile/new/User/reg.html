@@ -262,6 +262,7 @@ function sendcode(o){
 			success:function(res){
 				if(res.status==1){
 					countdown(o);
+					layer.open({content:res.msg,time:2});
 				}else{
 					layer.open({content:res.msg,time:2});
 				}
@@ -270,7 +271,7 @@ function sendcode(o){
 	}
 }
 
-var wait = 150;
+var wait = 60;
 function countdown(obj, msg) {
 	obj = $(obj);
 	if (wait == 0) {

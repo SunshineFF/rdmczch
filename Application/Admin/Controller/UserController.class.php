@@ -109,12 +109,30 @@ class UserController extends BaseController {
         $user['second_lower'] = M('users')->where("second_leader = {$user['user_id']}")->count();
         $user['third_lower'] = M('users')->where("third_leader = {$user['user_id']}")->count();
         $userLevel = M('user_level')->select();
- 
+        $this->addQunZhuData($user);
         $this->assign('user',$user);
         $this->assign('userLevel',$userLevel);
         $this->display();
     }
-    
+
+    /** 初始化群主所属
+     * @param $user
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function addQunZhuData(&$user){
+        if ($user['level_id'] == 2){
+            $p = M('region')->where(array('parent_id' => 0, 'level' => 1))->select();
+            $this->assign('province', $p);
+            if ($user['city_id']){
+                $user['city_list'] = M('region')->where(['parent_id' => $user['province_id']])->select();
+            }
+            if ($user['district_id']){
+                $user['cidistrict_list'] = M('region')->where(['parent_id' => $user['city_id']])->select();
+            }
+        }
+    }
     
     public function add_user(){
     	if(IS_POST){
