@@ -38,6 +38,10 @@ class MobileBaseController extends Controller {
             $userClick = new UserClick();
             $userClick->updateDataByUser($user);
         }
+        $inviteCode = I('invite_code');
+        if ($inviteCode){
+            setcookie('invite_code',$inviteCode,null,'/');
+        }
         //微信浏览器
 //        if(strstr($_SERVER['HTTP_USER_AGENT'],'MicroMessenger') && empty($_SESSION['openid'])){
 //            $this->weixin_config = M('wx_user')->find(); //获取微信配置

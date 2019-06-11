@@ -1284,7 +1284,11 @@ function get_goods_category_tree(){
 	return $result;
 }
 
-
+/**
+ * @param $user_id
+ * @param int $money
+ * @param string $desc
+ */
 function accountLogOnly($user_id,$money = 0,$desc = ''){
     /* 插入帐户变动记录 */
     $account_log = array(
