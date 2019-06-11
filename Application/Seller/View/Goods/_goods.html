@@ -257,7 +257,14 @@
                                         <input type="text" value="{$goodsInfo.cost_price}" name="cost_price" class="form-control" style="width:150px;" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
                                         <span id="err_cost_price" style="color:#F00; display:none"></span>					                                        
                                     </td>
-                                </tr>       
+                                </tr>
+                                <tr>
+                                    <td>运费:</td>
+                                    <td>
+                                        <input type="number" value="{$goodsInfo.shipping_price}" name="shipping_price" class="form-control" style="width:150px;" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+                                        <span id="shipping_price" style="color:#F00; display:none"></span>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>佣金:</td>
                                     <td>

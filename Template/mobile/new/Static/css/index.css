@@ -9,26 +9,37 @@ a{
     width: 100%;
     height: 2.5rem;
     line-height: 2rem;
-    background: #32d2b0;
-    padding: 0 0.5rem;
+    background: #ffffff;
     box-sizing: border-box;
     text-align: center;
+    border-top: 1px solid #ededed;
 }
 .head i{
-    font-size: 1.4rem;
-    margin-top: 0.3rem;
+    font-size: 18px;
+    margin: 0 auto;
+    color: #a5a5a5;
+    display: inline-block;
+    height: 100%;
+    line-height: 39px;
+    width: 13%;
+}
+.head a{
+    display: inline-block;
+    float: left;
+    height: 100%;
+    width: 13%;
 }
 .txt{
-    width: 82%;
-    height: 70%;
+    width: 71%;
+    height: 100%;
     border-radius: 0.3rem;
     background: #FFFFFF;
     margin-left: 0.5rem;
-    margin-top: 0.4rem;
+    /* margin-top: 0.4rem; */
 }
 .txt input[type='text']{
-    width: 95%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     float: left;
     margin-left: 0.5rem;
     margin-top: 0.5%;
@@ -57,14 +68,14 @@ a{
 }
 .content{
     width: 100%;
-    padding: 0 0.2rem;
+    /* padding: 0 0.2rem; */
     box-sizing: border-box;
     margin-bottom: 4rem;
 }
 /*轮播图开始*/
 .swiper-container{
     width:100%;
-    height:15rem;
+    height:13rem;
     overflow:hidden;
 }
 .swiper-container img{
@@ -73,76 +84,125 @@ a{
 }
 /*轮播图结束*/
 
+/*导航栏*/
+.nav{
+    width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    padding-bottom: 0.5rem;
+    box-sizing: border-box;
+}
+.nav li{
+    width: 25%;
+    text-align: center;
+    font-size: 12px;
+    color: #686868;
+    float: left;
+}
+.nav li a{
+    color: #686868;
+}
+.nav li i{
+    font-size: 35px;
+}
+
 /*工厂直销开始*/
 .factory{
     width: 100%;
     overflow: hidden;
     margin-top: 0.8rem;
-    border-radius: 0.8rem;
-    background: #ffffff;
+    background: #fff;
+}
+.factory .factory_banner{
+    width: 100%;
+    background: #fff;
+}
+.factory .factory_banner img{
+    width: 52%;
+    margin: 0 auto;
+    margin-top: 0.5rem;
 }
 .factory .factory_title{
     width: 100%;
     overflow: hidden;
     padding: 0.5rem;
     box-sizing: border-box;
+    background: #ffffff;
+}
+.factory ul{
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding-left: 0.3rem;
 }
 .factory li{
     float: left;
-    width: 45%;
-    margin-left: 5%;
+    width: 48%;
     margin-bottom: 1rem;
+    background: #ffffff;
+    margin-right: 0.8rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 8px #c3c3c3;
+    border-top: 1px solid #f3f3f3;
+    overflow: hidden;
+    padding: 0.3rem;
 }
 .factory li img{
-    width: 8.8rem;
-    height: 7.2rem;
+    width: 100%;
+    height: 11rem;
+    margin-bottom: 0.3rem;
 }
+.factory li:nth-of-type(even){margin-right: 0;}
 .factory .price{
     width: 100%;
     overflow: hidden;
+    height: 84px;
+    position: relative;
 }
-.factory .price .price_left{width: 55%;overflow: hidden;float: left}
-.factory .price .price_left span{
-    width: 100%;
-    background: #ff2e00;
-    color: #ffffff;
+.factory .price  p{
+    color: #ff0000;
     line-height: 1.3rem;
-    text-align: center;
-    border-radius: 0 0.5rem 0 0;
-    font-size: 12px;
-    float: left;
+    font-size: 15px;
     transform: scale(1.0);
+    padding-left: 0.2rem;
+    box-sizing: border-box;
 }
-.factory .price .price_left b{
+.factory .price b{
     float: left;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.3rem;
     color: #000;
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     width: 100%;
     transform: scale(1.0);
     font-weight: 500;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
-.factory .price .price_left i{
+.factory_sale{
     float: left;
     font-size: 12px;
     line-height: 1.3rem;
     transform: scale(1.0);
+    padding-left: 0.4rem;
 }
-.factory .price .price_right{
-    width: 3.5rem;
-    padding: 1.2rem 0;
-    font-size: 12px;
-    background: #ff2e00;
-    color: #ffffff;
+.factory .price span{
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #c2c2c2;
+    float: right;
+    border-radius: 1.5rem;
+    margin-right: 0.3rem;
+    position: absolute;
+    right: 0.3rem;
+    bottom: 0.5rem;
     text-align: center;
-    border-radius: 5rem;
-    float: left;
-    margin-left: 5%;
-    transform: scale(1.0);
 }
 /*工厂直销结束*/
 
@@ -150,43 +210,96 @@ a{
 .shop{
     width: 100%;
     overflow: hidden;
-    margin-top: 0.8rem;
-    border-radius: 0.8rem;
+    margin-top: 1rem;
     background: #ffffff;
 }
 .shop .shop_title{
     width: 100%;
     overflow: hidden;
-    padding: 0.5rem;
+    padding: 0.65rem;
     box-sizing: border-box;
+    border-bottom: 1px solid #c2c2c2;
+    margin-bottom: 0.2rem;
 }
 .shop .shop_img{
     width: 100%;
     padding-left: 0.3rem;
     overflow: hidden;
+    margin-top: 0.5rem;
+    box-sizing: border-box;
 }
 .shop .shop_img li{
-    width: 48%;
-    margin-right: 0.4rem;
     float: left;
-    margin-bottom: 0.5rem;
-    height: 10rem;
+    width: 48%;
+    margin-bottom: 1rem;
+    background: #ffffff;
+    margin-right: 0.6rem;
+    padding: 0.3rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 8px #c3c3c3;
+    position: relative;
+    height: 17rem;
+    border-top: 1px solid #f3f3f3;
+}
+.shop .shop_img li:nth-of-type(even){
+    margin-right: 0;
 }
 .shop .shop_img li img{
     width: 100%;
-    height: 100%;
+    height: 11rem;
+    margin-bottom: 0.3rem;
+}
+.shop .shop_img b{
+    float: left;
+    font-size: 15px;
+    line-height: 1.3rem;
+    color: #000;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    width: 100%;
+    transform: scale(1.0);
+    font-weight: 500;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.shop .shop_img p{
+    color: #ff0000;
+    line-height: 1.3rem;
+    font-size: 15px;
+    transform: scale(1.0);
+    padding-left: 0.2rem;
+    box-sizing: border-box;
+}
+.shop .shop_img li span{
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #c2c2c2;
+    float: right;
+    border-radius: 1.5rem;
+    margin-right: 0.3rem;
+    position: absolute;
+    right: 0.3rem;
+    bottom: 0.5rem;
+    text-align: center;
 }
 /*群主店铺结束*/
 
 /*积分商城图片开始*/
 .integral_img{
     width: 100%;
-    height: 11rem;
+    height: 5.1rem;
     margin-top: 1rem;
+    background: #ffffff;
 }
 .integral_img img{
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 1rem;
 }
 /*积分商城图片结束*/
 
@@ -194,10 +307,9 @@ a{
 .exchange{
     width: 100%;
     overflow: hidden;
-    margin-top: 0.8rem;
-    border-radius: 0.8rem;
     background: #ffffff;
-    padding-bottom: 1rem;
+    padding-left: 0.3rem;
+    box-sizing: border-box;
 }
 .exchange_title{
     width: 100%;
@@ -206,70 +318,70 @@ a{
     box-sizing: border-box;
 }
 .exchange li{
-    width: 45%;
-    overflow: hidden;
     float: left;
-    margin-left: 2rem;
+    width: 48%;
+    margin-bottom: 1rem;
+    background: #ffffff;
+    margin-right: 0.6rem;
+    padding: 0.3rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 8px #c3c3c3;
+    position: relative;
+    height: 17rem;
+    border-top: 1px solid #f3f3f3;
 }
-.exchange li:nth-of-type(odd){
-    margin: 0;
-}
-.exchange li img{
-    width: 80%;
-    height: 7.2rem;
-    margin-left: 1rem;
-}
-.exchange .exchange_left{
-    width: 45%;
-    overflow: hidden;
-    margin-left: 1rem;
-    margin-top: 0.5rem;
-}
-.exchange .exchange_left span{
-    width: 100%;
+.exchange li:nth-of-type(even){margin: 0;}
+.exchange li span{
+    display: block;
+    width: 1.5rem;
     height: 1.5rem;
+    background: #c2c2c2;
+    float: right;
+    border-radius: 1.5rem;
+    margin-right: 0.3rem;
+    position: absolute;
+    right: 0.3rem;
+    bottom: 0.5rem;
     text-align: center;
-    line-height: 1.5rem;
-    background: #ff2e00;
-    color: #ffffff;
-    border-radius: 0 0.5rem 0 0;
-    font-size: 0.5rem;
-    display: block;
 }
-.exchange .exchange_left b{
-    display: block;
+.exchange li img{width: 100%;height: 11rem;margin-bottom: 0.3rem;}
+.exchange p{
+    color: #ff0000;
+    line-height: 1.3rem;
+    font-size: 15px;
+    transform: scale(1.0);
+    padding-left: 0.2rem;
+    box-sizing: border-box;
+}
+.exchange b{
+    float: left;
+    font-size: 15px;
+    line-height: 1.3rem;
+    color: #000;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     width: 100%;
-    text-align: center;
-    color: #000000;
-    font-size: 0.5rem;
-    margin-top: 0.2rem;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-}
-.exchange .exchange_right{
-    width: 3.1rem;
-    padding: 1rem 0;
-    font-size: 12px;
-    border-radius: 2rem;
-    background: #ff2e00;
-    color: #ffffff;
-    text-align: center;
-    margin-left: 0.8rem;
+    transform: scale(1.0);
+    font-weight: 500;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 /*积分兑换结束*/
 
 /*新品预售开始*/
 .news{
     width: 100%;
-    height: 11rem;
+    height: 4.3rem;
     margin-top: 1rem;
+    background: #ffffff;
 }
 .news img{
-    width: 100%;
-    height: 100%;
+    width: 28%;
+    margin: 0 auto;
 }
 /*新品预售结束*/
 
@@ -277,10 +389,11 @@ a{
 .pre_sale{
     width: 100%;
     overflow: hidden;
-    margin-top: 0.8rem;
-    border-radius: 0.8rem;
     background: #ffffff;
     padding-bottom: 1rem;
+    border-top: 1px solid #efefef;
+    padding-left: 0.3rem;
+    box-sizing: border-box;
 }
 .pre_sale_title{
     width: 100%;
@@ -289,23 +402,36 @@ a{
     box-sizing: border-box;
 }
 .pre_sale li{
-    width: 25%;
+    width: 31%;
     overflow: hidden;
     float: left;
     text-align: center;
     color: #000000;
+    box-shadow: 1px 1px 8px #c3c3c3;
+    margin-right: 0.6rem;
+    padding-bottom: 0.5rem;
+    height: 10.5rem;
+    border-radius: 0.5rem;
+    padding-top: 1rem;
+}
+.pre_sale li:last-child{
+    margin-right: 0;
 }
 .pre_sale li img{
     width: 80%;
     margin: 0 auto;
-    height: 4rem;
+    height: 6rem;
 }
 .pre_sale li p{
-    overflow:hidden;
-    text-overflow:ellipsis;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 12px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 0.5rem;
 }
 .pre_sale li a{
     color: #000000;

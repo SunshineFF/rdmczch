@@ -38,7 +38,7 @@ class GoodsModel extends Model {
         array('member_price','/\d{1,10}(\.\d{1,2})?$/','会员价格式不对。',2,'regex'),        
         array('market_price','/\d{1,10}(\.\d{1,2})?$/','市场价格式不对。',2,'regex'), // currency
         array('weight','/\d{1,10}(\.\d{1,2})?$/','重量格式不对。',2,'regex'),
-        array('exchange_integral','checkExchangeIntegral','积分抵扣金额不能超过商品总额',0,'callback'),
+//        array('exchange_integral','checkExchangeIntegral','积分抵扣金额不能超过商品总额',0,'callback'),
      );   
     
     

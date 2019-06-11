@@ -1,22 +1,69 @@
-<!--
-<div class="footer" >
-	      <div class="links"  id="TP_MEMBERZONE"> 
-	      		<if condition="$user_id gt 0">
-	      		<a href="{:U('User/index')}"><span>{$user.nickname}</span></a><a href="{:U('User/logout')}"><span>退出</span></a>
-	      		<else/>
-	      		<a href="{:U('User/login')}"><span>登录</span></a><a href="{:U('User/reg')}"><span>注册</span></a>
-	      		</if>
-	      		<a href="#"><span>反馈</span></a><a href="javascript:window.scrollTo(0,0);"><span>回顶部</span></a>
-		  </div>
-	      <ul class="linkss" >
-		      <li>
-		        <a href="#">
-		        <i class="footerimg_1"></i>
-		        <span>客户端</span></a></li>
-		      <li>
-		      <a href="javascript:;"><i class="footerimg_2"></i><span class="gl">触屏版</span></a></li>
-		      <li><a href="{:U('Home/Index/index')}" class="goDesktop"><i class="footerimg_3"></i><span>电脑版</span></a></li>
-	      </ul>
-	  	 <p class="mf_o4">备案号:{$tpshop_config['shop_info_record_no']}<br/>&copy; 2005-2016 TPshop多商户V1.2 版权所有，并保留所有权利。</p>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/icon/iconfont.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/collection_footer.css">
+<div class="collection_footer">
+    <ul>
+        <li class="index1">
+            <a href="/">
+                <i class="iconshouye-copy"></i>
+                <p>首页</p>
+            </a>
+        </li>
+        <li class="product1">
+            <a href="{:U('Product/index')}">
+                <i class="iconshoucang1"></i>
+                <p>收藏</p>
+            </a>
+        </li>
+        <li style="display: none;" >
+            <i class="iconshejiao"></i>
+            <p>社交</p>
+        </li>
+        <li style="position: relative;" class="cart1">
+            <a href="{:U('Cart/cart')}">
+                <i class="icongouwuche"></i>
+                <em class="global-nav__nav-shop-cart-num" id="cart_quantity" style="right:9px;"></em>
+                <p>购物车</p>
+            </a>
+        </li>
+        <li  class="user1">
+            <a href="{:U('User/index')}">
+                <i class="iconwode"></i>
+                <p>我的</p>
+            </a>
+        </li>
+    </ul>
 </div>
--->
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var cart_cn = getCookie('cn');
+        if(cart_cn == ''){
+            $.ajax({
+                type : "GET",
+                url:"/index.php?m=Home&c=Cart&a=header_cart_list",//+tab,
+                success: function(data){
+                    cart_cn = getCookie('cn');
+                    $('#cart_quantity').html(cart_cn);
+                }
+            });
+        }
+        $('#cart_quantity').html(cart_cn);
+        var modelName = '{$current_model}';
+        if(modelName == ''){
+            $(".index1").addClass('cur');
+        }
+        if(modelName == 'Index'){
+            $(".index1").addClass('cur');
+        }
+        if(modelName == 'Product'){
+            $(".product1").addClass('cur');
+        }
+        if(modelName == 'Cart'){
+            $(".cart1").addClass('cur');
+        }
+        if(modelName == 'User'){
+            $(".user1").addClass('cur');
+        }
+    });
+</script>

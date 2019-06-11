@@ -175,17 +175,17 @@ class UserController extends MobileBaseController
             $password = I('post.password', '');
             $password2 = I('post.password2', '');
             //是否开启注册验证码机制
+//
+            if (check_mobile($username) && tpCache('sms.regis_sms_enable')) {
+                $code = I('post.mobile_code', '');
 
-//            if (check_mobile($username) && tpCache('sms.regis_sms_enable')) {
-//                $code = I('post.mobile_code', '');
-//
-//                if (!$code)
-//                    $this->error('请输入验证码');
-//                $check_code = $logic->sms_code_verify($username, $code, $this->session_id);
-//                if ($check_code['status'] != 1)
-//                    $this->error($check_code['msg']);
-//
-//            }
+                if (!$code)
+                    $this->error('请输入验证码');
+                $check_code = $logic->sms_code_verify($username, $code, $this->session_id);
+                if ($check_code['status'] != 1)
+                    $this->error($check_code['msg']);
+
+            }
 
             $data = $logic->reg($username, $password, $password2);
             if ($data['status'] != 1)
@@ -769,15 +769,27 @@ class UserController extends MobileBaseController
 
     public function collect_list()
     {
-        $userLogic = new UsersLogic();
-        $data = $userLogic->get_goods_collect($this->user_id);
-        $this->assign('page', $data['show']);// 赋值分页输出
-        $this->assign('goods_list', $data['result']);
-        if ($_GET['is_ajax']) {
-            $this->display('ajax_collect_list');
-            exit;
+        $type = I('get.type', 1);
+        if ($type == 1) {
+            //商品收藏
+            $userLogic = new UsersLogic();
+            $data = $userLogic->get_goods_collect($this->user_id);
+            $this->assign('page', $data['show']);// 赋值分页输出
+            $this->assign('goods_list', $data['result']);
+            $this->assign('active', 'goods_collect');
+            if ($_GET['is_ajax']) {
+                $this->display('ajax_collect_list');
+                exit;
+            }
+            $this->display();
+        } else {
+            //店铺收藏
+            $storeLogic = new StoreLogic();
+            $store_collect_list = $storeLogic->getCollectStore($this->user_id);
+            $this->assign('page', $store_collect_list['show']);// 赋值分页输出
+            $this->assign('store_collect_list', $store_collect_list['result']);
+            $this->display('bookmark');
         }
-        $this->display();
     }
 
     /*
@@ -978,7 +990,9 @@ class UserController extends MobileBaseController
         $type = I('type');
         $send = I('send');
         $logic = new UsersLogic();
-        $logic->send_validate_code($send, $type);
+        $res = $logic->send_validate_code($send, $type);
+        echo json_encode($res);
+        exit;
     }
 
     public function check_validate_code()
@@ -1290,5 +1304,17 @@ class UserController extends MobileBaseController
         $this->assign('url',$url);
         $this->assign('invite_code',$inviteCode);
         $this->display();
+    }
+
+    public function del_store_collect(){
+        $id = I('get.log_id');
+        if(!$id)
+            $this->error("缺少ID参数");
+        $store_id = M('store_collect')->where(array('log_id'=>$id,'user_id'=>$this->user_id))->getField('store_id');
+        $row = M('store_collect')->where(array('log_id'=>$id,'user_id'=>$this->user_id))->delete();
+        M('store')->where(array('store_id' => $store_id))->setDec('store_collect');
+        if(!$row)
+            $this->error("删除失败");
+        $this->success('删除成功');
     }
 }

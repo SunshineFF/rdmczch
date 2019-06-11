@@ -23,11 +23,14 @@ class QRcodeHelp{
         return $imgName;
     }
 
-    public function getTodayDir(){
+    public function getTodayDir($isPoster = false){
         $time = time();
         $dir = UPLOAD_PATH;
         $dir .= date('Y_m',$time);
         $dir .= '/'.date('d',$time);
+        if ($isPoster){
+            $dir .= '/poster';
+        }
         if (!$this->mkdirs($dir)){
             throw new Exception("创建文件 $dir 失败");
         };

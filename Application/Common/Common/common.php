@@ -301,8 +301,9 @@ function sendSMS($mobile,$content)
 function sendSMS($mobile, $code)
 {
 	//echo 'http://localhost:8080/smsDemo.php?mobile='.$mobile.'&code='.$code;
-	$resp = file_get_contents('http://505coder.com/smsDemo.php?mobile='.$mobile.'&code='.$code);
-    
+	//$resp = file_get_contents('http://505coder.com/smsDemo.php?mobile='.$mobile.'&code='.$code);
+    include_once 'smsDemo.php';
+	$resp = sendSmsAction($mobile,$code);
     
     //短信发送成功返回True，失败返回false
    

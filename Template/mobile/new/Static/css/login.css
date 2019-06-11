@@ -1,12 +1,23 @@
+/*body背景图片*/
+body{
+	background-image: url("/Template/mobile/new/Static/images/20190531103647.png");
+	background-size: 100% 100%;
+}
+
 /*个人中心登录*/
- .font12{ font-size:18px; line-height:50px; text-align:center; color:#333}
- 
+.font12{ font-size:18px; line-height:50px; text-align:center; color:#333}
+
+/*logo*/
+.logo{width: 100%;overflow: hidden;}
+.logo img{width: 31%;margin: 0 auto;display: block;margin-top: 3rem;}
+
 .denglu{ width:100%; margin:auto; overflow:hidden;}
-.Login{ width:90%; margin:auto; overflow:hidden; padding-top:20px;}
-.Login dl{ width:100%; overflow:hidden; overflow:hidden}
-.Login dl dt{ width:25%; float:left; font-size:14px; line-height:40px; color:#666}
-.Login dl dd{ width:75%; float:left; height:30px;}
-.Login dl dd input{border: 1px solid #DFDFDF; height:30px; line-height:30px; width:95%; padding-left: 5px; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; background-color: white; font-size:14px; line-height:30px;}
+.Login{width: 80%;margin:auto;overflow:hidden;padding-top: 3rem;}
+.Login dl{ width:100%; overflow:hidden; overflow:hidden;border-bottom: 1px solid #cecece}
+.Login dl dt{width:10%;float:left;font-size:14px;/* line-height: 44px; */color:#9a9a9a;}
+.Login dl dt i{font-size: 25px;margin-right: 0.5rem;color: #9a9a9a}
+.Login dl dd{width:90%;float:left;height: 44px;}
+.Login dl dd input{border:none;height: 100%;line-height:30px;width:95%;padding-left: 5px;-webkit-appearance: none;-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;border-radius: 0;-webkit-rtl-ordering: logical;-webkit-user-select: text;cursor: auto;background-color: white;font-size:14px;line-height: 44px;}
 .ng-foot .ng-cookie-area{font-size: 14px;text-align: left;color: #999; vertical-align: middle; width: 35%; float: left; cursor: pointer }
 .ng-foot .ng-link-area { color: #999;  float: right; width:60%; text-align: right;}
 .ng-foot .ng-link-area span{height:10px; }
@@ -23,9 +34,21 @@
 .codeTxt input{border: 1px solid #DFDFDF; height:35px; line-height:35px; width:95%; padding-left: 5px; -webkit-appearance: none; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; border-radius: 0; -webkit-rtl-ordering: logical; -webkit-user-select: text; cursor: auto; background-color: white; font-size:14px; line-height:30px;}
 .codePhoto{width:50%; height:40px; float:left}
 .codePhoto img{ border:1px solid #DFDFDF; width:90%; float:left; margin-left:10px; height:35px; margin-top:2px;}
-.btn_big1{ display:block; margin:auto; background:#FF2233; font-size:16px; line-height:40px; 
- border:0px; color:#FFF; width:100%; margin:auto;margin-top:20px; margin-bottom:10px;border-radius:5px;}
- /*注册*/
+.btn_big1{
+	display:block;
+	margin:auto;
+	background: #ff0000;
+	font-size: 18px;
+	line-height: 43px;
+	border:0px;
+	color:#FFF;
+	width:100%;
+	margin:auto;
+	margin-top: 3rem;
+	margin-bottom:10px;
+	border-radius: 2rem;
+}
+/*注册*/
 .log_reg_box {width: 100%;}
 .log_reg_box ul.tab {width: 100%;padding-bottom: 20px;}
 .log_reg_box ul.tab li {width: 50%;height: 41px;text-align: center;line-height: 40px;
@@ -33,7 +56,7 @@
 .log_reg_box ul.tab li.curr span {border-left: 1px solid #fbfdfe;border-right: 1px solid #fbfdfe;display: block;color: #EE2222;}
 .log_reg_box ul.tab li.curr span font {border: 1px solid #fcfcfd;display: block;}
 .log_reg_box ul.tab li.currl span {background: #F2F5F7;border-right: 1px solid #d3d3d3;border-bottom: 1px solid #d3d3d3;
--webkit-box-shadow: 0 1px 1px #E9EBEC;color: #3e3e3e;}
+	-webkit-box-shadow: 0 1px 1px #E9EBEC;color: #3e3e3e;}
 .log_reg_box ul.tab li.currr span {background: #F2F5F7;border-left: 1px solid #d3d3d3;border-right: none;
 	border-bottom: 1px solid #d3d3d3;-webkit-box-shadow: 0 1px 1px #E9EBEC;color: #3e3e3e;}
 #logRegTabCon { width:100%; overflow:hidden; padding-top:20px; padding-bottom:20px;}
@@ -41,10 +64,10 @@
 .hide {display: none}
 .c-form-txt-normal { display:block;height: 36px;width:96%; margin:auto;border: solid 1px #DDD;padding-left: 9px;color: #333333;
 	font-size: 14px;-webkit-border-radius: 0;-webkit-appearance: none;background: #ffffff; margin-bottom:10px;}
-.zphone{ display:block; width:90%; float:right; border:0px; height:35px; background:#f12b2b; font-size:14px; text-align:center; margin-top:2px;border-radius:0; } 
+.zphone{ display:block; width:90%; float:right; border:0px; height:35px; background:#f12b2b; font-size:14px; text-align:center; margin-top:2px;border-radius:0; }
 .field {padding: 5px 0;}
 .tips {font-size: 14px;}
-#tbh5v0 .reg-success .tips, #tbh5v0 .login-success .tips, #tbh5v0 .reg-success .c-btn-oran-big1, #tbh5v0 .login-success 
+#tbh5v0 .reg-success .tips, #tbh5v0 .login-success .tips, #tbh5v0 .reg-success .c-btn-oran-big1, #tbh5v0 .login-success
 #tbh5v0.err .tips {color: red;}
 #tbh5v0 .success .tips {display: none;}
 #tbh5v0  .tips {font-size: 12px;color: #999;margin: 5px 0 5px 0;}

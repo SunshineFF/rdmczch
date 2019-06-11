@@ -1,4 +1,5 @@
 <include file="Public/min-header"/>
+
 <div class="wrapper">
     <!-- Content Header (Page header) -->
    <include file="Public/breadcrumb"/>
@@ -22,7 +23,10 @@
                     </tr>
                     <tr>
                         <td>用户积分:</td>
-                        <td>{$user.pay_points} <span style="margin-left:100px;">账户余额：{$user.user_money}</span></td>
+                        <td><span class="change-pay_points">{$user.pay_points}</span>
+                            <span style="margin-left:100px;">账户余额：<span class="change-user_money">{$user.user_money}</span></span>
+                            <span style="margin-left:100px;">藏品额度：<span class="change-tou_zi">{$user.tou_zi}</span></span>
+                            <span id="add_tou_zi">修改</span></td>
                         <td></td>
                     </tr>
 
@@ -69,6 +73,44 @@
                         <td></td>
                     </tr>
                     <tr>
+                        <td>用户等级:</td>
+                        <td>
+                            <select name="level">
+                                <foreach name="userLevel" item="level">
+                                    <option value="{$level.level_id}" <if condition="$user['level'] eq $level['level_id']">selected</if>>{$level.level_name}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <if condition="$user['level'] eq 2">
+                        <tr>
+                            <td>群主区域:</td>
+                            <td>
+                                <select class="province_select"  name="province" id="province" onChange="get_city(this)">
+                                    <option value="0">请选择</option>
+                                    <volist name="province" id="p">
+                                        <option <if condition="$user['province_id'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                    </volist>
+                                </select>
+                                <select name="city" id="city" onChange="get_area(this)">
+                                    <option  value="0">请选择</option>
+                                    <volist name="user.city_list" id="p">
+                                        <option <if condition="$user['city_id'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                    </volist>
+                                </select>
+                                <select name="district" id="district" onChange="get_twon(this)">
+                                    <option  value="0">请选择</option>
+                                    <volist name="user.district_list" id="p">
+                                        <option <if condition="$user['district_id'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                    </volist>
+                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </if>
+
+                    <tr>
                         <td>冻结用户:</td>
                         <td>
                             <input name="is_lock" type="radio" value="1" <if condition="$user['is_lock'] eq 1">checked</if> >是
@@ -93,7 +135,7 @@
                         <td></td>
                     </tr>                    
                     <tr>
-                        <table  class="table table-bordered">
+                        <table style="display: none;" class="table table-bordered">
                             
                             <tr>
                                     <td>用户余额:</td>
@@ -156,7 +198,22 @@
 
             </div>
         </div>
- 	  </div> 
+ 	  </div>
+        <div id="poper">
+            <form id="edit_money" action="{:U('Admin/User/add_tou_zi')}" method="post" onsubmit="return false">
+                <div class="form-field">
+                    <span>藏品金额</span><input type="number" name="tou_zi" value="{$user.tou_zi}"/>
+                </div>
+                <div class="form-field">
+                    <span>积分</span><input type="number" name="pay_points" value="{$user.pay_points}"/>
+                </div>
+                <div class="form-field">
+                    <span>余额</span><input type="number" name="user_money" value="{$user.user_money}"/>
+                </div>
+                <div class="form-field"><button onclick="post_money()" type="button">保存</button><button class="close-button" type="button">关闭</button></div>
+                <input name="user_id" type="hidden" value="{$user.user_id}">
+            </form>
+        </div>
     </div>    <!-- /.content -->
    </section>
 </div>
@@ -183,8 +240,38 @@
             return false;
         }
         return true;
-
     }
+    $('#add_tou_zi').click(function () {
+        $('#poper').show();
+    })
+    $('.close-button').click(function () {
+        $('#poper').hide();
+    })
+
+    /**
+     * Ajax 请求修改钱包的金额
+     */
+    function post_money() {
+        $.ajax(
+            {url:"{:U('Admin/User/add_tou_zi')}",data:$('#edit_money').serialize(),method:'post'}
+        ).success(function (res) {
+            res = JSON.parse(res);
+            layer.msg(res.msg);
+            if (res.code == 200){
+                updateData();
+                $('#poper').hide();
+            }
+        }).error(function (res) {
+            layer.msg('网络错误');
+        })
+    }
+
+    function updateData() {
+        $('.change-tou_zi').text($("input[name='tou_zi']").val());
+        $('.change-user_money').text($("input[name='user_money']").val());
+        $('.change-pay_points').text($("input[name='pay_points']").val());
+    }
+
 </script>
 
 </body>

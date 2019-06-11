@@ -9,48 +9,47 @@
  * 不允许对程序代码以任何形式任何目的的再发布。
  * ============================================================================
  * $Author: 当燃 2016-01-09
- */ 
+ */
 namespace Mobile\Controller;
 
 use Mobile\Model\StoreModel;
 
 class IndexController extends MobileBaseController {
 
-    /** 首页群主店铺ID
+    /** 首页群主店铺产品ID
      * @var array
      */
-    protected $sellerProducts = [1,2,3,7];
+    protected $sellerProducts = [250,249,247,287];
 
     /** 抢购产品ID
      * @var array
      */
-    protected $qiangGou = [201,195,168,189];
+    protected $qiangGou = [262,246,264,211,212,286];
 
     /** 首页工厂直销ID
      * @var array
      */
-    protected $zhixiao = [201,195,168,189];
-
+    protected $zhixiao = [268,265,263,252,251,243,242,222,221,199,168,201,260,288,278,283,281,270,279,295,291,277,284];
     /** 新品预售ID
      * @var array
      */
-    protected $xinpin = [201,195,168,189];
+    protected $xinpin = [179,190,173];
 
-    public function index(){    
+    public function index(){
         /*
             //获取微信配置
             $wechat_list = M('wx_user')->select();
             $wechat_config = $wechat_list[0];
-            $this->weixin_config = $wechat_config;        
-            // 微信Jssdk 操作类 用分享朋友圈 JS            
+            $this->weixin_config = $wechat_config;
+            // 微信Jssdk 操作类 用分享朋友圈 JS
             $jssdk = new \Mobile\Logic\Jssdk($this->weixin_config['appid'], $this->weixin_config['appsecret']);
-            $signPackage = $jssdk->GetSignPackage();              
+            $signPackage = $jssdk->GetSignPackage();
             print_r($signPackage);
         */
 //        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
         $hot_goods = M('goods')->where(['goods_id' => ['in',$this->zhixiao]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页工厂直销
-        $group_store = M('store')->where(['store_id' => ['in',$this->sellerProducts]])->order('store_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺首图
-//        var_dump($group_store);
+        $group_store = M('goods')->where(['goods_id' => ['in',$this->sellerProducts]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺展示产品
+//        var_dump($hot_goods);
         $flash_sale= M('goods')->where(['goods_id' => ['in',$this->qiangGou]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页限时抢购
         $pre_sale= M('goods')->where(['goods_id' => ['in',$this->xinpin]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//新品预售
         $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,TPSHOP_CACHE_TIME)->select();
@@ -59,9 +58,46 @@ class IndexController extends MobileBaseController {
         $this->assign('pre_sale',$pre_sale);
         $this->assign('flash_sale',$flash_sale);
         $this->assign('hot_goods',$hot_goods);
+        $this->assign('store_banner',$this->getStoreFromCurrentUser());
 //        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
 //        $this->assign('favourite_goods',$favourite_goods);
         $this->display();
+    }
+
+    /** 初始化群主店铺的banner
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function getStoreFromCurrentUser(){
+        $default = [];
+        if (session('?user')) {
+            $user = session('user');
+            $store = M('store')->where(['user_id' => $user['qun_id']])->find();
+        }else{
+            $store = M('store')->where(['user_id' => 21])->find();
+        }
+        if (is_array($store) && $store['mb_slide']){
+            $recomend_goods = M('goods')->field('goods_content',true)->where(array('store_id'=>$store['store_id'],'is_recommend'=>1))->order('goods_id desc')->limit(2)->select();
+            $this->assign('recomend_goods',$recomend_goods);
+            $default['image'] = explode(',',$store['mb_slide']);
+            $default['url'] = explode(',',$store['mb_slide_url']);
+            return $default;
+        }else{
+            return [
+                'image' => [
+                    '/Template/mobile/new/Static/img/index/20190529110711.png',
+                    '/Template/mobile/new/Static/img/index/20190529110711.png',
+                    '/Template/mobile/new/Static/img/index/20190529110711.png'
+                ],
+                'url' => [
+                    '/Store/index/store_id/21.html',
+                    '/Store/index/store_id/21.html',
+                    '/Store/index/store_id/21.html',
+                ]
+            ];
+        }
     }
 
     /**
@@ -79,10 +115,10 @@ class IndexController extends MobileBaseController {
         foreach($arr as $key => $val)
         {
             $html = end(explode('/', $val));
-            echo "<a href='http://www.php.com/svn_tpshop/mobile--html/{$html}' target='_blank'>{$html}</a> <br/>";            
-        }        
+            echo "<a href='http://www.php.com/svn_tpshop/mobile--html/{$html}' target='_blank'>{$html}</a> <br/>";
+        }
     }
-    
+
     /**
      * 商品列表页
      */
@@ -93,12 +129,12 @@ class IndexController extends MobileBaseController {
         $this->assign('lists',$lists);
         $this->display();
     }
-    
+
     public function ajaxGetMore(){
-    	$p = I('p',1);
-    	$favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1  and goods_state = 1 ")->order('sort DESC')->page($p,10)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
-    	$this->assign('favourite_goods',$favourite_goods);
-    	$this->display();
+        $p = I('p',1);
+        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1  and goods_state = 1 ")->order('sort DESC')->page($p,10)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
+        $this->assign('favourite_goods',$favourite_goods);
+        $this->display();
     }
 
     /**

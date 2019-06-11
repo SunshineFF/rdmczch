@@ -203,6 +203,7 @@ class CartLogic extends RelationModel
      * @throws \think\exception\DbException
      */
     protected function addProductExchangeIntegral(&$cartList,$productIds,&$jifen){
+        if (count($productIds) == 0) return;
         $goods = M('goods')->field(['exchange_integral','goods_id'])->where(['goods_id' => ['in',$productIds]])->select();
         foreach ($goods as $key => $good){
             $goods[$good['goods_id']] = $good['exchange_integral'];

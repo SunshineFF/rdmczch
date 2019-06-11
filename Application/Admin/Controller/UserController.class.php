@@ -87,6 +87,12 @@ class UserController extends BaseController {
             if($password != '' && $password != $password2){
                 exit($this->error('两次输入密码不同'));
             }
+            if ($_POST['level'] == 2){
+                if ($user['tou_zi'] < 10000){
+                    exit($this->error('用户的藏品额度大于10000才能成为群主。'));
+                }
+            }
+
             if($password == '' && $password2 == ''){
                 unset($_POST['password']);
             }else{
@@ -102,11 +108,31 @@ class UserController extends BaseController {
         $user['first_lower'] = M('users')->where("first_leader = {$user['user_id']}")->count();
         $user['second_lower'] = M('users')->where("second_leader = {$user['user_id']}")->count();
         $user['third_lower'] = M('users')->where("third_leader = {$user['user_id']}")->count();
- 
+        $userLevel = M('user_level')->select();
+        $this->addQunZhuData($user);
         $this->assign('user',$user);
+        $this->assign('userLevel',$userLevel);
         $this->display();
     }
-    
+
+    /** 初始化群主所属
+     * @param $user
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function addQunZhuData(&$user){
+        if ($user['level_id'] == 2){
+            $p = M('region')->where(array('parent_id' => 0, 'level' => 1))->select();
+            $this->assign('province', $p);
+            if ($user['city_id']){
+                $user['city_list'] = M('region')->where(['parent_id' => $user['province_id']])->select();
+            }
+            if ($user['district_id']){
+                $user['cidistrict_list'] = M('region')->where(['parent_id' => $user['city_id']])->select();
+            }
+        }
+    }
     
     public function add_user(){
     	if(IS_POST){
@@ -403,5 +429,22 @@ class UserController extends BaseController {
             echo "<script>parent.{$call_back}({$res});</script>";
             exit();
         }
+    }
+
+    /**
+     * 编辑用户钱包金额
+     */
+    public function add_tou_zi(){
+        $userId = I('user_id');
+        if (!$userId){
+            exit(json_encode(['code'=>400,'msg'=>'请先添加用户在再编辑相关参数。']));
+        }
+        $data = [
+            'tou_zi' => I('tou_zi'),
+            'pay_points' => I('pay_points'),
+            'user_money' => I('user_money'),
+        ];
+        M('users')->where(['user_id' => I('user_id')])->save($data);
+        exit(json_encode(['code'=>200,'msg'=>'编辑成功']));
     }
 }

@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/public.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/goods.css"/>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/layer.css"/>
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/icon/iconfont.css"/>
 <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery.json.js"></script>
 <script type="text/javascript" src="__STATIC__/js/touchslider.dev.js"></script>
@@ -26,7 +27,7 @@ var process_request = "正在处理您的请求...";
 <div class="main">
   <div class="tab_nav">
     <div class="header">
-      <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"></a></div>
+      <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"><i class="iconshangyiyehoutuifanhui-yuankuang"></i></a></div>
       <div class="h-mid">
         <ul>
           <li><a href="javascript:;" class="tab_head on"   id="goods_ka1" onClick="setGoodsTab('goods_ka',1,3)">商品</a></li>
@@ -36,10 +37,19 @@ var process_request = "正在处理您的请求...";
       </div>
       <div class="h-right">
         <aside class="top_bar">
-          <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"></a> </div>
-          <a href="{:U('Mobile/Cart/cart')}" class="show_cart"><em class="global-nav__nav-shop-cart-num" id="tp_cart_info">{$cart_total_price[anum]}</em></a> 
+          <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"><i class="icongengduomore"></i></a> </div>
+          <a href="{:U('Mobile/Cart/cart')}" class="show_cart"><i class="icongouwuche1"></i></a>
          </aside>
       </div>
+    </div>
+    <div class="header1">
+          <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"><i class="iconshangyiyehoutuifanhui-yuankuang"></i></a></div>
+          <div class="h-right">
+              <aside class="top_bar">
+                  <div onClick="show_menu();$('#close_btn').addClass('hid');" id="show_more"><a href="javascript:;"><i class="icongengduomore"></i></a> </div>
+                  <a href="{:U('Mobile/Cart/cart')}" class="show_cart"><i class="icongouwuche1"></i></a>
+              </aside>
+          </div>
     </div>
   </div>
 <include file="Public/menu"/> 
@@ -49,8 +59,12 @@ var process_request = "正在处理您的请求...";
     <ul id="sliderlist" class="sliderlist" style="position: relative; overflow: hidden; transition: left 600ms ease; -webkit-transition: left 600ms ease;">
        <foreach  name="goods_images_list" item="pic">
       	<li style="float: left; display: block; width: 100%;"><span><a  href="javascript:void(0)">
-      	<img title="" width="100%" src="{$pic.image_url}"></a></span></li>
+      	<img title="" width="100%" height="400px" src="{$pic.image_url}"></a></span></li>
        </foreach>
+<!--        <li style="float: left; display: block; width: 100%;"><span><a  href="javascript:void(0)">-->
+<!--      	<img title="" width="100%" height="400px" src="__STATIC__/images/20190604173845.png"></a></span>-->
+<!--        </li>-->
+
     </ul>
     <div id="pagenavi">
     <foreach  name="goods_images_list" item="pic" key="k">
@@ -81,43 +95,41 @@ var t2=new TouchSlider({id:'sliderlist', speed:600, timeout:6000, before:functio
 		as[active].className='active';
 	}});
 </script>
-	  <form name="buy_goods_form" method="post" id="buy_goods_form" >
-      <div class="product_info">
-        <div class="info_dottm">
-          <h3 class="name">{$goods.goods_name}</h3>
-          <div class="right">
 
-<!-- JiaThis Button BEGIN -->          
-          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt" target="_blank">
-            <div id="pro_share" class="share"></div>
-          </a>         
-<script>
- var jiathis_config = {
-						url:"http://{$_SERVER[HTTP_HOST]}/index.php?m=Mobile&c=Goods&a=goodsInfo&id={$_GET[id]}",
-						pic:"http://{$_SERVER[HTTP_HOST]}{$goods[goods_id]|goods_thum_images=400,400}", 
-					}
-var is_distribut = getCookie('is_distribut');
-var user_id = getCookie('user_id');
-// 如果已经登录了, 并且是分销商
-if(parseInt(is_distribut) == 1 && parseInt(user_id) > 0)
-{									
-	jiathis_config.url = jiathis_config.url + "&first_leader="+user_id;									
-}										
-//alert(jiathis_config.url);
-</script>           
-<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->          
-          
-          </div>
-        </div>
+      <div class="product_info">
+
         <dl class="goods_price">
           <script type="text/javascript" src="__STATIC__/js/lefttime.js"></script>
           <dt> <span id="goods_price">￥{$goods.shop_price}元 + {$goods.exchange_integral}积分</span><font>价格：￥{$goods.market_price}元</font> </dt>
+            <h3 class="name" style="font-size: 18px">{$goods.goods_name}</h3>
+            <div class="right">
+
+                <!-- JiaThis Button BEGIN -->
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt" target="_blank">
+                    <i class="iconhongbao-"></i><span>分享有礼</span>
+                </a>
+                <script>
+                    var jiathis_config = {
+                        url:"http://{$_SERVER[HTTP_HOST]}/index.php?m=Mobile&c=Goods&a=goodsInfo&id={$_GET[id]}",
+                        pic:"http://{$_SERVER[HTTP_HOST]}{$goods[goods_id]|goods_thum_images=400,400}",
+                    }
+                    var is_distribut = getCookie('is_distribut');
+                    var user_id = getCookie('user_id');
+                    // 如果已经登录了, 并且是分销商
+                    if(parseInt(is_distribut) == 1 && parseInt(user_id) > 0)
+                    {
+                        jiathis_config.url = jiathis_config.url + "&first_leader="+user_id;
+                    }
+                    //alert(jiathis_config.url);
+                </script>
+                <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js" charset="utf-8"></script>
+                <!-- JiaThis Button END -->
+
+            </div>
         </dl>
         <ul class="price_dottm">
-          <li style=" text-align:left">折扣：{$goods.discount}折</li>
-          <li>{$commentStatistics.c0}人评价</li>
-          <li style=" text-align:right">{$goods.sale_num}人已付款</li>
+          <li>月销：497</li>
+          <li><i class="icondianzan"></i> {$commentStatistics.c0}人赞过</li>
         </ul>
       </div>
 <if condition="($prom_goods neq null) OR ($prom_order neq null)">      
@@ -144,65 +156,27 @@ if(parseInt(is_distribut) == 1 && parseInt(user_id) > 0)
 	      <div class="blank10"></div>
 	      </div>
       </section>
-</if>      
-<!-------商品属性-------->
-<if condition="$filter_spec neq ''">  
-<section id="search_ka">
-<!---属性---->
-<div class="ui-sx bian1"> 
-<div class="subNavBox"> 
-	<div class="subNav"><strong>选择商品属性</strong></div>
-    <ul class="navContent"> 
-    <foreach item="spec" key="key" name="filter_spec">
-    <li>   
-          <div class="title">{$key}</div>
-          <div class="item">
-          <foreach name="spec" item="v2" key="k2">
-	          <a href="javascript:;" onclick="switch_spec(this);" title="{$v2[item]}" <if condition="$k2 eq 0">class="hover"</if>>
-	          	<input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>/>
-          		{$v2[item]}            
-          	  </a>
-           </foreach>
-          </div>                    
-    </li>
-    </foreach>
-       </ul>  
-    </div>
-    </div>    
-</section> 
 </if>
-      <section id="search_ka">
-        <div class="ui-sx bian1">
-          <div class="subNavBox">
-            <div class="subNav on"><strong>购买数量</strong></div>
-            <ul class="navContent" style="display: block;">
-              <li style=" border-bottom:1px solid #eeeeee">
-                <div class="item1"> 
-                  <span class="ui-number">
-                  <button type="button" class="decrease" onClick="goods_cut();">-</button>
-                    <input type="text" class="num" id="number" name="goods_num" value="1" min="1" max="1000"/>
-                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
-                  <button type="button" class="increase" onClick="goods_add();">+</button>
-                  </span> </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-      <section id="search_ka">
-        <div class="ui-sx bian1">
-          <div class="subNavBox" >
-            <div class="subNav"><strong>会员专享价</strong></a></div>
-            <ul class="navContent" >
-              <li  class="user_price">
-                <p> <span class="key">铜牌会员：</span> <b class="p-price-v">9.8折</b> </p>
-                <p> <span class="key">金牌会员：</span> <b class="p-price-v">9.5折</b> </p>
-                <p> <span class="key">钻石会员：</span> <b class="p-price-v">9折</b> </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<!-------商品属性-------->
+<section id="search_ka">
+  <div class="activity">
+      <i>活动</i><span><i class="iconhongbao-"></i>分享产品即可获取100块现金红包</span>
+  </div>
+</section>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<div style=" height:8px; background:#eeeeee; margin-top:-1px;"></div>
+<section id="search_ka">
+  <div class="choice">
+      <i>选择</i><span>选择适合的属性&数量</span>
+  </div>
+</section>
+<section id="search_ka">
+  <div class="service">
+      <i>服务</i><span>包邮&15天内发货</span>
+  </div>
+</section>
 <script type="text/javascript">
 $(function(){
 	$(".subNav").click(function(){		
@@ -302,7 +276,7 @@ function changeAtt1(t) {
           <span><a href="{:U('Store/index',array('store_id'=>$store[store_id]))}" style=" margin-left:3%;"><em class="bg2"></em>进入店铺</a></span> </div>
         </section>
       </div></if>
-    </form>
+
   </div>
   <div class="main" id="user_goods_ka_2" style="display:none">
     <div class="product_main" style=" margin-top:40px;"> <!-- 产品图片 -->
@@ -335,12 +309,11 @@ function changeAtt1(t) {
         </ul>
     </div>
 <div class="my_comment_list" id="ECS_MYCOMMENTS"> </div>
-
 </div>
  	</div>
 </div>
 <script>
-function goTop(){
+function goTop(){commentList
 	$('html,body').animate({'scrollTop':0},600);
 }
 </script> 
@@ -348,15 +321,118 @@ function goTop(){
 <div style=" height:60px;"></div>
 <div class="footer_nav">
   <ul>
-    <li class="bian"><a href="{:U('Index/index')}"><em class="goods_nav1"></em><span>首页</span></a> </li>
+    <li class="bian"><a href="/"><em class="goods_nav1"></em><span>首页</span></a> </li>
     <li class="bian"><a href="tel:{$tpshop_config['shop_info_phone']}"><em class="goods_nav2"></em><span>客服</span></a> </li>
     <li><a href="javascript:collect_goods({$goods.goods_id})" id="favorite_add"><em class="goods_nav3"></em><span>收藏</span></a></li>
   </ul>
   <dl>
-    <dd class="flow"><a class="button active_button" href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a> </dd>
-    <dd class="goumai"><a style="display:block;" href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a> </dd>
+    <dd class="jiagou"><a class="button active_button" href="javascript:void(0);">加入购物车</a> </dd>
+    <dd class="buy"><a style="display:block;" href="javascript:void(0);">立即购买</a> </dd>
   </dl>
 </div>
+<div class="curtain" style="display: none">
+    <form name="buy_goods_form" method="post" id="buy_goods_form" >
+    <div class="information">
+        <div class="msg">
+            <img src="{$goods.original_img}" alt="">
+            <div class="msg_small">
+                <p style="font-size: 18px;font-weight: 600">￥{$goods.shop_price}元 + {$goods.exchange_integral}积分</p>
+                <p>库存：{$goods.store_count}</p>
+            </div>
+        </div>
+<!--        <div class="model">-->
+<!--            <p>型号</p>-->
+<!--            <ul>-->
+<!--                <li>01</li>-->
+<!--                <li>02</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="model">-->
+<!--            <p>颜色</p>-->
+<!--            <ul>-->
+<!--                <li>玫瑰金</li>-->
+<!--                <li>天空蓝</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+        <if condition="$filter_spec neq ''">
+            <section id="search_ka">
+                <!---属性---->
+                <div class="ui-sx bian1">
+                    <div class="subNavBox">
+                        <div class="subNav"><strong>选择商品属性</strong></div>
+                        <ul class="navContent">
+                            <foreach item="spec" key="key" name="filter_spec">
+                                <li>
+                                    <div class="title">{$key}</div>
+                                    <div class="item">
+                                        <foreach name="spec" item="v2" key="k2">
+                                            <a href="javascript:;" onclick="switch_spec(this);" title="{$v2[item]}" <if condition="$k2 eq 0">class="hover"</if>>
+                                            <input type="radio" style="display:none;" name="goods_spec[{$key}]" value="{$v2[item_id]}" <if condition="$k2 eq 0 ">checked="checked"</if>/>
+                                            {$v2[item]}
+                                            </a>
+                                        </foreach>
+                                    </div>
+                                </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </if>
+        <section id="search_ka">
+            <div class="ui-sx bian1">
+                <div class="subNavBox">
+                    <div class="subNav on"><strong>购买数量</strong></div>
+                    <ul class="navContent" style="display: block;">
+                        <li style=" border-bottom:1px solid #eeeeee">
+                            <div class="item1">
+                  <span class="ui-number">
+                  <button type="button" class="decrease" onClick="goods_cut();">-</button>
+                    <input type="text" class="num" id="number" name="goods_num" value="1" min="1" max="1000"/>
+                    <input type="hidden" name="goods_id" value="{$goods.goods_id}"/>
+                  <button type="button" class="increase" onClick="goods_add();">+</button>
+                  </span> </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <dl>
+            <dd class="flow"><a class="button active_button" href="javascript:void(0);" onClick="AjaxAddCart({$goods.goods_id},1,0);">加入购物车</a> </dd>
+            <dd class="goumai"><a style="display:block;" href="javascript:void(0);"  onclick="AjaxAddCart({$goods.goods_id},1,1);">立即购买</a> </dd>
+        </dl>
+    </form>
+    </div>
+</div>
+<script type="text/javascript">
+    // 点击选择出现属性框
+    $(".choice").click(function(){
+        $(".curtain").css('display','block');
+    })
+
+    // 点击空白地方隐藏选择属性框
+    $(".curtain").click(function(){
+        $(this).hide()
+    })
+    $(".information").click(function(e){
+        e.stopPropagation();
+    })
+
+    $(".jiagou").click(function(){
+        $(".curtain").css('display','block');
+    })
+    $(".buy").click(function(){
+        $(".curtain").css('display','block');
+    })
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var high = $(window).height();
+        $(".curtain").css('height',high)
+    })
+</script>
 <script type="text/javascript">
 $(document).ready(function(){	
 	// 更新商品价格
@@ -450,6 +526,17 @@ $(document).ready(function(){
 	  }
 	  $('#tp_cart_info').html(cart_cn);
 });
+
+window.onscroll=function(){
+    var high = $(window).scrollTop();
+    var num = (high/150).toFixed(1);
+    console.log(num);
+    $(".header").css('opacity',num);
+    var high1 = 150-high;
+    var num = (high1/150).toFixed(1);
+    $(".header1").css('opacity',num);
+}
+
 </script>
 <script src="__PUBLIC__/js/jqueryUrlGet.js"></script><!--获取get参数插件-->
 <script> set_first_leader(); //设置推荐人 </script>
