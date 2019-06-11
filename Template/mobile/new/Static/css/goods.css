@@ -88,8 +88,8 @@
 .navContent li{overflow:hidden; width:100%;}
 .navContent li .title{ width:100%;font-size:16px; line-height:30px; color:#666; margin-top:5px;}
 .navContent li .item{ overflow:hidden; border-bottom:1px solid #eeeeee; padding-bottom:5px;}
-.navContent li .item a{ padding-left:10px; padding-right:10px; border:1px solid #CCC; line-height:30px; display:inline-block;	-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px; margin-right:5px; margin-bottom:10px;}
-.navContent li .item a.hover{border: 1px solid #d5d5d5;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5rem;}
+.navContent li .item a{ padding-left:10px; padding-right:10px; border:1px solid #CCC; line-height:30px; display:inline-block;	-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:5rem; margin-right:5px; margin-bottom:10px;}
+.navContent li .item a.hover{border: 1px solid #d5d5d5;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5rem;color: #ff0000}
 
 .navContent li .purchase{ font-size:14px; line-height:25px; color:#666;}
 .navContent li .purchase_v{font-size:16px; line-height:25px; color:#dd2724; font-weight:bold}

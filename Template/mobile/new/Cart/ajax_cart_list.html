@@ -1,4 +1,5 @@
- <style type="text/css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/product/icon/iconfont.css"/>
+<style type="text/css">
 	.page-shopping .bottom-panel{display: flex;}
 	.page-shopping .bottom-panel .info{margin-top: 4px;width: 50%;}
 	.page-shopping .bottom-panel .right{margin-top: 10px;}
@@ -13,7 +14,7 @@
       <div class="item-list">
        <div class="item">
          <div class="inner">
-           <div style="width:60%; float:left; height:98px;">
+           <div style="width:100%; float:left;height: 8rem">
              <div class="check-wrapper">
               <span  class="cart-checkbox  <if condition="$v[selected] eq 1" >checked</if>">
                  <input type="checkbox" autocomplete="off" name="cart_select[{$v.id}]" <if condition="$v[selected] eq 1" >checked="checked"</if>  style="display:none;" value="1" onclick="ajax_cart_list();">
@@ -27,8 +28,11 @@
                <span>  {$v.goods_name} </span>
              </div>
              <div class="attr">
-                 <span>{$v.spec_key_name}</span>
+                 <span>数量：{$v.goods_num}&nbsp;&nbsp;&nbsp;&nbsp;{$v.spec_key_name}</span>
              </div>
+               <div>
+                   <p style="color: #ff0000">￥{$v.member_goods_price}+ {$v.exchange_integral}积分</p>
+               </div>
              <div class="num">
                  <div class="xm-input-number">
                    <div class="act_wrap">
@@ -39,18 +43,11 @@
                   </div>                 
              </div>
            </div>
-           <div style=" position:absolute; right:0px; top:20px; width:150px; height:98px;">
-             <div class="price">
-               <span class="mar_price">￥{$v.market_price}元</span>
-               <br>
-               <span>￥{$v.member_goods_price}元+ {$v.exchange_integral}积分</span>
-              </div>
              <div class="delete">
                <a href="javascript:void(0);" onclick="del_cart_goods({$v.id})">
                  <div class="icon-shanchu"></div>
                </a>
              </div>
-           </div>
            <div style="height:0px; line-height:0px; clear:both;"></div>
          </div>
          <div class="append"></div>
@@ -59,16 +56,15 @@
     </div>
 </foreach>
 <if condition="empty($cartList)">         
-<div class="screen-wrap fullscreen login">
+<div class="screen-wrap fullscreen login" style="background: #ffffff;padding-bottom: 2rem">
 <section id="cart-content">
-      <div class="qb_tac" style="padding:50px 0">
-        <img src="__STATIC__/images/flow/empty_cart.png" width="100" height="95">
-        <br>购物车还是空的</div>
+      <div class="qb_tac" style="padding: 50px 0 20px;">
+        <img src="__STATIC__/images/flow/20190611120030.png" width="100" height="95">
+        <br>千万好货等你挑选</div>
       <div class="qb_gap" style="width:60%; margin:0 auto;">
         <a href="{:U('Mobile/Index/index')}" class="mod_btn btn_strong">马上逛逛</a>
       </div>
 </section>
-<div style="height:72px;"></div>
 <section class="f_mask" style="display: none;"></section>
 <section class="f_block" id="choose" style="height:0px;"></section> 
 <script type="text/javascript">
@@ -96,7 +92,26 @@
 	   <div class="right" style="margin-top:10px">
 	     <input type="button" href="javascript:void();"  onclick="return selcart_submit();" class="xm-button " value="去结算"></div>
 	</div>
-</if> 
+</if>
+<div class="cai">
+    <div class="cai_title">
+        <b class="fl" style="font-size: 0.8rem;color: #000000">猜你喜欢</b>
+        <!--            <span class="fr" style="font-size: 0.5rem;color: #6d6d6d;"><a href="{:U('Index/street')}" style="color: #6d6d6d;">进入</a> <i class="icongengduo"></i></span>-->
+    </div>
+    <div class="cai_con">
+        <ul>
+            <li>
+                <a href="">
+                    <img src="/Public/upload/goods/2019/05-17/5cde42a49b01b.jpg" alt="">
+                    <b>{$v.goods_name}</b>
+                    <p>￥{$v.shop_price}+{$v.exchange_integral}积分</p>
+                    <i style="color: #a7a7a7;text-decoration:line-through;" class="factory_sale">原价￥{$v.market_price}</i>
+                    <span><i class="iconai-cart" style="font-size: 15px;color: #ffffff"></i></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 <script type="text/javascript">
 $(".check-wrapper .cart-checkbox").click(function(){
 	if($(this).hasClass('checked')){

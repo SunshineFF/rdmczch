@@ -29,7 +29,7 @@ class IndexController extends MobileBaseController {
     /** 首页工厂直销ID
      * @var array
      */
-    protected $zhixiao = [268,265,263,252,251,243,242,222,221,199,168,201,260,288,278,283,281,270,279,295,291,277,284];
+    protected $zhixiao = [268,265,263,252,251,243,242,222,221,199,168,201,260,288,278,283,281,270,279,295,291,277,284,311,297,316,317];
     /** 新品预售ID
      * @var array
      */
@@ -47,9 +47,8 @@ class IndexController extends MobileBaseController {
             print_r($signPackage);
         */
 //        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
-        $hot_goods = M('goods')->where(['goods_id' => ['in',$this->zhixiao]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页工厂直销
+        $hot_goods = M('goods')->where(['goods_id' => ['in',$this->zhixiao]])->order('goods_id DESC')->cache(true,TPSHOP_CACHE_TIME)->select();//首页工厂直销
         $group_store = M('goods')->where(['goods_id' => ['in',$this->sellerProducts]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页店铺展示产品
-//        var_dump($hot_goods);
         $flash_sale= M('goods')->where(['goods_id' => ['in',$this->qiangGou]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页限时抢购
         $pre_sale= M('goods')->where(['goods_id' => ['in',$this->xinpin]])->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//新品预售
         $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,TPSHOP_CACHE_TIME)->select();
