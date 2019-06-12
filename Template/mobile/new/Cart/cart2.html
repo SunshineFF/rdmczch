@@ -26,17 +26,18 @@
 <div class="screen-wrap fullscreen login"> 
 <form name="cart2_form" id="cart2_form" method="post">
     <section class="content" style="min-height: 294px;">
-    <div class="wrap">
+    <div class="wrap" style="padding: 0 0.6rem;box-sizing: border-box">
     <div class="active" style="min-height: 294px;">
     <div class="content-buy">
     <div class="wrap order-buy">
     <a href="{:U('User/address_list',array('source'=>'cart2'))}">
 	    <section class="address">
-	      <div class="address-info" >收货人:
-	        <p class="address-name">{$address.consignee}</p>
-	        <p class="address-phone">{$address.mobile}</p>
+            <p class="address_title">配送地址</p>
+	      <div class="address-info" >
+            <p>收货人信息</p>
+            <span>{$address.consignee}</span><span class="tel">{$address.mobile}</span>
+            <p style="color: #bdbdbd;">{$address.address}</p>
 	      </div>
-	      <div class="address-details">收货地址：{$address.address}</div>
           <input type="hidden" value="{$address.address_id}" name="address_id" />
 	    </section>
     </a>
@@ -52,20 +53,17 @@
           <ul class="order-list-info">
 <!--商品列表-->
 <foreach name="storeList" item="v">
-          
+            <div class="list_kuang">
             <div class="goods-list-title"> {$v[store_name]}</div>
            <foreach name="cartList" item="v2"  key="k">
 	           <if condition="($v2[selected] eq '1') and ($v2[store_id] eq $v[store_id])">
                     <li class="item" >
-                      <div class="itemPay list-price-nums" id="itemPay17">
-                        <p class="price">￥{$v2.member_goods_price}元 + {$v2.exchange_integral}积分</p>
-                        <p class="nums">x{$v2.goods_num}</p>
-                      </div>
                       <div class="itemInfo list-info" id="itemInfo12">
                         <div class="list-img"> <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$v2[goods_id]))}"> <img src="{$v2.goods_id|goods_thum_images=200,200}"></a> </div>
                         <div class="list-cont">
-                          <h5 class="goods-title">{$v2.goods_name} </h5>
-                          <p class="godds-specification">{$v2.spec_key_name}</p>
+                            <h5 class="goods-title">{$v2.goods_name} </h5>
+                            <p class="nums">数量：x{$v2.goods_num}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$v2.spec_key_name}</p>
+                            <p class="price">￥{$v2.member_goods_price}元 + {$v2.exchange_integral}积分</p>
                         </div>
                       </div>
                     </li>
@@ -88,7 +86,8 @@
        			   给卖家留言：
                         <input type="text" placeholder="给卖家留言" name="user_note[{$v[store_id]}]" style="vertical-align:middle" class="txt1">            
                  </label>
-            </li>                            
+            </li>
+            </div>
 </foreach>
           </ul>
         </div>
@@ -99,9 +98,9 @@
     <div class="order-list">
       <div class="content ptop0">
         <div class="panel panel-default info-box">
-          <div class="orderInfo " >
-            <h4 class="seller-name"> <img src="__STATIC__/images/flow/dingdan.png" width="28"> 其他选项 </h4>
-          </div>
+<!--          <div class="orderInfo " >-->
+<!--            <h4 class="seller-name"> <img src="__STATIC__/images/flow/dingdan.png" width="28"> 其他选项 </h4>-->
+<!--          </div>-->
           <table border=0 cellpadding=0 cellspacing=0 width="100%" class="checkgoods">
             <tr>
               <td colspan=4 class="tdother2" style="border-top:none;"><div class="checkout_other" >
@@ -120,7 +119,6 @@
                 </td>
             </tr>                                   
           </table>
-        	<div style="height:10px; line-height:10px; clear:both;"></div>
         </div></div></div>
         </section>
         <section class="order-info">
@@ -234,6 +232,17 @@ function submit_order()
         }
     });
 }
+</script>
+<script type="text/javascript">
+    var a = $(".tel").html();
+    var a = parseInt(a);
+    var b = a.toString();
+    if(b.length == 11){
+        var tel = a;
+        tel = "" + tel;
+        var tel1 =tel.replace(tel.substring(3,7), "****")
+        $(".tel").html(tel1);
+    }
 </script>
 </body>
 </html>
