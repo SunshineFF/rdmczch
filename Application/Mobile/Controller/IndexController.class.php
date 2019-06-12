@@ -75,7 +75,7 @@ class IndexController extends MobileBaseController {
             $user = session('user');
             $store = M('store')->where(['user_id' => $user['qun_id']])->find();
         }else{
-            $store = M('store')->where(['user_id' => 21])->find();
+            $store = M('store')->where(['store_id' => 21])->find();
         }
         if (is_array($store) && $store['mb_slide']){
             $recomend_goods = M('goods')->field('goods_content',true)->where(array('store_id'=>$store['store_id'],'is_recommend'=>1))->order('goods_id desc')->limit(2)->select();
