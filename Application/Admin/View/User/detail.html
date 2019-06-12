@@ -75,7 +75,7 @@
                     <tr>
                         <td>用户等级:</td>
                         <td>
-                            <select name="level">
+                            <select id="level" name="level">
                                 <foreach name="userLevel" item="level">
                                     <option value="{$level.level_id}" <if condition="$user['level'] eq $level['level_id']">selected</if>>{$level.level_name}</option>
                                 </foreach>
@@ -83,32 +83,31 @@
                         </td>
                         <td></td>
                     </tr>
-                    <if condition="$user['level'] eq 2">
-                        <tr>
-                            <td>群主区域:</td>
-                            <td>
-                                <select class="province_select"  name="province" id="province" onChange="get_city(this)">
-                                    <option value="0">请选择</option>
-                                    <volist name="province" id="p">
-                                        <option <if condition="$user['province_id'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
-                                    </volist>
-                                </select>
-                                <select name="city" id="city" onChange="get_area(this)">
-                                    <option  value="0">请选择</option>
-                                    <volist name="user.city_list" id="p">
-                                        <option <if condition="$user['city_id'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
-                                    </volist>
-                                </select>
-                                <select name="district" id="district" onChange="get_twon(this)">
-                                    <option  value="0">请选择</option>
-                                    <volist name="user.district_list" id="p">
-                                        <option <if condition="$user['district_id'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
-                                    </volist>
-                                </select>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </if>
+
+                    <tr id="qun"  <if condition="$user['level'] eq 1">style="display: none</if>">
+                        <td>群主区域:</td>
+                        <td>
+                            <select class="province_select"  name="province" id="province" onChange="get_city(this)">
+                                <option value="0">请选择</option>
+                                <volist name="province" id="p">
+                                    <option <if condition="$user['province'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                </volist>
+                            </select>
+                            <select name="city" id="city" onChange="get_area(this)">
+                                <option  value="0">请选择</option>
+                                <volist name="user.city_list" id="p">
+                                    <option <if condition="$user['city'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                </volist>
+                            </select>
+                            <select name="district" id="district" onChange="get_twon(this)">
+                                <option  value="0">请选择</option>
+                                <volist name="user.district_list" id="p">
+                                    <option <if condition="$user['district'] eq $p['id']">selected</if>  value="{$p.id}">{$p.name}</option>
+                                </volist>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
 
                     <tr>
                         <td>冻结用户:</td>
@@ -272,6 +271,14 @@
         $('.change-pay_points').text($("input[name='pay_points']").val());
     }
 
+    $('#level').change(function () {
+        var value = $(this).val();
+        if (value == 1) {
+            $('#qun').hide();
+        }else {
+            $('#qun').show();
+        }
+    })
 </script>
 
 </body>

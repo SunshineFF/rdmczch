@@ -87,18 +87,13 @@ class UserController extends BaseController {
             if($password != '' && $password != $password2){
                 exit($this->error('两次输入密码不同'));
             }
-            if ($_POST['level'] == 2){
-                if ($user['tou_zi'] < 10000){
-                    exit($this->error('用户的藏品额度大于10000才能成为群主。'));
-                }
-            }
-
+            $this->verificationQuYu($user);
+            $this->initQuId($user);
             if($password == '' && $password2 == ''){
                 unset($_POST['password']);
             }else{
                 $_POST['password'] = encrypt($_POST['password']);
             }
-
             $row = M('users')->where(array('user_id'=>$uid))->save($_POST);
             if($row)
                 exit($this->success('修改成功'));
@@ -115,6 +110,56 @@ class UserController extends BaseController {
         $this->display();
     }
 
+    /** 验证群主的区域和代理的地域信息
+     * @param $user
+     */
+    protected function verificationQuYu($user){
+        if ($_POST['level'] == 2 || $_POST['level'] == 7){
+            if ($user['tou_zi'] < 10000 && $user['level' != 2] ){
+                exit($this->error('用户的藏品额度大于10000才能成为群主。'));
+            }
+            if (!$_POST['district'] || !$_POST['city'] || !$_POST['province']){
+                exit($this->error('请完善区域信息，具体到区或县城。'));
+            }
+        }
+        if ($_POST['level'] == 8){
+            if (!$_POST['district'] || !$_POST['city']){
+                exit($this->error('请完善区域信息，具体到市。'));
+            }
+        }
+        if ($_POST['level'] == 9){
+            if (!$_POST['district']){
+                exit($this->error('请完善区域信息，具体到省。'));
+            }
+        }
+    }
+
+    /**
+     * 初始化区域ID
+     */
+    protected function initQuId(){
+        $quYuId = '';
+        switch ($_POST['level']){
+            case 7:
+                $quYuId = $_POST['province'].'_'.$_POST['city'].'_'.$_POST['district'];
+                break;
+            case 8:
+                $quYuId = $_POST['province'].'_'.$_POST['city'];
+                break;
+            case 9:
+                $quYuId = $_POST['province'];
+                break;
+            default:
+                break;
+        }
+        if (!$quYuId)return;
+        $_POST['qu_yu_id'] = $quYuId;
+        $res = M('users')->where(['qu_yu_id' => $quYuId])->find();
+        if ($res){
+            exit($this->error('此区域已有代理，请切换区域。'));
+        }
+    }
+
     /** 初始化群主所属
      * @param $user
      * @throws \think\db\exception\DataNotFoundException
@@ -122,15 +167,13 @@ class UserController extends BaseController {
      * @throws \think\exception\DbException
      */
     protected function addQunZhuData(&$user){
-        if ($user['level_id'] == 2){
-            $p = M('region')->where(array('parent_id' => 0, 'level' => 1))->select();
-            $this->assign('province', $p);
-            if ($user['city_id']){
-                $user['city_list'] = M('region')->where(['parent_id' => $user['province_id']])->select();
-            }
-            if ($user['district_id']){
-                $user['cidistrict_list'] = M('region')->where(['parent_id' => $user['city_id']])->select();
-            }
+        $p = M('region')->where(array('parent_id' => 0, 'level' => 1))->select();
+        $this->assign('province', $p);
+        if ($user['city']){
+            $user['city_list'] = M('region')->where(['parent_id' => $user['province']])->select();
+        }
+        if ($user['district']){
+            $user['district_list'] = M('region')->where(['parent_id' => $user['city']])->select();
         }
     }
     

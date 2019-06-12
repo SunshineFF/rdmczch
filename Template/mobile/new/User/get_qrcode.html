@@ -17,34 +17,26 @@
 <div id="tbh5v0">
     <div class="get-qrcode">
         <p class="line">推荐码:<span>{$invite_code}</span></p>
-        <div><p style="line-height: 18px">推荐衔接:<span class="float-right cp-link" data-copy=".js-copyText">复制链接</span></p><p class="js-copyText"></p></div>
+        <div style="height: 33px;overflow: hidden;"><p style="line-height: 18px">推荐衔接:<span class="float-right cp-link" onclick="copyUrl2()">复制链接</span></p>
+            <input value="{$url}" id="copy-text">
+        </div>
         <p>我的二维码：</p>
         <img src="/{$qr_code}">
     </div>
 </div>
 <include file="Public/footer"/>
 <include file="Public/footer_nav"/>
-<script type="text/javascript" src="__STATIC__/js/copy.js"></script>
 <script type="text/javascript">
     function goTop(){
         $('html,body').animate({'scrollTop':0},600);
     }
-
-</script>
-<script type="text/javascript">
-    /**
-     * 复制粘贴功能
-     * 2017-05-25
-     * 参数一：表示复制功能按钮btn 可为id,可为class
-     * 参数二：表示回调
-     * yb
-     */
-    copy.coptText(".cp-link", function(flag) {
-        /**
-         * flag 为true的时候，表示赋值成功，false表示赋值失败，自行处理
-         */
-        return flag ? alert("文字已复制到剪贴板中") : alert("请长按选中复制")
-    });
+    function copyUrl2()
+    {
+        var Url2=document.getElementById("copy-text");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("文字已复制到剪贴板中");
+    }
 
 </script>
 </body>

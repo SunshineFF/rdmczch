@@ -39,6 +39,8 @@ function get_city(t){
         success: function(v) {
             v = '<option value="0">选择城市</option>'+ v;          
             $('#city').empty().html(v);
+            v = '<option>选择区域</option>';
+            $('#district').empty().html(v);
         }
     });
 }
