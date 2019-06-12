@@ -14,7 +14,7 @@
 <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
 <script type="text/javascript" src="__STATIC__/js/common.js"></script>
 </head>
-<body>
+<body style="background: #E9E9E9">
       <header>
       <div class="tab_nav">
         <div class="header">
@@ -29,12 +29,12 @@
       </div>
       </header>
 <include file="Public/menu"/>
-									
+<p class="remind">防诈骗提醒：裔商城不会以任何理由发链接要求您填写个人银行信息进行退款，谨防假冒客服电话诈骗！</p>
 <div id="tbh5v0">    
   <volist name="lists" id="list">  
 	 
-        <div class="address_add   <if condition="$list[is_default] eq 1"> Default</if>">
-                
+<!--        <div class="address_add   <if condition="$list[is_default] eq 1"> Default</if>">-->
+        <div class="address_add >
              <if condition="$_GET['source'] eq 'cart2'">         
                     <a href="{:U('/Mobile/Cart/cart2',array('address_id'=>$list['address_id']))}">
                         <if condition="$list[is_default] eq 1"><h2><img src="__STATIC__/images/right.png"></h2></if>
@@ -42,7 +42,8 @@
                             <dt><span>{$list.consignee}</span><em>电话:{$list.mobile}</em></dt>
                             <dd>{$region_list[$list['province']]['name']}，{$region_list[$list['city']]['name']}，{$region_list[$list['district']]['name']}，{$list.address}</dd>
                         </dl>
-                    </a>         
+                        <if condition="$list[is_default] eq 1"> <div class="default">默认</div></if>
+                    </a>
              <else/>
                     <if condition="$list[is_default] eq 1"><h2><img src="__STATIC__/images/right.png"></h2></if>
                     <dl>
