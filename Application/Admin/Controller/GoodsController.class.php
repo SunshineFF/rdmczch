@@ -27,7 +27,7 @@ class GoodsController extends BaseController {
         $goods_type = M('goods_type')->getField('id,name');
         $this->assign('goods_type',$goods_type);
         $this->assign('cat_list',$cat_list);  
-        $this->display();        
+        $this->display();
     }
     
     /**
@@ -893,5 +893,34 @@ class GoodsController extends BaseController {
         }
         $return_fail = array('status' => -1, 'msg' => '没有找到该批量操作', 'data' => '');
         $this->ajaxReturn($return_fail);
+    }
+
+    /**
+     * @throws \think\db\exception\BindParamException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public function goodsEdit(){
+        $goodId = I('id');
+        $seller =D()->query("
+            SELECT s.* FROM `__PREFIX__seller` s LEFT JOIN `__PREFIX__goods` g
+            ON g.`store_id` = s.`store_id`
+            WHERE g.`goods_id` = $goodId");
+        $seller = $seller[0];
+        if (session('seller_id') <= 0 || session('seller_id') != $seller['seller_id']){
+            if($seller['group_id'] > 0){
+                $group = M('seller_group')->where(array('group_id'=>$seller['group_id']))->find();
+                $seller['act_limits'] = $group['act_limits'];
+                $seller['smt_limits'] = $group['smt_limits'];
+            }
+            session('seller',$seller);
+            session('seller_id',$seller['seller_id']);
+            session('store_id',$seller['store_id']);
+            M('seller')->where(array('seller_id'=>$seller['seller_id']))->save(array('last_login_time'=>time()));
+        }
+        $url = U('Seller/Goods/addEditGoods',['goods_id' =>$goodId]);
+        header("Location: $url");
     }
 }
