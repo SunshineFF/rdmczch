@@ -38,11 +38,11 @@ class GoodsLogic extends RelationModel
                 $goods_category = D('goods_category')->query($sql);
                 $goods_category = convert_arr_key($goods_category, 'id');
                 
-                foreach ($goods_category AS $key => $value)
-                {
-                    if($value['level'] == 1)
-                        $this->get_cat_tree($value['id']);                                
-                }
+//                foreach ($goods_category AS $key => $value)
+//                {
+//                    if($value['level'] == 1)
+//                        $this->get_cat_tree($value['id']);
+//                }
                 /*
                 foreach ($goods_category2 AS $key => $value)
                 {
@@ -51,6 +51,7 @@ class GoodsLogic extends RelationModel
                         echo $value['name'];
                         echo "<br/>";
                 }*/
+                $goods_category2 = $this->_initCateList();
                 return $goods_category2;               
     }
     
@@ -72,6 +73,55 @@ class GoodsLogic extends RelationModel
              }
         }               
     }
+
+    /**
+     * 分类初始化,优化
+     */
+    public function _initCateList(){
+        global $goods_category;
+        $catOne = $catTwo = $catTree = [];
+        $outher = [];
+        foreach ($goods_category AS $key => $value){
+            if($value['level'] == 1)
+            {
+                $catOne[$value['id']] = $value;
+                continue;
+            }
+            if($value['level'] == 2)
+            {
+                $catTwo[$value['parent_id']][] = $value;
+                continue;
+            }
+            if($value['level'] == 3)
+            {
+                $catTree[$value['parent_id']][] = $value;
+                continue;
+            }
+            $outher[] = $value;
+        }
+        $allCate = [];
+        foreach ($catOne as $value){
+            if (isset($catTwo[$value['id']])){
+                $value['have_son'] = 1;
+                $allCate[$value['id']] = $value;
+                foreach ($catTwo[$value['id']] as $item){
+                    if (isset($catTree[$item['id']])){
+                        $item['have_son'] = 1;
+                        $allCate[$item['id']] = $item;
+                        foreach ($catTree[$item['id']] as $item2){
+                            $allCate[$item2['id']] = $item2;
+                        }
+                    }else{
+                        $allCate[$item['id']] = $item;
+                    }
+               }
+            }else{
+                $allCate[$value['id']] = $value;
+            }
+        }
+        return $allCate;
+    }
+
     
     
     /**

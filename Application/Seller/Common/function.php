@@ -67,7 +67,7 @@ function navigate_admin()
     $navigate = include APP_PATH.'Common/Conf/navigate.php';    
     $location = strtolower('Seller/'.CONTROLLER_NAME);
     $arr = array(
-        '后台首页'=>'javascript:void();',
+        '后台首页'=> U('Seller/index/index'),
         $navigate[$location]['name']=>'javascript:void();',
         $navigate[$location]['action'][ACTION_NAME]=>'javascript:void();',
     );

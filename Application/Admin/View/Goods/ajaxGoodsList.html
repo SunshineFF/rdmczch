@@ -40,6 +40,7 @@
                     <a href="javascript:sort('goods_state');">审核状态</a>
                 </td>              
                 <td class="text-right">操作</td>
+                <td class="text-right">店铺</td>
             </tr>
             </thead>
             <tbody>
@@ -74,8 +75,9 @@
                     <if condition="$list[goods_state] eq 3">违规下架</if>
                     </td>
                     <td class="text-right">
-                      <!--    <a href="{:U('Home/Goods/goodsInfo',array('id'=>$list['goods_id']))}">查看</a>&nbsp;
-                   --> </td>   
+                        <a target="_blank" href="{:U('Admin/Goods/goodsEdit',array('id'=>$list['goods_id']))}">编辑</a>&nbsp;</td>
+                    <td class="text-right">
+                     <a target="_blank" href="{:U('Mobile/Goods/goodsInfo',array('id'=>$list['goods_id']))}">查看</a>&nbsp;</td>
                 </tr>
             </volist>
             </tbody>
