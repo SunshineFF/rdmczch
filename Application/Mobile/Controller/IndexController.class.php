@@ -29,11 +29,11 @@ class IndexController extends MobileBaseController {
     /** 首页工厂直销ID
      * @var array
      */
-    protected $zhixiao = [268,265,263,252,251,243,242,222,221,199,168,201,260,288,278,283,281,270,279,295,291,277,284,311,297,316,317];
+    protected $zhixiao = [268,263,252,251,243,242,222,199,168,201,260,288,278,283,281,270,279,291,277,284,311,297,316,317,337,294,336,330];
     /** 新品预售ID
      * @var array
      */
-    protected $xinpin = [179,190,173];
+    protected $xinpin = [179,190,244];
 
     public function index(){
         /*

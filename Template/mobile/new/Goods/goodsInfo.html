@@ -30,9 +30,9 @@ var process_request = "正在处理您的请求...";
       <div class="h-left"><a class="sb-back" href="javascript:history.back(-1)" title="返回"><i class="iconshangyiyehoutuifanhui-yuankuang"></i></a></div>
       <div class="h-mid">
         <ul>
-          <li><a href="javascript:;" class="tab_head on"   id="goods_ka1" onClick="setGoodsTab('goods_ka',1,3)">商品</a></li>
-          <li><a href="javascript:;" class="tab_head" id="goods_ka2" onClick="setGoodsTab('goods_ka',2,3)">详情</a></li>
-          <li><a href="javascript:;" class="tab_head" id="goods_ka3" onClick="setGoodsTab('goods_ka',3,3)">评价</a></li>
+          <li><a href="#user_goods_ka_1" class="tab_head on"   id="goods_ka1">商品</a></li>
+          <li><a href="#goods_list" class="tab_head" id="goods_ka2">详情</a></li>
+          <li><a href="javascript:;" class="tab_head" id="goods_ka3">评价</a></li>
         </ul>
       </div>
       <div class="h-right">
@@ -278,8 +278,10 @@ function changeAtt1(t) {
       </div></if>
 
   </div>
-  <div class="main" id="user_goods_ka_2" style="display:none">
-    <div class="product_main" style=" margin-top:40px;"> <!-- 产品图片 -->
+
+  <div class="main" id="user_goods_ka_2">
+      <p style="text-indent: 10px;border-bottom: 1px solid #000000;font-size: 18px" id="goods_list">商品详情</p>
+    <div class="product_main"> <!-- 产品图片 -->
          <div class="product_images product_desc" id="product_desc"> {$goods.goods_content|htmlspecialchars_decode} </div>
     </div>
     <section class="index_floor">
@@ -530,12 +532,31 @@ $(document).ready(function(){
 window.onscroll=function(){
     var high = $(window).scrollTop();
     var num = (high/150).toFixed(1);
-    console.log(num);
     $(".header").css('opacity',num);
     var high1 = 150-high;
     var num = (high1/150).toFixed(1);
     $(".header1").css('opacity',num);
 }
+
+$(".h-mid li a").click(function(){
+    var val = $(this).html();
+    console.log(val);
+    if(val == '评价'){
+        $('#user_goods_ka_1').css('display','none');
+        $('#user_goods_ka_2').css('display','none');
+        $('#user_goods_ka_3').css('display','block');
+    }
+    if(val == '商品'){
+        $('#user_goods_ka_1').css('display','block');
+        $('#user_goods_ka_2').css('display','block');
+        $('#user_goods_ka_3').css('display','none');
+    }
+    if(val == '详情'){
+        $('#user_goods_ka_1').css('display','block');
+        $('#user_goods_ka_2').css('display','block');
+        $('#user_goods_ka_3').css('display','none');
+    }
+})
 
 </script>
 <script src="__PUBLIC__/js/jqueryUrlGet.js"></script><!--获取get参数插件-->
