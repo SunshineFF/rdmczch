@@ -69,7 +69,9 @@ class UserController extends MobileBaseController
         $comment_count = M('comment')->where("user_id = {$this->user_id}")->count();//  我的评论数
         $coupon_count = M('coupon_list')->where("uid = {$this->user_id}")->count(); // 我的优惠券数量
         $level_name = M('user_level')->where("level_id = '{$this->user['level']}'")->getField('level_name'); // 等级名称
+        $notice = M('article')->where("cat_id = 4")->find(); // 公告
         $this->assign('level_name', $level_name);
+        $this->assign('notice', $notice);
         $this->assign('order_count', $order_count);
         $this->assign('goods_collect_count', $goods_collect_count);
         $this->assign('comment_count', $comment_count);

@@ -668,3 +668,19 @@ div.main_thh table tr .check_but_thh{text-align: center;}
 .get-qrcode .float-right{float:right}
 .get-qrcode img{display:block;margin: 0 auto;}
 .get-qrcode .line{border-bottom: 1px solid #CCCCCC}
+
+/*公告栏*/
+.notice{
+    width: 100%;
+    height: 40px;
+    margin-top: 0.6rem;
+    background: #ffffff;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 40px;
+    padding-left: 0.5rem;
+    white-space: nowrap;
+    box-sizing: border-box;
+    position: relative;
+}
+.notice p{display: inline-block;position: absolute;left: 10px;top: 0}

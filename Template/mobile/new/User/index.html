@@ -4,7 +4,8 @@
 <div class="user_com">
 
 <include file="Public/uer_topnav"/>
-
+<!--广告栏-->
+<div class="notice"><p>{$notice.description}</p></div>
 <div class="Wallet">
 	<ul>
 	<li class="bain1"><strong>￥{$user['user_money']}元</strong><span>余额</span></li>
@@ -43,3 +44,27 @@
 <include file="Public/footer"/>
 </body>
 </html>
+<script>
+	$(function() {
+		var num = 10;
+		var width = $(".notice p").css("width");
+		var width = parseInt(width);
+		var width = 0-width;
+		console.log(width);
+		function goLeft() {
+			if (num == width) {
+				num = 10;
+			}
+			num -= 1;
+			$(".notice p").css({
+				left: num
+			})
+		}
+		//滚动速度
+
+	})
+	$(".notice").click(function(){
+		var a = $(".notice p").text();
+		layer.open({'content':a})
+	})
+</script>
