@@ -28,6 +28,9 @@ class ArticleController extends BaseController {
         $this->assign('article_main_system_id', $this->article_main_system_id);
     }
 
+    /**
+     * 公告分类列表
+     */
     public function categoryList(){
         $ArticleCat = new ArticleCatLogic(); 
         $cat_list = $ArticleCat->article_cat_list(0, 0, false);
@@ -36,7 +39,6 @@ class ArticleController extends BaseController {
         $this->assign('cat_list',$cat_list);
         $this->display('categoryList');
     }
-    
     public function category(){
         $ArticleCat = new ArticleCatLogic();  
  		$act = I('GET.act','add');

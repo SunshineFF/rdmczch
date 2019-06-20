@@ -156,6 +156,10 @@ function getAllMenu(){
 					array('name' => '商品规格', 'act' =>'specList', 'control' => 'Goods'),
 					
 			)),
+            'article' => array('name' => '公告管理', 'icon'=>'fa-bell', 'sub_menu' => array(
+                array('name' => '公告分类', 'act'=>'categoryList', 'control'=>'Article'),
+                array('name' => '公告列表', 'act'=>'articleList', 'control'=>'Article'),
+            )),
 			'order' => array('name' => '订单管理', 'icon'=>'fa-money', 'sub_menu' => array(
 					array('name' => '订单列表', 'act'=>'index', 'control'=>'Order'),
 					//array('name' => '发货单', 'act'=>'delivery_list', 'control'=>'Order'),
