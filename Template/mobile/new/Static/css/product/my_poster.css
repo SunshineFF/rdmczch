@@ -48,7 +48,7 @@ li{
     margin-bottom: 4rem;
 }
 .small li{
-    width: 22.9%;
+    width: 21.9%;
     height: 8rem;
     float: left;
     margin-right: 2%;
@@ -88,6 +88,10 @@ li{
     top: -1rem;
     right: -1rem;
     font-size: 2rem;
+    background: rgba(239, 0, 0);
+    border-radius: 2rem;
+    padding: 0 0.5rem;
+    color: #fff;
 }
 .new{
     width: 20%;

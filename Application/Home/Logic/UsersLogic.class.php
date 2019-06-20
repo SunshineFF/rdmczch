@@ -208,6 +208,9 @@ class UsersLogic extends RelationModel
             $map['password_2'] = md5(I('password_2'));
             $map['pay_points'] = 100;
             $map = $this->_initUserData($map);
+            if (!$map['mobile']){
+                throw new \Exception('手机号不合法，请检查数据');
+            }
             $user_id = M('users')->add($map);
             $this->commit();
             if(!$user_id)

@@ -202,6 +202,16 @@ class ProductController extends MobileBaseController
                 'x' => 356,
                 'y' => 263,
                 'width' => 145
+            ],
+            '20190613183050.png' => [
+                'x' => 234,
+                'y' => 791,
+                'width' => 300
+            ],
+            '20190614110259.png' => [
+                'x' => 400,
+                'y' => 357,
+                'width' => 300,
             ]
         ];
         $img = I('back_img') ? I('back_img') : '20190528134854.png';

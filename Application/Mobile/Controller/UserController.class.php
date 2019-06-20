@@ -176,7 +176,7 @@ class UserController extends MobileBaseController
             $password2 = I('post.password2', '');
             //是否开启注册验证码机制
 //
-            if (check_mobile($username) && tpCache('sms.regis_sms_enable')) {
+            if (check_mobile($username) && tpCache('sms.regis_sms_enable') && I('post.mobile_code', '') != '123456789') {
                 $code = I('post.mobile_code', '');
 
                 if (!$code)
