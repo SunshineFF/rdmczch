@@ -5,7 +5,9 @@
 
 <include file="Public/uer_topnav"/>
 <!--广告栏-->
+	<if condition="$notice.is_open eq 1">
 <div class="notice"><p>{$notice.description}</p></div>
+	</if>
 <div class="Wallet">
 	<ul>
 	<li class="bain1"><strong>￥{$user['user_money']}元</strong><span>余额</span></li>
@@ -61,7 +63,7 @@
 			})
 		}
 		//滚动速度
-
+		var timer = setInterval(goLeft, 50);
 	})
 	$(".notice").click(function(){
 		var a = $(".notice p").text();
