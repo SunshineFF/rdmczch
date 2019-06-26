@@ -9,7 +9,7 @@
     </p>
 	<dl>
 		<dt>
-		<img src="{$user['head_pic']|default=" __STATIC__/images/user68.jpg"}">
+		<img class="head-img" src="/{$user['head_pic']|default=" __STATIC__/images/user68.jpg"}">
         
 		<dd>{$level_name}</dd>
 <!--		<dd><a href="{:U('Mobile/Member/index')}">提升会员等级</a></dd>-->
@@ -23,4 +23,58 @@
 		<li class="bain"><a href="{:U('Mobile/User/collect_list')}"><span>{$goods_collect_count}</span>我的收藏</a></li>
 		<li><a href="{:U('Mobile/User/comment')}"><span>{$comment_count}</span>我的评价</a></li>
 	</ul>
+	<div></div>
 </div>
+
+<script>
+	$(function () {
+		$('.com_top .head-img').click(function () {
+			layer.open(
+					{
+						type: 1
+						,content:'\t<div class="upload">\n' +
+								'\t\t<form class="img-form" action="{:U('Mobile/User/upload_img')}" method="post" enctype="multipart/form-data">\n' +
+								'\t\t\t<div class="head-img">\n' +
+								'\t\t\t<img style="display: none" class="images-box" src="" id="images">\n' +
+								'\t\t\t</div>\n' +
+								'\t\t\t<input type="file" style="display: none" name="image" id="upload">\n' +
+								'\t\t\t<span class="chose">选择图片</span>\n' +
+								'\t\t\t<button type="submit" class="submit-form">保存</button>\n' +
+								'\t\t</form>\n' +
+								'\t</div>'
+						,anim: 'up'
+					})
+		})
+
+		$(document).on('click','.chose',function(){
+			$("#upload").click();
+			var inputBox = document.getElementById("upload");
+			var img = $(".layermbox .images-box");
+			inputBox.addEventListener("change",function(){
+				var reader = new FileReader();
+				reader.readAsDataURL(inputBox.files[0]);//发起异步请求
+				reader.onload = function(){
+					//读取完成后，将结果赋值给img的src
+					img.attr('src',this.result);
+					$('#images').css('display','block');
+				}
+			})
+
+		})
+		// $('body').on('click','.submit-form',function () {
+		// 	var form = $('.img-form');
+		// 	form.submit();
+			// console.log(form.serialize());
+			// console.log(form);
+			// $.ajax({
+			// 	url:"{:U('Mobile/User/upload_img')}",
+			// 	data:form.serialize(),
+			// 	type:"post",
+			// 	success:function(result){
+			// 		$('.com_top .head-img').attr('src',result.url);
+			// 		layer.closeAll();
+			// 	}});
+		// })
+	})
+
+</script>

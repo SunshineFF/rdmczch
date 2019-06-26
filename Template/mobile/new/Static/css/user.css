@@ -684,3 +684,39 @@ div.main_thh table tr .check_but_thh{text-align: center;}
     position: relative;
 }
 .notice p{display: inline-block;position: absolute;left: 10px;top: 0}
+
+
+/*上传头像*/
+.upload{
+    width: 300px;
+    height: 20rem;
+    background: #ffffff;
+    overflow: hidden;
+    text-align: center;
+}
+.upload .head-img{
+    width: 100px;
+    height: 100px;
+    margin: 40px auto 0;
+    border-radius: 5rem;
+    border: 1px solid;
+    overflow: hidden;
+}
+.upload img{width: 100px;height: 100px;display: block}
+.upload button{
+    margin: 20px auto 0;
+    display: block;
+    background: #ffffff;
+    padding: 5px 34px;
+    border: 1px solid;
+    border-radius: 10px;
+    outline: none;
+}
+
+.upload .chose{
+    display: inline-block;
+    border: 1px solid;
+    padding: 5px 20px;
+    font-size: 14px;
+    margin-top: 20px;
+    border-radius: 10px;}

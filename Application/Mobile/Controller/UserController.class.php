@@ -1319,4 +1319,37 @@ class UserController extends MobileBaseController
             $this->error("删除失败");
         $this->success('删除成功');
     }
+
+    public function upload_img(){
+        if (!isset($_FILES['image'])){
+            var_dump($_FILES);
+            $this->error('请选择图片',U('Mobile/User/index'));
+        }
+        if($_FILES["image"]["error"]){
+            $this->error($_FILES["image"]["error"],U('Mobile/User/index'));
+        }
+        else
+        {
+            //没有出错
+            //加限制条件
+            //判断上传文件类型为png或jpg且大小不超过1024000B
+            if(($_FILES["image"]["type"]=="image/png"||$_FILES["image"]["type"]=="image/jpeg")&&$_FILES["image"]["size"]<1024000)
+            {
+                //防止文件名重复
+                $filename ="Public/upload/ad/".time().'.jpg';
+                //转码，把utf-8转成gb2312,返回转换后的字符串， 或者在失败时返回 FALSE。
+                $filename =iconv("UTF-8","gb2312",$filename);
+                //保存文件,   move_uploaded_file 将上传的文件移动到新位置
+                move_uploaded_file($_FILES["image"]["tmp_name"],$filename);//将临时地址移动到指定地址
+                M('users')->where(['user_id'=>$this->user_id])->save(['head_pic'=>$filename]);
+                $this->success('修改头像成功',U('Mobile/User/index'));
+            }
+            else
+            {
+                $this->error('文件类型不对',U('Mobile/User/index'));
+            }
+        }
+
+//        $this->ajaxReturn(['code'=>200,'msg'=>'上传完成','url'=>'/Public/upload/2019_05/20190619161553.png']);
+    }
 }
