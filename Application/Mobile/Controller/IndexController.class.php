@@ -186,4 +186,75 @@ class IndexController extends MobileBaseController {
         $this->assign('brand_class', $brand_class);//品牌分类
         $this->display();
     }
+
+    /**
+     * csv_get_lines 读取CSV文件中的某几行数据
+     * @param $csvfile csv文件路径
+     * @param $lines 读取行数
+     * @param $offset 起始行数
+     * @return array
+     * */
+   public function csv_get_lines($csvfile, $lines, $offset = 0) {
+        if(!$fp = fopen($csvfile, 'r')) {
+            return false;
+        }
+        $i = $j = 0;
+        while (false !== ($line = fgets($fp))) {
+            if($i++ < $offset) {
+                continue;
+            }
+            break;
+        }
+        $data = array();
+        while(($j++ < $lines) && !feof($fp)) {
+            $data[] = fgetcsv($fp);
+        }
+        fclose($fp);
+        return $data;
+    }
+
+    /**
+     *  url  /Mobile/Index/addUserFromCsv.html?token=FAYTYSDADsa12s4
+     * 导入用户列表
+     */
+    public function addUserFromCsv(){
+        if (I('token') == 'FAYTYSDADsa12s4'){
+            $file_path = "user-list.csv";
+            echo "<pre>";
+            $data = $this->csv_get_lines($file_path,100);
+            $userModel =  new \Home\Logic\UsersLogic();
+            $hasMobile = $noUser = $error = [];
+            foreach ($data as $one){
+                if (!$one)continue;
+                $hasUser = M('users')->where(['mobile' => $one[0]])->find();
+                if ($hasUser){
+                    $hasMobile[] = $hasUser['mobile'];
+                    continue;
+                }
+                $parentUser = M('users')->where(['mobile' => $one[1]])->find();
+                if (!$parentUser){
+                    $noUser[] = $one[1];
+                    continue;
+                }
+                $_POST['invite_code'] = $parentUser['invite_code'];
+                $_POST['password_2'] = '111111';
+                $_POST['password'] = '123456';
+                $_POST['password2'] = '123456';
+                $res = $userModel->reg($one[0],'111111','111111');
+                if ($res['status'] != 1){
+                    $res['mobile'] = $one[0];
+                    $error[] = $res;
+                }
+            }
+            print_r($hasMobile);
+            echo "<br>";
+            print_r($noUser);
+            echo "<br>";
+            print_r($error);
+            exit;
+        }else{
+            $this->index();
+        }
+
+    }
 }
