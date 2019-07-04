@@ -29,17 +29,18 @@
 			<div class="item validate_type">
 				<label style=" font-size:14px;">请选择验证身份方式：</label>
 				<select id="validate_type" name="validate_type"  class="select">
+					<?php var_dump($user['email'])?>
 					<if condition="$user['email'] neq ''"> 
 						<option id="validate_type_email" value="email" val="{$user.email}" <if condition="$user[type] eq 'email'">selected</if> >邮箱</option>
 					</if>
-					<if condition="$user['email'] neq ''"> 
+					<if condition="$user['mobile'] neq ''">
 						<option id="validate_type_mobile" value="mobile" val="{$user.mobile}"  <if condition="$user[type] eq 'mobile'">selected</if> >手机</option>
 					</if>
 				</select>
 		    </div>
 			<div class="v_mobile v_item">
 					<label>手机号：</label>
-					<span id="l_mobile_phone"></span>
+					<span id="l_mobile_phone">{$user['mobile']}</span>
 			</div>
 			<div id="c_mobile_code" class="field auth-code v_item v_mobile">
 				<div class="codeTxt">
@@ -88,7 +89,8 @@ function sendcode(o){
 		data:{type:type,send:send},
 		success:function(res){
 			if(res.status==1){
-				countdown(o);
+				layer.open({content:res.msg,time:2});
+				// countdown(o);
 			}else{
 				layer.open({content:res.msg,time:2});
 			}
