@@ -90,7 +90,7 @@ function sendcode(o){
 		success:function(res){
 			if(res.status==1){
 				layer.open({content:res.msg,time:2});
-				// countdown(o);
+				countdown(o);
 			}else{
 				layer.open({content:res.msg,time:2});
 			}
