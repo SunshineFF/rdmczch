@@ -3,9 +3,9 @@
 return array(
     'DB_TYPE' => 'mysql', //数据库类型
     'DB_HOST' => 'localhost', //数据库主机
-    'DB_NAME' => 'rdmczch', //数据库名称
-    'DB_USER' => 'rdmczch', //数据库用户名
-    'DB_PWD' => 'm6R4d7jAGmeysy8M', //数据库密码
+    'DB_NAME' => 'www_qunyigou_cn', //数据库名称
+    'DB_USER' => 'www_qunyigou_cn', //数据库用户名
+    'DB_PWD' => 'G82r58raJeLS5cyy', //数据库密码
     'DB_PORT' => '3306', //数据库端口
     'DB_PREFIX' => 'ty_', //数据库前缀
 	'DB_CHARSET'=> 'utf8', // 字符集
