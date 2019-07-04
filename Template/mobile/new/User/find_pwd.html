@@ -29,7 +29,6 @@
 			<div class="item validate_type">
 				<label style=" font-size:14px;">请选择验证身份方式：</label>
 				<select id="validate_type" name="validate_type"  class="select">
-					<?php var_dump($user['email'])?>
 					<if condition="$user['email'] neq ''"> 
 						<option id="validate_type_email" value="email" val="{$user.email}" <if condition="$user[type] eq 'email'">selected</if> >邮箱</option>
 					</if>

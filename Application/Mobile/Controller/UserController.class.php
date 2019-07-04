@@ -1002,7 +1002,7 @@ class UserController extends MobileBaseController
         $code = I('post.code');
         $send = I('send');
         $logic = new UsersLogic();
-        $logic->check_validate_code($code, $send);
+        echo json_encode($logic->check_validate_code($code, $send));
     }
 
     /**
